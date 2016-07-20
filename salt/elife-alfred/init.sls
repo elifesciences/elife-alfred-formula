@@ -22,6 +22,12 @@ jenkins:
         - pattern: '^JAVA_ARGS=".*"'
         - repl: 'JAVA_ARGS="-Djava.awt.headless=true -Duser.timezone=Europe/London"'
 
+jenkins-user-and-group:
+    cmd.run:
+        - name: echo "Jenkins user and group have already been created by the package installation"
+        - require:
+            - jenkins
+
 reverse-proxy:
     file.managed:
         - name: /etc/nginx/sites-enabled/jenkins.conf
@@ -57,6 +63,16 @@ add-jenkins-gitconfig:
         - require:
             - pkg: jenkins
 
+# giving AWS credentials to old builder, these will be removed with it
+old-builder-project-aws-credentials:
+    file.managed:
+        - name: /home/{{ pillar.elife.deploy_user.username }}/.aws/credentials
+        - source: salt://elife-alfred/config/var-lib-jenkins-.aws-credentials
+        - template: jinja
+        - user: jenkins
+        - group: jenkins
+        - makedirs: True
+
 # old builder is used to interact with AWS stacks
 elife-builder-project:
     git.latest:
@@ -80,6 +96,7 @@ elife-builder-project:
         - cwd: /opt/elife-builder
         - require:
             - file: elife-builder-project
+            - old-builder-project-aws-credentials
 
 # old builder-scripts are public, but the jenkins user does not have the AWS credentials
 # to use them

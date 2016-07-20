@@ -1,10 +1,9 @@
 base:
     '*':
+        - elife
         - elife.swapspace
-        - elife.awscli
         - elife.java
         - elife.nginx
-        - elife.python-dev
         #- elife.mercurial
         - elife-alfred
         - elife-alfred.spectrum
