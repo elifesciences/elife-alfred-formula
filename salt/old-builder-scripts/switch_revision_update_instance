@@ -1,0 +1,3 @@
+#!/bin/bash
+source /usr/local/old-builder-scripts/base
+/opt/elife-builder/bldr buildvars.switch_revision_update_instance:"$@"

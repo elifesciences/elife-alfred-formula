@@ -1,0 +1,2 @@
+tar-gzipped:
+    - /var/local/jenkins-backup/**

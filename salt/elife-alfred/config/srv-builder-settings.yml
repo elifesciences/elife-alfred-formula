@@ -1,0 +1,3 @@
+write-keypairs-to-s3: True
+project-locations:
+    - ./projects/elife.yaml

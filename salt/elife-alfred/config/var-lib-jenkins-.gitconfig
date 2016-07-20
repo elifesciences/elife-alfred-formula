@@ -1,0 +1,5 @@
+[user]
+	name = Jenkins
+	email = techalerts@elifesciences.org
+[push]
+	default = simple
