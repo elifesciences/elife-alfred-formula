@@ -25,6 +25,7 @@ class end2end():
     dashboard_password = '{{ pillar.alfred.dashboard.password }}'
     lax_host = 'https://develop--end2end.lax.elifesciences.org'
     api_gateway_host = 'http://end2end--gateway.elifesciences.org'
+    region_name = 'us-east-1'
 
 def get_settings(ENV = 'end2end'):
     """
