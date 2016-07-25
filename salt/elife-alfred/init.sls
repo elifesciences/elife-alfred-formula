@@ -55,6 +55,14 @@ add-alfred-key-to-jenkins-home:
         - require:
             - file: jenkins-ssh
 
+    #can connect to itself for launching slaves
+    ssh_auth.present:
+        - name: jenkins@alfred
+        - user: jenkins
+        - source: salt://elife-alfred/config/var-lib-jenkins-.ssh-id_rsa.pub
+        - require:
+            - file: jenkins-ssh
+
 add-jenkins-gitconfig:
     file.managed:
         - name: /var/lib/jenkins/.gitconfig
