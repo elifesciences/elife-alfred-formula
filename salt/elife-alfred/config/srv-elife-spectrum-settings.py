@@ -20,7 +20,7 @@ class end2end():
     website_host = 'http://develop--end2end.v2.elifesciences.org'
     website_user = '{{ pillar.alfred.website.user }}'
     website_password = '{{ pillar.alfred.website.password }}'
-    dashboard_host = 'https://develop--end2end.ppp-dash.elifesciences.org'
+    dashboard_host = 'https://end2end--ppp-dash.elifesciences.org'
     dashboard_user = '{{ pillar.alfred.dashboard.user }}'
     dashboard_password = '{{ pillar.alfred.dashboard.password }}'
     lax_host = 'https://develop--end2end.lax.elifesciences.org'
