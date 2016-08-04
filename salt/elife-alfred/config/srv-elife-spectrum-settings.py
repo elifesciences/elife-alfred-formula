@@ -17,7 +17,7 @@ class end2end():
     bucket_input = 'end2end-elife-production-final'
     bucket_eif = 'end2end-elife-publishing-eif'
     bucket_cdn = 'end2end-elife-publishing-cdn'
-    website_host = 'http://develop--end2end.v2.elifesciences.org'
+    website_host = 'http://end2end--v2.elifesciences.org'
     website_user = '{{ pillar.alfred.website.user }}'
     website_password = '{{ pillar.alfred.website.password }}'
     dashboard_host = 'https://end2end--ppp-dash.elifesciences.org'
