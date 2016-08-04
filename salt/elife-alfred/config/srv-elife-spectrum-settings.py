@@ -23,7 +23,7 @@ class end2end():
     dashboard_host = 'https://end2end--ppp-dash.elifesciences.org'
     dashboard_user = '{{ pillar.alfred.dashboard.user }}'
     dashboard_password = '{{ pillar.alfred.dashboard.password }}'
-    lax_host = 'https://develop--end2end.lax.elifesciences.org'
+    lax_host = 'https://end2end--lax.elifesciences.org'
     api_gateway_host = 'http://end2end--gateway.elifesciences.org'
     region_name = 'us-east-1'
 
