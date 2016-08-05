@@ -14,18 +14,18 @@
 class end2end():
     aws_access_key_id = '{{ pillar.alfred.aws.access_key_id }}'
     aws_secret_access_key = '{{ pillar.alfred.aws.secret_access_key }}'
-    bucket_input = 'end2end-elife-production-final'
-    bucket_eif = 'end2end-elife-publishing-eif'
-    bucket_cdn = 'end2end-elife-publishing-cdn'
-    website_host = 'http://end2end--v2.elifesciences.org'
+    bucket_input = '{{ pillar.alfred.bot.bucket.input }}' 
+    bucket_eif = '{{ pillar.alfred.bot.bucket.eif }}'
+    bucket_cdn = '{{ pillar.alfred.bot.bucket.cdn }}'
+    website_host = '{{ pillar.alfred.website.host }}'
     website_user = '{{ pillar.alfred.website.user }}'
     website_password = '{{ pillar.alfred.website.password }}'
-    dashboard_host = 'https://end2end--ppp-dash.elifesciences.org'
+    dashboard_host = '{{ pillar.alfred.dashboard.host }}'
     dashboard_user = '{{ pillar.alfred.dashboard.user }}'
     dashboard_password = '{{ pillar.alfred.dashboard.password }}'
-    lax_host = 'https://end2end--lax.elifesciences.org'
-    api_gateway_host = 'http://end2end--gateway.elifesciences.org'
-    region_name = 'us-east-1'
+    lax_host = '{{ pillar.alfred.lax.host }}'
+    api_gateway_host = '{{ pillar.alfred.api_gateway.host }}'
+    region_name = '{{ pillar.aws.region }}'
 
 def get_settings(ENV = 'end2end'):
     """

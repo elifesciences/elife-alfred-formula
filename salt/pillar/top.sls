@@ -1,4 +1,4 @@
 base:
     '*':
         - elife
-        - elife-alfred
+        - alfred
