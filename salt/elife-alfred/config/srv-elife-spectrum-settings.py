@@ -25,7 +25,7 @@ class end2end():
     dashboard_password = '{{ pillar.alfred.dashboard.password }}'
     lax_host = '{{ pillar.alfred.lax.host }}'
     api_gateway_host = '{{ pillar.alfred.api_gateway.host }}'
-    region_name = '{{ pillar.aws.region }}'
+    region_name = '{{ pillar.alfred.aws.region }}'
 
 def get_settings(ENV = 'end2end'):
     """
