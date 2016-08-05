@@ -83,8 +83,9 @@ old-builder-project-aws-credentials:
 
 # old builder is used to interact with AWS stacks
 elife-builder-project:
-    git.latest:
+    builder.git_latest:
         - name: ssh://git@github.com/elifesciences/elife-builder.git
+        - identity: {{ pillar.elife.deploy_user.key or '' }}
         - rev: master
         - force: True
         - force_fetch: True
@@ -97,7 +98,7 @@ elife-builder-project:
         - recurse:
             - user
         - require:
-            - git: elife-builder-project
+            - builder: elife-builder-project
 
     cmd.run:
         - name: ./update.sh
@@ -125,8 +126,9 @@ builder-project-aws-credentials:
         - makedirs: True
 
 builder-project:
-    git.latest:
+    builder.git_latest:
         - name: ssh://git@github.com/elifesciences/builder.git
+        - identity: {{ pillar.elife.deploy_user.key or '' }}
         - rev: master
         - force: True
         - force_fetch: True
@@ -141,7 +143,7 @@ builder-project:
             - user
             - group
         - require:
-            - git: builder-project
+            - builder: builder-project
 
     cmd.run:
         - name: ./update.sh --exclude virtualbox vagrant

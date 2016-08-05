@@ -4,7 +4,8 @@ base:
         - elife.swapspace
         - elife.java
         - elife.nginx
-        #- elife.mercurial
         - elife-alfred
         - elife-alfred.spectrum
         - elife.jenkins-scripts
+        - elife.postfix
+        - elife.postfix-ses

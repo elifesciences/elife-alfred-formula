@@ -1,6 +1,7 @@
 spectrum-project:
-    git.latest:
+    builder.git_latest:
         - name: ssh://git@github.com/elifesciences/elife-spectrum.git
+        - identity: {{ pillar.elife.deploy_user.key or '' }}
         - rev: master
         - force_fetch: True
         - force_clone: True
@@ -12,7 +13,7 @@ spectrum-project:
         - recurse:
             - user
         - require:
-            - git: spectrum-project
+            - builder: spectrum-project
 
     # provides xmllint for beautifying imported XML
     pkg.installed:
@@ -24,7 +25,7 @@ spectrum-project:
         - user: {{ pillar.elife.deploy_user.username }}
         - cwd: /srv/elife-spectrum
         - require:
-            - git: spectrum-project
+            - builder: spectrum-project
             - pkg: spectrum-project
 
 spectrum-log-directory:
@@ -33,7 +34,7 @@ spectrum-log-directory:
         - user: {{ pillar.elife.deploy_user.username }}
         - mode: 755
         - require:
-            - cmd: spectrum-project
+            - spectrum-project
         
 spectrum-cleanup-log:
     file.managed:
@@ -50,4 +51,4 @@ spectrum-settings:
         - template: jinja
         - user: {{ pillar.elife.deploy_user.username }}
         - require:
-            - git: spectrum-project
+            - spectrum-project
