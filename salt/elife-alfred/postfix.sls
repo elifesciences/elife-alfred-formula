@@ -1,5 +1,5 @@
 enable-postfix:
-    - service.running:
+    service.running:
         - name: postfix
         - require:
             - postfix-mailserver
