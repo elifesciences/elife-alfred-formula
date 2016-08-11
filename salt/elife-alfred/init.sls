@@ -85,7 +85,7 @@ old-builder-project-aws-credentials:
 elife-builder-project:
     builder.git_latest:
         - name: ssh://git@github.com/elifesciences/elife-builder.git
-        - identity: {{ pillar.elife.deploy_user.key or '' }}
+        - identity: {{ pillar.elife.projects_builder.key or '' }}
         - rev: master
         - force: True
         - force_fetch: True
@@ -128,7 +128,7 @@ builder-project-aws-credentials:
 builder-project:
     builder.git_latest:
         - name: ssh://git@github.com/elifesciences/builder.git
-        - identity: {{ pillar.elife.deploy_user.key or '' }}
+        - identity: {{ pillar.elife.projects_builder.key or '' }}
         - rev: master
         - force: True
         - force_fetch: True

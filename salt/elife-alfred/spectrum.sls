@@ -1,7 +1,7 @@
 spectrum-project:
     builder.git_latest:
         - name: ssh://git@github.com/elifesciences/elife-spectrum.git
-        - identity: {{ pillar.elife.deploy_user.key or '' }}
+        - identity: {{ pillar.elife.projects_builder.key or '' }}
         - rev: master
         - force_fetch: True
         - force_clone: True
