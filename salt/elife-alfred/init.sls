@@ -32,6 +32,7 @@ reverse-proxy:
     file.managed:
         - name: /etc/nginx/sites-enabled/jenkins.conf
         - source: salt://elife-alfred/config/etc-nginx-sites-available-jenkins.conf
+        - template: jinja
         - watch_in:
             - service: nginx-server-service
 
