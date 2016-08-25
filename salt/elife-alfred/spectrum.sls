@@ -5,6 +5,7 @@ spectrum-project:
         - rev: master
         - force_fetch: True
         - force_clone: True
+        - force_reset: True
         - target: /srv/elife-spectrum
 
     file.directory:
