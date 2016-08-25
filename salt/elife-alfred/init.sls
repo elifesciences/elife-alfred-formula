@@ -36,6 +36,13 @@ reverse-proxy:
         - watch_in:
             - service: nginx-server-service
 
+{% if salt['elife.cfg']('cfn.outputs.DomainName') %}
+non-https-redirect:
+    file.symlink:
+        - name: /etc/nginx/sites-enabled/unencrypted-redirect.conf
+        - target: /etc/nginx/sites-available/unencrypted-redirect.conf
+{% endif %}
+
 # only needed to checkout the git projects
 jenkins-ssh:
     file.directory:
