@@ -12,24 +12,40 @@
 """
 
 class end2end():
-    aws_access_key_id = '{{ pillar.alfred.aws.access_key_id }}'
-    aws_secret_access_key = '{{ pillar.alfred.aws.secret_access_key }}'
-    bucket_input = '{{ pillar.alfred.bot.bucket.input }}' 
-    bucket_eif = '{{ pillar.alfred.bot.bucket.eif }}'
-    bucket_cdn = '{{ pillar.alfred.bot.bucket.cdn }}'
-    website_host = '{{ pillar.alfred.website.host }}'
-    website_user = '{{ pillar.alfred.website.user }}'
-    website_password = '{{ pillar.alfred.website.password }}'
-    dashboard_host = '{{ pillar.alfred.dashboard.host }}'
-    dashboard_user = '{{ pillar.alfred.dashboard.user }}'
-    dashboard_password = '{{ pillar.alfred.dashboard.password }}'
-    lax_host = '{{ pillar.alfred.lax.host }}'
-    api_gateway_host = '{{ pillar.alfred.api_gateway.host }}'
-    region_name = '{{ pillar.alfred.aws.region }}'
+    aws_access_key_id = '{{ pillar.alfred.end2end.aws.access_key_id }}'
+    aws_secret_access_key = '{{ pillar.alfred.end2end.aws.secret_access_key }}'
+    bucket_input = '{{ pillar.alfred.end2end.bot.bucket.input }}' 
+    bucket_eif = '{{ pillar.alfred.end2end.bot.bucket.eif }}'
+    bucket_cdn = '{{ pillar.alfred.end2end.bot.bucket.cdn }}'
+    website_host = '{{ pillar.alfred.end2end.website.host }}'
+    website_user = '{{ pillar.alfred.end2end.website.user }}'
+    website_password = '{{ pillar.alfred.end2end.website.password }}'
+    dashboard_host = '{{ pillar.alfred.end2end.dashboard.host }}'
+    dashboard_user = '{{ pillar.alfred.end2end.dashboard.user }}'
+    dashboard_password = '{{ pillar.alfred.end2end.dashboard.password }}'
+    lax_host = '{{ pillar.alfred.end2end.lax.host }}'
+    api_gateway_host = '{{ pillar.alfred.end2end.api_gateway.host }}'
+    region_name = '{{ pillar.alfred.end2end.aws.region }}'
 
-def get_settings(ENV = 'end2end'):
+class continuumtest():
+    aws_access_key_id = '{{ pillar.alfred.continuumtest.aws.access_key_id }}'
+    aws_secret_access_key = '{{ pillar.alfred.continuumtest.aws.secret_access_key }}'
+    bucket_input = '{{ pillar.alfred.continuumtest.bot.bucket.input }}' 
+    bucket_eif = '{{ pillar.alfred.continuumtest.bot.bucket.eif }}'
+    bucket_cdn = '{{ pillar.alfred.continuumtest.bot.bucket.cdn }}'
+    website_host = '{{ pillar.alfred.continuumtest.website.host }}'
+    website_user = '{{ pillar.alfred.continuumtest.website.user }}'
+    website_password = '{{ pillar.alfred.continuumtest.website.password }}'
+    dashboard_host = '{{ pillar.alfred.continuumtest.dashboard.host }}'
+    dashboard_user = '{{ pillar.alfred.continuumtest.dashboard.user }}'
+    dashboard_password = '{{ pillar.alfred.continuumtest.dashboard.password }}'
+    lax_host = '{{ pillar.alfred.continuumtest.lax.host }}'
+    api_gateway_host = '{{ pillar.alfred.continuumtest.api_gateway.host }}'
+    region_name = '{{ pillar.alfred.continuumtest.aws.region }}'
+
+def get_settings(env):
     """
     Return the settings class based on the environment type provided,
     by default use the end2end environment settings
     """
-    return eval(ENV)
+    return eval(env)
