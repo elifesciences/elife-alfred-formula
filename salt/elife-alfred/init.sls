@@ -181,9 +181,11 @@ jenkins-sudo-commands:
     file.append:
         - name: /etc/sudoers
         - text:
+            - "Defaults    env_keep+=SPECTRUM_ENVIRONMENT"
             - "jenkins    ALL=(ALL)    NOPASSWD: /usr/local/old-builder-scripts/"
             - "jenkins    ALL=(ALL)    NOPASSWD: /usr/local/builder-scripts/"
             - "jenkins    ALL=(ALL)    NOPASSWD: /srv/elife-spectrum/execute.sh"
+            - "jenkins    ALL=(ALL)    NOPASSWD: /srv/elife-spectrum/execute-simplest-possible-test.sh"
 
 jenkins-slave-node-for-end2end-tests-folder:
     file.directory:
