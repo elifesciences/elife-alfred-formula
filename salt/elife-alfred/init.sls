@@ -8,6 +8,10 @@ format-external-volume:
             # volume exists and is already formatted
             - file --special-files /dev/xvdh | grep ext4
 
+mount-point-external-volume:
+    file.directory:
+        - name: /ext
+
 mount-external-volume:
     mount.mounted:
         - name: /ext
@@ -17,7 +21,8 @@ mount-external-volume:
         - opts:
             - defaults
         - require:
-            - cmd: format-external-volume
+            - format-external-volume
+            - mount-point-external-volume
         - onlyif:
             # disk exists
             - test -b /dev/xvdh
@@ -25,13 +30,63 @@ mount-external-volume:
             # mount point already has a volume mounted
             - cat /proc/mounts | grep --quiet --no-messages /ext/
 
-# for Vagrant support
-fake-external-volume:
+
+srv-directory:
     file.directory:
-        - name: /ext
+        - name: /ext/srv
+        - require:
+            - mount-external-volume
+
+srv-directory-linked:
+    cmd.run:
+        - name: mv /srv/* /ext/srv
         - onlyif:
-            # disk does not exist
-            - test ! -b /dev/xvdh
+            - test ! -L /srv
+        - require:
+            - srv-directory
+
+    file.symlink:
+        - name: /srv
+        - target: /ext/srv
+        - force: True
+        - require:
+            - cmd: srv-directory-linked
+
+jenkins-home-directory:
+    file.directory:
+        - name: /ext/jenkins
+        - require:
+            - mount-external-volume
+
+jenkins-home-directory-linked:
+    cmd.run:
+        - name: mv /var/lib/jenkins/* /ext/jenkins
+        - onlyif:
+            - test -e /var/lib/jenkins && test ! -L /var/lib/jenkins
+        - require:
+            - jenkins-home-directory
+
+    file.symlink:
+        - name: /var/lib/jenkins
+        - target: /ext/jenkins
+        - force: True
+        - require:
+            - cmd: jenkins-home-directory-linked
+
+jenkins-home-directory-ownership:
+    user.present: 
+        - name: jenkins
+        - home: /var/lib/jenkins
+        - fullname: Jenkins
+        - shell: /bin/bash
+        - groups:
+            - jenkins
+
+    file.directory:
+        - name: /ext/jenkins
+        - user: jenkins
+        - group: jenkins
+        - mode: 755
 
 jenkins:
     pkgrepo.managed:
@@ -40,8 +95,10 @@ jenkins:
         - file: /etc/apt/sources.list.d/jenkins.list
 
     pkg.latest:
+        - name: jenkins
         - refresh: True
         - require:
+            - jenkins-home-directory-ownership
             - pkgrepo: jenkins
             - pkg: openjdk7-jre
 
