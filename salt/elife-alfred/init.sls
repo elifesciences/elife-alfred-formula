@@ -1,3 +1,30 @@
+format-external-volume:
+    cmd.run: 
+        - name: mkfs -t ext4 /dev/xvdh
+        - onlyif:
+            # disk exists
+            - test -b /dev/xvdh
+        - unless:
+            # volume exists and is already formatted
+            - file --special-files /dev/xvdh | grep ext4
+
+mount-external-volume:
+    mount.mounted:
+        - name: /ext
+        - device: /dev/xvdh
+        - fstype: ext4
+        - mkmnt: True
+        - opts:
+            - defaults
+        - require:
+            - cmd: format-external-volume
+        - onlyif:
+            # disk exists
+            - test -b /dev/xvdh
+        - unless:
+            # mount point already has a volume mounted
+            - cat /proc/mounts | grep --quiet --no-messages /ext/
+
 jenkins:
     pkgrepo.managed:
         - name: deb http://pkg.jenkins-ci.org/debian binary/ # !trailing slash is important
