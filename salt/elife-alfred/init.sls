@@ -25,6 +25,14 @@ mount-external-volume:
             # mount point already has a volume mounted
             - cat /proc/mounts | grep --quiet --no-messages /ext/
 
+# for Vagrant support
+fake-external-volume:
+    file.directory:
+        - name: /ext
+        - onlyif:
+            # disk does not exist
+            - test ! -b /dev/xvdh
+
 jenkins:
     pkgrepo.managed:
         - name: deb http://pkg.jenkins-ci.org/debian binary/ # !trailing slash is important
