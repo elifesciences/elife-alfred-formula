@@ -88,8 +88,6 @@ Under the covers Jenkins is delegating the deployment of projects and their test
 
 - `/srv/builder` is the modern, open sourced builder.
 - `/usr/local/jenkins-scripts` contains miscellaneous scripts like `verifyjunitxml.py` that can be run without external dependencies. Nothing very interesting.
-- `/opt/elife-builder` is the old, closed source builder.
-- `/usr/local/old-builder-scripts` is a set of scripts that wrap the old builder to provide isolated access to tasks like `cmd`, but not to `aws_delete_stack` and other sensitive operations.
 
 ## Project conventions
 
