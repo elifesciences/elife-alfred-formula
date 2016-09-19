@@ -21,6 +21,8 @@ alfred:
             host: null
         api_gateway:
             host: 'http://end2end--gateway.elifesciences.org'
+        journal:
+            host: 'http://end2end--journal.elifesciences.org'
     continuumtest:
         aws:
             access_key_id: null

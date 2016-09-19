@@ -25,6 +25,7 @@ class end2end():
     dashboard_password = '{{ pillar.alfred.end2end.dashboard.password }}'
     lax_host = '{{ pillar.alfred.end2end.lax.host }}'
     api_gateway_host = '{{ pillar.alfred.end2end.api_gateway.host }}'
+    journal_host = '{{ pillar.alfred.end2end.journal.host }}'
     region_name = '{{ pillar.alfred.end2end.aws.region }}'
 
 class continuumtest():
@@ -41,6 +42,7 @@ class continuumtest():
     dashboard_password = '{{ pillar.alfred.continuumtest.dashboard.password }}'
     lax_host = '{{ pillar.alfred.continuumtest.lax.host }}'
     api_gateway_host = '{{ pillar.alfred.continuumtest.api_gateway.host }}'
+    journal_host = None
     region_name = '{{ pillar.alfred.continuumtest.aws.region }}'
 
 def get_settings(env):
