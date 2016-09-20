@@ -270,3 +270,6 @@ jenkins-workspaces-cleanup-cron:
         - identifier: jenkins-workspaces-cleanup-cron
         - hour: 5
         - minute: 0
+
+siege:
+    pkg.installed
