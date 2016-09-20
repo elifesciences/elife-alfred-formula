@@ -273,3 +273,8 @@ jenkins-workspaces-cleanup-cron:
 
 siege:
     pkg.installed
+
+siege-log-file:
+    file.managed:
+        - name: /var/log/siege.log
+        - mode: 666
