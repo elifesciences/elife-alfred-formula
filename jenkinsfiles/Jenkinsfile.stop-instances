@@ -1,12 +1,12 @@
 def stopAll(stacks) {
-    def actions = []
+    def actions = [:]
     for (int i = 0; i < stacks.size(); i++) {
         def stack = stacks.get(i)
-        actions.add({
+        actions[stack] = {
             lock(stack) {
                 builderStopIfNextHourIsImminent(stack)
             }
-        })
+        }
     }
     parallel actions
 }
