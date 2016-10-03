@@ -1,6 +1,21 @@
+def stopAll(stacks) {
+    for (int i = 0; i < stacks.size(); i++) {
+        def stack = stacks.get(i)
+        lock(stack) {
+            builderStopIfNextHourIsImminent(stack)
+        }
+    }
+}
+
 elifePipeline {
-    stage 'Ci'
-    lock('medium--ci') {
-        builderStopIfNextHourIsImminent('medium--ci')
+    def ciStacks = ['medium--ci']
+    def end2endStacks = ['medium--end2end']
+
+    stage 'Ci', {
+        stopAll(ciStacks)
+    }
+
+    stage 'End2end', {
+        stopAll(end2endStacks)
     }
 }
