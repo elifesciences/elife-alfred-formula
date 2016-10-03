@@ -234,11 +234,8 @@ jenkins-sudo-commands:
             - "jenkins    ALL=(ALL)    NOPASSWD: /srv/elife-spectrum/execute-simplest-possible-test.sh"
 
 jenkins-slave-node-for-end2end-tests-folder:
-    file.directory:
+    file.absent:
         - name: /var/lib/jenkins-end2end-runner
-        - user: jenkins
-        - group: jenkins
-        - dir_mode: 755
 
 # Jenkins plugin backs up here 
 jenkins-thin-backup-plugin-target:
