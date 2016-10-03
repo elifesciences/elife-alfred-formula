@@ -1,14 +1,18 @@
 def stopAll(stacks) {
+    def actions = []
     for (int i = 0; i < stacks.size(); i++) {
         def stack = stacks.get(i)
-        lock(stack) {
-            builderStopIfNextHourIsImminent(stack)
-        }
+        actions.add({
+            lock(stack) {
+                builderStopIfNextHourIsImminent(stack)
+            }
+        })
     }
+    parallel actions
 }
 
 elifePipeline {
-    def ciStacks = ['medium--ci']
+    def ciStacks = ['medium--ci', 'pattern-library--ci']
     def end2endStacks = ['medium--end2end']
 
     stage 'Ci', {
