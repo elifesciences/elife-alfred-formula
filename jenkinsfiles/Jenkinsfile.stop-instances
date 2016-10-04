@@ -7,6 +7,8 @@ elifePipeline {
     }
 
     stage 'End2end', {
-        builderStopAll(end2endStacks, 'end2end')
+        lock ('end2end') {
+            builderStopAll(end2endStacks)
+        }
     }
 }
