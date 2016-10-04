@@ -7,6 +7,6 @@ elifePipeline {
     }
 
     stage 'End2end', {
-        builderStopAll(end2endStacks)
+        builderStopAll(end2endStacks, 'end2end')
     }
 }
