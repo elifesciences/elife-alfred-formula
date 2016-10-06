@@ -112,7 +112,8 @@ jenkins:
     file.replace:
         - name: /etc/default/jenkins
         - pattern: '^JAVA_ARGS=".*"'
-        - repl: 'JAVA_ARGS="-Djava.awt.headless=true -Duser.timezone=Europe/London"'
+        # default PermSize seems to be 20.75MB on a t2.medium
+        - repl: 'JAVA_ARGS="-Djava.awt.headless=true -Duser.timezone=Europe/London XX:MaxPermSize=64m"'
 
 jenkins-user-and-group:
     cmd.run:
@@ -267,6 +268,11 @@ jenkins-workspaces-cleanup-cron:
         - identifier: jenkins-workspaces-cleanup-cron
         - hour: 5
         - minute: 0
+
+jenkins-diagnostic-tools:
+    pkg.installed:
+        - pkgs:
+            - openjdk-7-jdk
 
 siege:
     pkg.installed
