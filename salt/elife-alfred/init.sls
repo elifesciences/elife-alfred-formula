@@ -121,6 +121,21 @@ jenkins-user-and-group:
         - require:
             - jenkins
 
+# ah, Java...
+# probably because of some builds running every 2 minutes, Jenkins suffers
+# from a memory leak that brings to a `java.lang.OutOfMemoryError: PermGen space`
+# after several days of running it continuously.
+# Therefore, restart every night while no one is using it to ensure the JVM
+# gets a new object graph from scratch
+jenkins-periodical-restart:
+    cron.present:
+        - identifier: jenkins-periodical-restart
+        - name: /etc/init.d/jenkins restart
+        - minute: 0
+        - hour: 4
+        - require:
+            - jenkins
+
 reverse-proxy:
     file.managed:
         - name: /etc/nginx/sites-enabled/jenkins.conf
