@@ -244,7 +244,8 @@ jenkins-sudo-commands:
     file.append:
         - name: /etc/sudoers
         - text:
-            - "Defaults    env_keep+=SPECTRUM_ENVIRONMENT SPECTRUM_PROCESSES"
+            - "Defaults    env_keep+=SPECTRUM_ENVIRONMENT"
+            - "Defaults    env_keep+=SPECTRUM_PROCESSES"
             - "jenkins    ALL=(ALL)    NOPASSWD: /usr/local/builder-scripts/"
             - "jenkins    ALL=(ALL)    NOPASSWD: /srv/elife-spectrum/execute.sh"
             - "jenkins    ALL=(ALL)    NOPASSWD: /srv/elife-spectrum/execute-simplest-possible-test.sh"
