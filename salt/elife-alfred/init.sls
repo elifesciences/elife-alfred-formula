@@ -112,8 +112,8 @@ jenkins:
     file.replace:
         - name: /etc/default/jenkins
         - pattern: '^JAVA_ARGS=".*"'
-        # default PermSize seems to be 20.75MB on a t2.medium
-        - repl: 'JAVA_ARGS="-Djava.awt.headless=true -Duser.timezone=Europe/London -XX:MaxPermSize=256m"'
+        # default PermSize seems to be 166MB on a t2.medium
+        - repl: 'JAVA_ARGS="-Djava.awt.headless=true -Duser.timezone=Europe/London -XX:MaxPermSize=256m -Djenkins.branch.WorkspaceLocatorImpl.PATH_MAX=30"'
 
 jenkins-user-and-group:
     cmd.run:
