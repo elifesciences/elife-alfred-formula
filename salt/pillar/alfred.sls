@@ -9,6 +9,7 @@ alfred:
                 input: null
                 eif: null
                 cdn: null
+                archive: null
         website:
             host: null
             user: null
@@ -33,6 +34,7 @@ alfred:
                 input: null
                 eif: null
                 cdn: null
+                archive: null
         website:
             host: null
             user: null
