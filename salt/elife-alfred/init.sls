@@ -94,8 +94,10 @@ jenkins:
         - key_url: http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key
         - file: /etc/apt/sources.list.d/jenkins.list
 
-    pkg.latest:
+    pkg.installed:
         - name: jenkins
+        # pinning because 2.29 broke all outputs
+        - version: 2.28
         - refresh: True
         - require:
             - jenkins-home-directory-ownership
