@@ -10,6 +10,8 @@ alfred:
                 eif: null
                 cdn: null
                 archive: null
+            queue:
+                workflow_starter: null
         website:
             host: null
             user: null
@@ -35,6 +37,8 @@ alfred:
                 eif: null
                 cdn: null
                 archive: null
+            queue:
+                workflow_starter: null
         website:
             host: null
             user: null
