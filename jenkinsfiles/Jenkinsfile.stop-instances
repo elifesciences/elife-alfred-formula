@@ -1,16 +1,28 @@
+import org.jenkinsci.plugins.workflow.steps.FlowInterruptedException
+
 elifePipeline {
     def ciStacks = elifeCiStacks()
     def end2endStacks = elifeEnd2endStacks()
 
-    //timeout(time:60, unit:'SECONDS') {
-        stage 'Ci', {
-            builderStopAll(ciStacks)
-        }
-
-        stage 'End2end', {
-            lock ('end2end') {
-                builderStopAll(end2endStacks)
+    try {
+        timeout(time:60, unit:'SECONDS') {
+            stage 'Ci', {
+                builderStopAll(ciStacks)
             }
         }
-    //}
+    } catch (FlowInterruptedException e) {
+        echo "Spent enough time on --ci stacks"
+    }
+
+    try {
+        timeout(time:60, unit:'SECONDS') {
+            stage 'End2end', {
+                lock ('end2end') {
+                    builderStopAll(end2endStacks)
+                }
+            }
+        }
+    } catch (FlowInterruptedException e) {
+        echo "Spent enough time on --end2end stacks"
+    }
 }
