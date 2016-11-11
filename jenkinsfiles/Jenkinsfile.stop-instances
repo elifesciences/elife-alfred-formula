@@ -10,8 +10,9 @@ elifePipeline {
                 builderStopAll(ciStacks)
             }
         }
-    } catch (FlowInterruptedException e) {
+    } catch (e) {
         echo "Spent enough time on --ci stacks"
+        echo e.toString()
     }
 
     try {
@@ -22,7 +23,8 @@ elifePipeline {
                 }
             }
         }
-    } catch (FlowInterruptedException e) {
+    } catch (e) {
         echo "Spent enough time on --end2end stacks"
+        echo e.toString()
     }
 }
