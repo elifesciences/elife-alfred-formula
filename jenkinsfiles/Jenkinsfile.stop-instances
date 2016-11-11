@@ -2,7 +2,7 @@ elifePipeline {
     def ciStacks = elifeCiStacks()
     def end2endStacks = elifeEnd2endStacks()
 
-    timeout(time:60, unit:'SECONDS') {
+    //timeout(time:60, unit:'SECONDS') {
         stage 'Ci', {
             builderStopAll(ciStacks)
         }
@@ -12,5 +12,5 @@ elifePipeline {
                 builderStopAll(end2endStacks)
             }
         }
-    }
+    //}
 }
