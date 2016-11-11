@@ -1,5 +1,3 @@
-import org.jenkinsci.plugins.workflow.steps.FlowInterruptedException
-
 elifePipeline {
     def ciStacks = elifeCiStacks()
     def end2endStacks = elifeEnd2endStacks()
@@ -10,7 +8,7 @@ elifePipeline {
                 builderStopAll(ciStacks)
             }
         }
-    } catch (e) {
+    } catch (org.jenkinsci.plugins.workflow.steps.FlowInterruptedException e) {
         echo "Spent enough time on --ci stacks"
         echo e.toString()
     }
@@ -23,7 +21,7 @@ elifePipeline {
                 }
             }
         }
-    } catch (e) {
+    } catch (org.jenkinsci.plugins.workflow.steps.FlowInterruptedException e) {
         echo "Spent enough time on --end2end stacks"
         echo e.toString()
     }
