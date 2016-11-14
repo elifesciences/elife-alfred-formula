@@ -284,6 +284,13 @@ jenkins-diagnostic-tools:
         - pkgs:
             - openjdk-7-jdk
 
+jenkins-cli:
+    cmd.run:
+        - name: wget -O /usr/local/bin/jenkins-cli.jar http://localhost/jnlpJars/jenkins-cli.jar
+        - require:
+            - jenkins
+    
+
 siege:
     pkg.installed
 
