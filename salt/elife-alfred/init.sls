@@ -289,6 +289,14 @@ jenkins-cli:
         - name: wget -O /usr/local/bin/jenkins-cli.jar http://localhost/jnlpJars/jenkins-cli.jar
         - require:
             - jenkins
+
+    file.managed:
+        - name: /usr/local/bin/jenkins-cli
+        - source: salt://elife-alfred/config/usr-local-bin-jenkins-cli
+        - template: jinja
+        - mode: 755
+        - require:
+            - cmd: jenkins-cli
     
 
 siege:
