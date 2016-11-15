@@ -1,3 +1,6 @@
+// all stopping commands use timeouts as there may be a lock on them representing a build running,
+// which would lead to this build being unable to progress
+// they also act on nodes in the same environment in parallel (all `ciStacks` for example)
 elifePipeline {
     def ciStacks = elifeCiStacks()
     def end2endStacks = elifeEnd2endStacks()
@@ -30,7 +33,7 @@ elifePipeline {
     try {
         timeout(time:60, unit:'SECONDS') {
             stage 'Jenkins slaves', {
-                builderStopAll(slavesStacks)
+                builderStopAll(slaveStacks)
             }
         }
     } catch (org.jenkinsci.plugins.workflow.steps.FlowInterruptedException e) {
