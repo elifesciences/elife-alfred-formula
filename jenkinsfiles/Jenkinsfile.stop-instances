@@ -1,6 +1,7 @@
 elifePipeline {
     def ciStacks = elifeCiStacks()
     def end2endStacks = elifeEnd2endStacks()
+    def slaveStacks = elifeSlaveStacks()
 
     try {
         timeout(time:60, unit:'SECONDS') {
@@ -23,6 +24,17 @@ elifePipeline {
         }
     } catch (org.jenkinsci.plugins.workflow.steps.FlowInterruptedException e) {
         echo "Spent enough time on --end2end stacks"
+        echo e.toString()
+    }
+
+    try {
+        timeout(time:60, unit:'SECONDS') {
+            stage 'Jenkins slaves', {
+                builderStopAll(slavesStacks)
+            }
+        }
+    } catch (org.jenkinsci.plugins.workflow.steps.FlowInterruptedException e) {
+        echo "Spent enough time on slave stacks"
         echo e.toString()
     }
 }
