@@ -26,6 +26,8 @@ alfred:
             host: 'http://end2end--gateway.elifesciences.org'
         journal:
             host: 'http://end2end--journal.elifesciences.org'
+        github:
+            article_xml_repository_url: null
     continuumtest:
         aws:
             access_key_id: null
@@ -51,6 +53,8 @@ alfred:
             host: null
         api_gateway:
             host: null
+        github:
+            article_xml_repository_url: null
     builder:
         aws:
             access_key_id: null

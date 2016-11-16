@@ -29,6 +29,7 @@ class end2end():
     api_gateway_host = '{{ pillar.alfred.end2end.api_gateway.host }}'
     journal_host = '{{ pillar.alfred.end2end.journal.host }}'
     region_name = '{{ pillar.alfred.end2end.aws.region }}'
+    github_article_xml_repository_url = '{{ pillar.alfred.end2end.github.article_xml_repository_url }}'
 
 class continuumtest():
     aws_access_key_id = '{{ pillar.alfred.continuumtest.aws.access_key_id }}'
@@ -48,6 +49,8 @@ class continuumtest():
     api_gateway_host = '{{ pillar.alfred.continuumtest.api_gateway.host }}'
     journal_host = None
     region_name = '{{ pillar.alfred.continuumtest.aws.region }}'
+    github_article_xml_repository_url = None
+
 
 def get_settings(env):
     """
