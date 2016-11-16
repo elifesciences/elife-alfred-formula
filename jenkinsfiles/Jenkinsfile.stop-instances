@@ -7,7 +7,7 @@ elifePipeline {
     def slaveStacks = elifeSlaveStacks()
 
     try {
-        timeout(time:60, unit:'SECONDS') {
+        timeout(time:120, unit:'SECONDS') {
             stage 'Ci', {
                 builderStopAll(ciStacks)
             }
@@ -18,7 +18,7 @@ elifePipeline {
     }
 
     try {
-        timeout(time:60, unit:'SECONDS') {
+        timeout(time:120, unit:'SECONDS') {
             stage 'End2end', {
                 lock ('end2end') {
                     builderStopAll(end2endStacks)
@@ -31,7 +31,7 @@ elifePipeline {
     }
 
     try {
-        timeout(time:60, unit:'SECONDS') {
+        timeout(time:120, unit:'SECONDS') {
             stage 'Jenkins slaves', {
                 builderStopAll(slaveStacks)
             }
