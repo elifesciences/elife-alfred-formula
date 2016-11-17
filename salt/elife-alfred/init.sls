@@ -288,7 +288,10 @@ jenkins-cli:
         - name: wget -O /usr/local/bin/jenkins-cli.jar http://localhost/jnlpJars/jenkins-cli.jar
         - require:
             - jenkins
+        - unless:
+            - test -e /usr/local/bin/jenkins-cli.jar
 
+    # wrapper script for the .jar
     file.managed:
         - name: /usr/local/bin/jenkins-cli
         - source: salt://elife-alfred/config/usr-local-bin-jenkins-cli
