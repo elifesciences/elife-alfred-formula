@@ -289,7 +289,7 @@ jenkins-cli:
         - require:
             - jenkins
         - unless:
-            - test -e /usr/local/bin/jenkins-cli.jar
+            - java -jar /usr/local/bin/jenkins-cli.jar
 
     # wrapper script for the .jar
     file.managed:
