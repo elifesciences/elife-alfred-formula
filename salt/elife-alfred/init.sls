@@ -289,7 +289,9 @@ jenkins-cli:
         - require:
             - jenkins
         - unless:
-            - java -jar /usr/local/bin/jenkins-cli.jar
+            - test -e /usr/local/bin/jenkins-cli.jar
+            - test -s /usr/local/bin/jenkins-cli.jar
+            - jar tvf /usr/local/bin/jenkins-cli.jar
 
     # wrapper script for the .jar
     file.managed:
@@ -299,7 +301,13 @@ jenkins-cli:
         - mode: 755
         - require:
             - cmd: jenkins-cli
-    
+
+jenkins-cli-validation:    
+    cmd.run:
+        - name: /usr/local/bin/jenkins-cli
+        - user: jenkins
+        - require:
+            - jenkins-cli
 
 siege:
     pkg.installed
