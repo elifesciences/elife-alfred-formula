@@ -96,8 +96,7 @@ jenkins:
 
     pkg.installed:
         - name: jenkins
-        # pinning because 2.29 broke all outputs
-        - version: 2.28
+        - version: 2.32
         - refresh: True
         - require:
             - jenkins-home-directory-ownership
