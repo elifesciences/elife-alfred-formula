@@ -209,13 +209,18 @@ builder-project:
         - require:
             - builder: builder-project
 
+builder-update:
+    file.touch:
+        - name: /srv/builder/.no-delete-venv.flag
+
     cmd.run:
         - name: ./update.sh --exclude virtualbox vagrant
         - cwd: /srv/builder
         - user: jenkins
         - require:
-            - file: builder-project
-            - file: builder-project-aws-credentials
+            - builder-project
+            - builder-project-aws-credentials
+            - file: builder-update
 
 builder-settings:
     file.managed:
@@ -224,7 +229,8 @@ builder-settings:
         - user: jenkins
         - group: jenkins
         - require:
-            - cmd: builder-project
+            - builder-project
+            - builder-update
 
 # jenkins customizations
 alfred-assets:
