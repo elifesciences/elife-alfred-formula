@@ -74,6 +74,10 @@ jenkins-home-directory-linked:
             - cmd: jenkins-home-directory-linked
 
 jenkins-home-directory-ownership:
+    group.present:
+        - name: jenkins
+        - system: True
+    
     user.present: 
         - name: jenkins
         - home: /var/lib/jenkins
@@ -81,6 +85,8 @@ jenkins-home-directory-ownership:
         - shell: /bin/bash
         - groups:
             - jenkins
+        - require:
+            - group: jenkins-home-directory-ownership
 
     file.directory:
         - name: /ext/jenkins
@@ -88,33 +94,39 @@ jenkins-home-directory-ownership:
         - group: jenkins
         - mode: 755
 
-jenkins:
-    pkgrepo.managed:
-        - name: deb http://pkg.jenkins-ci.org/debian binary/ # !trailing slash is important
-        - key_url: http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key
-        - file: /etc/apt/sources.list.d/jenkins.list
+{% set deb_filename = 'jenkins_2.32_all.deb' %}
+# the apt repository does not allow us to pin the version:
+# https://issues.jenkins-ci.org/browse/INFRA-92
+jenkins-download:
+    cmd.run:
+        - name: |
+            wget http://pkg.jenkins-ci.org/debian/binary/{{ deb_filename }}
+        - unless:
+            - test -e {{ deb_filename }}
+            - test -s {{ deb_filename }}
 
-    pkg.installed:
-        - name: jenkins
-        - version: 2.32
-        - refresh: True
+jenkins:
+    cmd.run:
+        - name: dpkg -i {{ deb_filename }}
         - require:
             - jenkins-home-directory-ownership
-            - pkgrepo: jenkins
-            - pkg: openjdk7-jre
+            - jenkins-download
+            - pkg: oracle-java8-installer
 
     service.running:
         - enable: True
         - watch:
             - file: /etc/default/jenkins
         - require:
-            - pkg: jenkins
+            - cmd: jenkins
 
     file.replace:
         - name: /etc/default/jenkins
         - pattern: '^JAVA_ARGS=".*"'
         # default PermSize seems to be 166MB on a t2.medium
         - repl: 'JAVA_ARGS="-Djava.awt.headless=true -Duser.timezone=Europe/London -XX:MaxPermSize=256m -Djenkins.branch.WorkspaceLocatorImpl.PATH_MAX=30"'
+        - require: 
+            - cmd: jenkins
 
 jenkins-user-and-group:
     cmd.run:
@@ -161,7 +173,7 @@ jenkins-ssh:
         - dir_mode: 750
         - makedirs: True
         - require:
-            - pkg: jenkins
+            - jenkins
 
 add-alfred-key-to-jenkins-home:
     file.managed:
@@ -178,7 +190,7 @@ add-jenkins-gitconfig:
         - source: salt://elife-alfred/config/var-lib-jenkins-.gitconfig
         - mode: 664
         - require:
-            - pkg: jenkins
+            - jenkins
 
 builder-project-aws-credentials:
     file.managed:
@@ -188,6 +200,8 @@ builder-project-aws-credentials:
         - user: jenkins
         - group: jenkins
         - makedirs: True
+        - require:
+            - jenkins
 
 builder-project:
     builder.git_latest:
@@ -198,6 +212,8 @@ builder-project:
         - force_fetch: True
         - force_reset: True
         - target: /srv/builder
+        - require:
+            - builder-project-aws-credentials
 
     file.directory:
         - name: /srv/builder
@@ -260,6 +276,8 @@ jenkins-thin-backup-plugin-target:
         - user: jenkins
         - group: jenkins
         - dir_mode: 755
+        - require:
+            - jenkins
 
 # UBR transports the local backup to a durable destination like S3
 jenkins-ubr-backup:
@@ -283,6 +301,8 @@ jenkins-workspaces-cleanup-cron:
         - identifier: jenkins-workspaces-cleanup-cron
         - hour: 5
         - minute: 0
+        - require:
+            - jenkins
 
 jenkins-diagnostic-tools:
     pkg.installed:

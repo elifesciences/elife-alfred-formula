@@ -2,7 +2,7 @@ base:
     '*':
         - elife
         - elife.swapspace
-        - elife.java
+        - elife.java8
         - elife.nginx
         - elife-alfred
         - elife-alfred.spectrum
