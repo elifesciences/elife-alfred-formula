@@ -328,12 +328,15 @@ jenkins-cli:
         - require:
             - cmd: jenkins-cli
 
-jenkins-cli-validation:    
-    cmd.run:
-        - name: /usr/local/bin/jenkins-cli
-        - user: jenkins
-        - require:
-            - jenkins-cli
+# this requires a configured Jenkins, not one out of the box
+# Go to 'Manage Jenkins' > 'Configure Global Security'.
+# For 'TCP port for JNLP agents' select 'Fixed' and specify a port to use.
+#jenkins-cli-validation:    
+#    cmd.run:
+#        - name: /usr/local/bin/jenkins-cli
+#        - user: jenkins
+#        - require:
+#            - jenkins-cli
 
 siege:
     pkg.installed
