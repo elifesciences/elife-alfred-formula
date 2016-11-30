@@ -207,7 +207,7 @@ builder-project:
     builder.git_latest:
         - name: ssh://git@github.com/elifesciences/builder.git
         - identity: {{ pillar.elife.projects_builder.key or '' }}
-        - rev: newrelic
+        - rev: master
         - force: True
         - force_fetch: True
         - force_reset: True
