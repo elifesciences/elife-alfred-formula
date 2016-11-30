@@ -4,7 +4,7 @@ newrelic-builder-license-configuration:
     cmd.run:
         - name: venv/bin/newrelic-admin generate-config {{ pillar.elife.newrelic.license }} newrelic.ini
         - cwd: /srv/builder
-        - user: {{ pillar.elife.deploy_user.username }}
+        - user: jenkins
         - require: 
             - builder-update
 
