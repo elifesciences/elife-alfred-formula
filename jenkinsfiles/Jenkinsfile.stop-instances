@@ -32,12 +32,12 @@ elifePipeline {
 
     try {
         timeout(time:120, unit:'SECONDS') {
-            stage 'Jenkins slaves', {
-                builderStopAll(slaveStacks)
+            stage 'Rest of stacks', {
+                builderStopAll(restOfStacks)
             }
         }
     } catch (org.jenkinsci.plugins.workflow.steps.FlowInterruptedException e) {
-        echo "Spent enough time on slave stacks"
+        echo "Spent enough time on rest of stacks"
         echo e.toString()
     }
 }
