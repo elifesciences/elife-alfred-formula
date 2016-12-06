@@ -112,6 +112,8 @@ jenkins:
             - jenkins-home-directory-ownership
             - jenkins-download
             - pkg: oracle-java8-installer
+        - unless:
+            - test $(dpkg-query --showformat='${Version}' --show jenkins) == "2.32"
 
     service.running:
         - enable: True
