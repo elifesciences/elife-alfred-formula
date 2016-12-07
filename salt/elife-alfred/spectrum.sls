@@ -28,6 +28,10 @@ spectrum-project:
         - require:
             - builder: spectrum-project
             - pkg: spectrum-project
+        - onchanges:
+            - builder: spectrum-project
+            - file: spectrum-project
+            - pkg: spectrum-project
 
 spectrum-log-directory:
     file.directory:
