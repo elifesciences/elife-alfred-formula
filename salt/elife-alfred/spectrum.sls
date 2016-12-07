@@ -28,7 +28,7 @@ spectrum-project:
         - require:
             - builder: spectrum-project
             - pkg: spectrum-project
-        - onchanges:
+        - onchanges_in:
             - builder: spectrum-project
             - file: spectrum-project
             - pkg: spectrum-project
