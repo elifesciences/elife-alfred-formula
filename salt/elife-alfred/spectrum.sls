@@ -25,9 +25,9 @@ spectrum-project:
         - name: ./install.sh
         - user: {{ pillar.elife.deploy_user.username }}
         - cwd: /srv/elife-spectrum
-        - require:
-            - builder: spectrum-project
-            - pkg: spectrum-project
+        #- require:
+        #    - builder: spectrum-project
+        #    - pkg: spectrum-project
         - onchanges_in:
             - builder: spectrum-project
             - file: spectrum-project
