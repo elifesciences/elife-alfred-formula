@@ -7,8 +7,8 @@ spectrum-project:
         - force_clone: True
         - force_reset: True
         - target: /srv/elife-spectrum
-        - onchanges:
-            - cmd: spectrum-project
+        #- onchanges:
+        #    - cmd: spectrum-project
 
     file.directory:
         - name: /srv/elife-spectrum
@@ -29,6 +29,7 @@ spectrum-project:
         - cwd: /srv/elife-spectrum
         - require:
             - builder: spectrum-project
+            - file: spectrum-project
             - pkg: spectrum-project
 
 spectrum-log-directory:
