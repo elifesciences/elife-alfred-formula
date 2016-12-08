@@ -10,6 +10,8 @@ alfred:
                 eif: null
                 cdn: null
                 archive: null
+                published: null
+                silent_corrections: null
             queue:
                 workflow_starter: null
         website:
@@ -39,6 +41,8 @@ alfred:
                 eif: null
                 cdn: null
                 archive: null
+                published: null
+                silent_corrections: null
             queue:
                 workflow_starter: null
         website:
