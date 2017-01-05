@@ -100,7 +100,9 @@ jenkins-home-directory-ownership:
 jenkins-download:
     cmd.run:
         - name: |
-            wget http://pkg.jenkins-ci.org/debian/binary/{{ deb_filename }}
+            wget https://pkg.jenkins.io/debian-stable/binary/{{ deb_filename }}
+            # for non-LTS versions:
+            #wget http://pkg.jenkins-ci.org/debian/binary/{{ deb_filename }}
         - unless:
             - test -e {{ deb_filename }}
             - test -s {{ deb_filename }}
