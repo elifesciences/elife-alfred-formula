@@ -94,7 +94,7 @@ jenkins-home-directory-ownership:
         - group: jenkins
         - mode: 755
 
-{% set deb_filename = 'jenkins_2.32_all.deb' %}
+{% set deb_filename = 'jenkins_2.32.1_all.deb' %}
 # the apt repository does not allow us to pin the version:
 # https://issues.jenkins-ci.org/browse/INFRA-92
 jenkins-download:
@@ -113,7 +113,7 @@ jenkins:
             - jenkins-download
             - pkg: oracle-java8-installer
         - unless:
-            - test $(dpkg-query --showformat='${Version}' --show jenkins) == "2.32"
+            - test $(dpkg-query --showformat='${Version}' --show jenkins) == "2.32.1"
 
     service.running:
         - enable: True
