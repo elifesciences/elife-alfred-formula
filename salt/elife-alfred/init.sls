@@ -110,7 +110,6 @@ jenkins-download:
 jenkins:
     cmd.run:
         # configuration will be tweaked by file.replace state
-        # DEBIAN_FRONTEND=noninteractive
         - name: dpkg --force-confnew -i {{ deb_filename }}
         - require:
             - jenkins-home-directory-ownership
