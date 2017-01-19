@@ -62,9 +62,10 @@ All the `elife*` and `builder*` elements in the pipeline definition are provided
 ### Pipelines
 
 - `test-*` pipelines bring a project from `develop` to `approved` if it passed all specified tests.
-- `production-*` pipelines bring a project from `approved` to `master` and deploy it.
+- `prod-*` pipelines bring a project from `approved` to `master` and deploy it.
 - `library-*` pipelines builds the `master` of libraries, which have no standalone deploy. Sometimes libraries are deployed on servers in their `master` versions, so in that case their pipelines build the `develop` branch and merge it to `master` once it passes the tests.
-- `Pull Requests (*)` folders contain one subfolder per-project. They build the branches of pull requests to the official repositories (no forks) according to their Jenkinsfile.
+- `process-*` pipelines perform a custom periodical task, behaving like a cron on steroids.
+- `Pull Requests (*)` folders contain one subfolder per-project or per-library. They build the branches of pull requests to the official repositories according to their Jenkinsfile.
 
 Not all the projects are in `Pull requests`: they have to be whitelisted in its configurations. Libraries are easily supported, as their builds are stateless and parallelizable; projects instead need the pipeline to take a `lock` step over the `ci` machine being used.
 
