@@ -1,3 +1,27 @@
+# git extension for managing large files like .tif images
+git-lfs:
+    cmd.run:
+        - name: curl -L https://packagecloud.io/github/git-lfs/gpgkey | sudo apt-key add -
+        - unless:
+            - apt-key list | grep D59097AB
+
+    # https://packagecloud.io/github/git-lfs/install#manual
+    pkgrepo.managed:
+        - humanname: packagecloud
+        - name: deb https://packagecloud.io/github/git-lfs/ubuntu/ trusty main
+        - file: /etc/apt/sources.list.d/github_git-lfs.list
+        - require:
+            - cmd: git-lfs-repo
+        - unless:
+            - test -e /etc/apt/sources.list.d/github_git-lfs.list
+
+    pkg.install:
+        - name: git-lfs
+        - refresh: True
+        - require:
+            - pkgrepo: git-lfs
+
+# repository of end2end tests
 spectrum-project:
     builder.git_latest:
         - name: ssh://git@github.com/elifesciences/elife-spectrum.git
@@ -10,27 +34,31 @@ spectrum-project:
         #- onchanges:
         #    - cmd: spectrum-project
 
+    cmd.run:
+        - name: git lfs install
+        - require:
+            - builder: spectrum-project
+
     file.directory:
         - name: /srv/elife-spectrum
         - user: {{ pillar.elife.deploy_user.username }}
         - recurse:
             - user
         - require:
-            - builder: spectrum-project
+            - cmd: spectrum-project
 
     # provides xmllint for beautifying imported XML
     pkg.installed:
         - pkgs:
           - libxml2-utils
 
+spectrum-project-install:
     cmd.run:
         - name: ./install.sh
         - user: {{ pillar.elife.deploy_user.username }}
         - cwd: /srv/elife-spectrum
         - require:
-            - builder: spectrum-project
-            - file: spectrum-project
-            - pkg: spectrum-project
+            - spectrum-project
 
 spectrum-log-directory:
     file.directory:
@@ -55,4 +83,4 @@ spectrum-settings:
         - template: jinja
         - user: {{ pillar.elife.deploy_user.username }}
         - require:
-            - spectrum-project
+            - spectrum-project-install
