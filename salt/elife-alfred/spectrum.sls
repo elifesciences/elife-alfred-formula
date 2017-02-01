@@ -11,7 +11,7 @@ git-lfs:
         - name: deb https://packagecloud.io/github/git-lfs/ubuntu/ trusty main
         - file: /etc/apt/sources.list.d/github_git-lfs.list
         - require:
-            - cmd: git-lfs-repo
+            - cmd: git-lfs
         - unless:
             - test -e /etc/apt/sources.list.d/github_git-lfs.list
 
@@ -31,6 +31,8 @@ spectrum-project:
         - force_clone: True
         - force_reset: True
         - target: /srv/elife-spectrum
+        - require:
+            - git-lfs
         #- onchanges:
         #    - cmd: spectrum-project
 
