@@ -36,18 +36,21 @@ spectrum-project:
         #- onchanges:
         #    - cmd: spectrum-project
 
-    cmd.run:
-        - name: git lfs install
-        - require:
-            - builder: spectrum-project
-
     file.directory:
         - name: /srv/elife-spectrum
         - user: {{ pillar.elife.deploy_user.username }}
         - recurse:
             - user
         - require:
+            - builder: spectrum-project
+
+    cmd.run:
+        - name: git lfs install
+        - cwd: /srv/elife-spectrum
+        - user: {{ pillar.elife.deploy_user.username }}
+        - require:
             - cmd: spectrum-project
+
 
     # provides xmllint for beautifying imported XML
     pkg.installed:
