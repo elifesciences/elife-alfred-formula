@@ -49,7 +49,7 @@ spectrum-project:
         - cwd: /srv/elife-spectrum
         - user: {{ pillar.elife.deploy_user.username }}
         - require:
-            - cmd: spectrum-project
+            - file: spectrum-project
 
 
     # provides xmllint for beautifying imported XML
