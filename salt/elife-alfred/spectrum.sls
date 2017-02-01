@@ -15,7 +15,7 @@ git-lfs:
         - unless:
             - test -e /etc/apt/sources.list.d/github_git-lfs.list
 
-    pkg.install:
+    pkg.installed:
         - name: git-lfs
         - refresh: True
         - require:
