@@ -81,6 +81,13 @@ spectrum-cleanup-log:
         - require:
             - file: spectrum-log-directory
 
+spectrum-cleanup-logrotate:
+    file.managed:
+        - name: /etc/logrotate.d/spectrum
+        - source: salt://elife-alfred/config/etc-logrotate.d-spectrum
+        - require:
+            - file: spectrum-cleanup-log
+
 spectrum-settings:
     file.managed:
         - name: /srv/elife-spectrum/settings.py
