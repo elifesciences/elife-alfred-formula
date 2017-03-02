@@ -27,6 +27,7 @@ spectrum-project:
         - name: ssh://git@github.com/elifesciences/elife-spectrum.git
         - identity: {{ pillar.elife.projects_builder.key or '' }}
         - rev: master
+        - branch: master
         - force_fetch: True
         - force_clone: True
         - force_reset: True
