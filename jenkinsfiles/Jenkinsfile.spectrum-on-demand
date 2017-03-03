@@ -5,7 +5,8 @@ elifePipeline {
             params.marker ?: null,
             params.environment ?: 'end2end',
             6,
-            params.revision ?: 'master'
+            params.revision ?: 'master',
+            params.articleId ?: null
         )
     }
 }
