@@ -97,3 +97,10 @@ spectrum-settings:
         - user: {{ pillar.elife.deploy_user.username }}
         - require:
             - spectrum-project-install
+
+spectrum-temporary-folder:
+    file.directory:
+        - name: {{ pillar.alfred.spectrum.tmp }}
+        - user: {{ pillar.elife.deploy_user.username }}
+        - require:
+            - spectrum-project-install

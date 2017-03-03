@@ -1,4 +1,5 @@
 alfred:
+    # TODO: move into alfred.spectrum
     end2end:
         aws:
             access_key_id: null
@@ -65,4 +66,6 @@ alfred:
             secret_access_key: null
     slack:
         channel_hook: null
+    spectrum: 
+        tmp: /ext/spectrum-tmp
         

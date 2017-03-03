@@ -11,7 +11,10 @@
 
 """
 
-class end2end():
+class common():
+    tmp = '{{ pillar.alfred.spectrum.tmp }}'
+
+class end2end(common):
     aws_access_key_id = '{{ pillar.alfred.end2end.aws.access_key_id }}'
     aws_secret_access_key = '{{ pillar.alfred.end2end.aws.secret_access_key }}'
     bucket_input = '{{ pillar.alfred.end2end.bot.bucket.input }}' 
@@ -33,7 +36,7 @@ class end2end():
     region_name = '{{ pillar.alfred.end2end.aws.region }}'
     github_article_xml_repository_url = '{{ pillar.alfred.end2end.github.article_xml_repository_url }}'
 
-class continuumtest():
+class continuumtest(common):
     aws_access_key_id = '{{ pillar.alfred.continuumtest.aws.access_key_id }}'
     aws_secret_access_key = '{{ pillar.alfred.continuumtest.aws.secret_access_key }}'
     bucket_input = '{{ pillar.alfred.continuumtest.bot.bucket.input }}' 
