@@ -1,6 +1,6 @@
 elifePipeline {
     stage 'Spectrum tests', {
-        elifeEnd2EndTest(
+        elifeEnd2endTest(
             null,
             params.marker ?: null,
             params.environment ?: 'end2end',
