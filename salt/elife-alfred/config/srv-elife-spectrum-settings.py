@@ -33,6 +33,9 @@ class end2end(common):
     lax_host = '{{ pillar.alfred.end2end.lax.host }}'
     api_gateway_host = '{{ pillar.alfred.end2end.api_gateway.host }}'
     journal_host = '{{ pillar.alfred.end2end.journal.host }}'
+    journal_cms_host = '{{ pillar.alfred.end2end.journal_cms.host }}'
+    journal_cms_user = '{{ pillar.alfred.end2end.journal_cms.user }}'
+    journal_cms_password = '{{ pillar.alfred.end2end.journal_cms.password }}'
     region_name = '{{ pillar.alfred.end2end.aws.region }}'
     github_article_xml_repository_url = '{{ pillar.alfred.end2end.github.article_xml_repository_url }}'
 

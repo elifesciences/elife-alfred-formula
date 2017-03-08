@@ -29,6 +29,10 @@ alfred:
             host: 'http://end2end--gateway.elifesciences.org'
         journal:
             host: 'http://end2end--journal.elifesciences.org'
+        journal_cms:
+            host: 'https://end2end--journal-cms.elifesciences.org'
+            user: null
+            password: null
         github:
             article_xml_repository_url: null
     continuumtest:
