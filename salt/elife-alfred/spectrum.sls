@@ -98,6 +98,15 @@ spectrum-settings:
         - require:
             - spectrum-project-install
 
+spectrum-configuration:
+    file.managed:
+        - name: /srv/elife-spectrum/app.cfg
+        - source: salt://elife-alfred/config/srv-elife-spectrum-app.cfg
+        - template: jinja
+        - user: {{ pillar.elife.deploy_user.username }}
+        - require:
+            - spectrum-project-install
+
 spectrum-temporary-folder:
     file.directory:
         - name: {{ pillar.alfred.spectrum.tmp }}
