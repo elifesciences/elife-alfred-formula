@@ -89,15 +89,6 @@ spectrum-cleanup-logrotate:
         - require:
             - file: spectrum-cleanup-log
 
-spectrum-settings:
-    file.managed:
-        - name: /srv/elife-spectrum/settings.py
-        - source: salt://elife-alfred/config/srv-elife-spectrum-settings.py
-        - template: jinja
-        - user: {{ pillar.elife.deploy_user.username }}
-        - require:
-            - spectrum-project-install
-
 spectrum-configuration:
     file.managed:
         - name: /srv/elife-spectrum/app.cfg
