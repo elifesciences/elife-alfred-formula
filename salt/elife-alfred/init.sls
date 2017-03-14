@@ -180,6 +180,17 @@ jenkins-ssh:
         - require:
             - jenkins
 
+# for simplicity, users `elife` and `jenkins` on this instance
+# use the same credentials
+add-alfred-key-to-elife-user:
+    file.managed:
+        - user: elife
+        - name: /home/{{ pillar.elife.deploy_user.username }}/.ssh/id_rsa
+        - source: salt://elife-alfred/config/var-lib-jenkins-.ssh-id_rsa
+        - mode: 400
+        - require:
+            - file: jenkins-ssh
+
 add-alfred-key-to-jenkins-home:
     file.managed:
         - user: jenkins
