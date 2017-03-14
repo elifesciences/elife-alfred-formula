@@ -1,0 +1,5 @@
+elifePipeline {
+    stage "Spectrum clean", {
+        elifeEnd2endClean()
+    }
+}
