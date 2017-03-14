@@ -200,6 +200,14 @@ add-alfred-key-to-jenkins-home:
         - require:
             - file: jenkins-ssh
 
+add-elife-gitconfig:
+    file.managed:
+        - name: /home/{{ pillar.elife.deploy_user.username }}/.gitconfig
+        - source: salt://elife-alfred/config/var-lib-jenkins-.gitconfig
+        - mode: 664
+        - require:
+            - jenkins
+
 add-jenkins-gitconfig:
     file.managed:
         - name: /var/lib/jenkins/.gitconfig
@@ -208,7 +216,18 @@ add-jenkins-gitconfig:
         - require:
             - jenkins
 
-builder-project-aws-credentials:
+builder-project-aws-credentials-elife:
+    file.managed:
+        - name: /home/{{ pillar.elife.deploy_user.username }}/.aws/credentials
+        - source: salt://elife-alfred/config/var-lib-jenkins-.aws-credentials
+        - template: jinja
+        - user: {{ pillar.elife.deploy_user.username }}
+        - group: {{ pillar.elife.deploy_user.username }}
+        - makedirs: True
+        - require:
+            - jenkins
+
+builder-project-aws-credentials-jenkins:
     file.managed:
         - name: /var/lib/jenkins/.aws/credentials
         - source: salt://elife-alfred/config/var-lib-jenkins-.aws-credentials
@@ -229,7 +248,8 @@ builder-project:
         - force_reset: True
         - target: /srv/builder
         - require:
-            - builder-project-aws-credentials
+            - builder-project-aws-credentials-elife
+            - builder-project-aws-credentials-jenkins
 
     file.directory:
         - name: /srv/builder
@@ -251,7 +271,8 @@ builder-update:
         - user: jenkins
         - require:
             - builder-project
-            - builder-project-aws-credentials
+            - builder-project-aws-credentials-elife
+            - builder-project-aws-credentials-jenkins
             - file: builder-update
 
 builder-settings:
