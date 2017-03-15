@@ -27,6 +27,8 @@ alfred:
                 host: null
             api_gateway:
                 host: 'http://end2end--gateway.elifesciences.org'
+                user: null
+                authorization: null
             journal:
                 host: 'http://end2end--journal.elifesciences.org'
             journal_cms:
@@ -62,6 +64,8 @@ alfred:
                 host: null
             api_gateway:
                 host: null
+                user: null
+                authorization: null
             github:
                 article_xml_repository_url: null
         tmp: /ext/spectrum-tmp
