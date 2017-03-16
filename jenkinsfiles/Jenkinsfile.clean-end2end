@@ -5,21 +5,33 @@ elifePipeline {
         }
 
         stage "Lax", {
-            builderCmd 'lax--end2end', 'cd /srv/lax; ./manage.sh flush'
+            lock 'lax--end2end', {
+                builderStart 'lax--end2end'
+                builderCmd 'lax--end2end', 'cd /srv/lax; ./manage.sh flush'
+            }
         }
 
         stage "Journal-cms", {
-            builderCmd 'journal-cms--end2end', 'cd /srv/journal-cms/web; ../vendor/bin/drush si config_installer -y; sudo salt-call state.highstate'
+            lock 'journal-cms--end2end', {
+                builderStart 'journal-cms--end2end'
+                builderCmd 'journal-cms--end2end', 'cd /srv/journal-cms/web; ../vendor/bin/drush si config_installer -y; sudo salt-call state.highstate'
+            }
         }
 
         stage "Recommendations", {
-            builderCmd 'recommendations--end2end', 'cd /srv/recommendations; php bin/console generate:database -d --env=end2end; php bin/console cache:clean --env=end2end'
-            // broken generate:database -d doesn't really delete data and fail silently, don't trust it
-            builderCmd 'recommendations--end2end', 'cd /srv/recommendations; echo DELETE FROM Rules > mysql -urecommendations -precommendations recommendations'
+            lock 'recommendations--end2end', {
+                builderStart 'recommendations--end2end'
+                builderCmd 'recommendations--end2end', 'cd /srv/recommendations; php bin/console generate:database -d --env=end2end; php bin/console cache:clean --env=end2end'
+                // broken generate:database -d doesn't really delete data and fail silently, don't trust it
+                builderCmd 'recommendations--end2end', 'cd /srv/recommendations; echo DELETE FROM Rules > mysql -urecommendations -precommendations recommendations'
+            }
         }
 
         stage "Search", {
-            builderCmd 'search--end2end', 'cd /srv/search; php bin/console search:setup -d --env=end2end; php bin/console cache:clean --env=end2end'
+            lock 'search--end2end', {
+                builderStart 'search--end2end'
+                builderCmd 'search--end2end', 'cd /srv/search; php bin/console search:setup -d --env=end2end; php bin/console cache:clean --env=end2end'
+            }
         }
     }
 }
