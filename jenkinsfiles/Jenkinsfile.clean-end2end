@@ -7,7 +7,7 @@ elifePipeline {
         stage "Lax", {
             lock 'lax--end2end', {
                 builderStart 'lax--end2end'
-                builderCmd 'lax--end2end', 'cd /srv/lax; ./manage.sh flush'
+                builderCmd 'lax--end2end', 'cd /srv/lax; ./manage.sh flush --no-input'
             }
         }
 
