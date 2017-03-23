@@ -96,11 +96,11 @@ spectrum-configuration:
         - template: jinja
         - user: {{ pillar.elife.deploy_user.username }}
         - require:
-            - spectrum-project-install
+            - spectrum-project
 
 spectrum-temporary-folder:
     file.directory:
         - name: {{ pillar.alfred.spectrum.tmp }}
         - user: {{ pillar.elife.deploy_user.username }}
         - require:
-            - spectrum-project-install
+            - spectrum-project
