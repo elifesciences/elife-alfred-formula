@@ -285,6 +285,14 @@ builder-settings:
             - builder-project
             - builder-update
 
+
+builder-logrotate:
+    file.managed:
+        - name: /etc/logrotate.d/builder
+        - source: salt://elife-alfred/config/etc-logrotate.d-builder
+        - require:
+            - builder-settings
+
 # jenkins customizations
 alfred-assets:
     file.recurse:
