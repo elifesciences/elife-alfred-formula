@@ -30,6 +30,7 @@ alfred:
                 authorization: null
             journal:
                 host: 'http://end2end--journal.elifesciences.org'
+                cdn_host: 'http://end2end--cdn-journal.elifesciences.org'
             journal_cms:
                 host: 'https://end2end--journal-cms.elifesciences.org'
                 user: null
@@ -64,6 +65,13 @@ alfred:
             api_gateway:
                 host: null
                 authorization: null
+            journal:
+                host: 'http://continuumtest--journal.elifesciences.org'
+                cdn_host: 'http://continuumtest--cdn-journal.elifesciences.org'
+            journal_cms:
+                host: 'https://continuumtest--journal-cms.elifesciences.org'
+                user: null
+                password: null
             github:
                 article_xml_repository_url: null
         tmp: /ext/spectrum-tmp
