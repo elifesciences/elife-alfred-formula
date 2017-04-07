@@ -384,6 +384,14 @@ jenkins-cli:
 #        - require:
 #            - jenkins-cli
 
+jenkins-statistics:
+    file.directory:
+        - name: /var/lib/jenkins/statistics
+        - user: jenkins
+        - group: jenkins
+        - require:
+            - jenkins-user-and-group
+
 siege:
     pkg.installed
 
