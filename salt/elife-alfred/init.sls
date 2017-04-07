@@ -345,14 +345,10 @@ jenkins-junit-xml-cleanup-cron:
         - minute: 0 
 
 jenkins-workspaces-cleanup-cron:
-    cron.present:
+    cron.absent:
         - user: jenkins
         - name: rm -rf /var/lib/jenkins/workspace/*
         - identifier: jenkins-workspaces-cleanup-cron
-        - hour: 5
-        - minute: 0
-        - require:
-            - jenkins
 
 jenkins-diagnostic-tools:
     pkg.installed:
