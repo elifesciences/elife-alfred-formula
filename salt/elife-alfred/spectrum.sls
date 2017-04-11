@@ -31,6 +31,7 @@ spectrum-project:
         - force_fetch: True
         - force_clone: True
         - force_reset: True
+        - force_checkout: True
         - target: /srv/elife-spectrum
         - require:
             - git-lfs
