@@ -7,7 +7,7 @@ elifePipeline {
         stage "Elife-website", {
             lock 'elife-website--end2end', {
                 builderStart 'elife-website--end2end'
-                builderCmd 'elife-website--end2end', 'sudo salt-call state.highstate'
+                builderCmd 'elife-website--end2end', 'sudo salt-call state.highstate --retcode-passthrough'
             }
         }
 
@@ -21,7 +21,7 @@ elifePipeline {
         stage "Journal-cms", {
             lock 'journal-cms--end2end', {
                 builderStart 'journal-cms--end2end'
-                builderCmd 'journal-cms--end2end', 'cd /srv/journal-cms/web && ../vendor/bin/drush si config_installer -y && ../vendor/bin/drush cr && sudo salt-call state.highstate'
+                builderCmd 'journal-cms--end2end', 'cd /srv/journal-cms/web && ../vendor/bin/drush si config_installer -y && ../vendor/bin/drush cr && sudo salt-call state.highstate --retcode-passthrough'
             }
         }
 
