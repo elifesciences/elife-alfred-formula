@@ -136,7 +136,7 @@ jenkins:
 jenkins-args:
     file.replace:
         - name: /etc/default/jenkins
-        - pattern: '^JENKINS_ARGS=".*"'
+        - pattern: '^JENKINS_ARGS=.*'
         - repl: 'JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT --sessionTimeout=0"'
         - require: 
             - cmd: jenkins
