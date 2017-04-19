@@ -134,10 +134,11 @@ jenkins:
             - cmd: jenkins
 
 jenkins-args:
+    # 1 month login sessions
     file.replace:
         - name: /etc/default/jenkins
         - pattern: '^JENKINS_ARGS=.*'
-        - repl: 'JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT --sessionTimeout=0"'
+        - repl: 'JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT --sessionTimeout=43200"'
         - require: 
             - cmd: jenkins
 
