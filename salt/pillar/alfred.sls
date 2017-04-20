@@ -74,6 +74,9 @@ alfred:
                 password: null
             github:
                 article_xml_repository_url: null
+        prod:
+            journal:
+                host: 'http://prod--journal.elifesciences.org'
         tmp: /ext/spectrum-tmp
     builder:
         aws:
