@@ -5,4 +5,7 @@ alfred:
             secret_access_key: null
     slack:
         channel_hook: null
+    jenkins:
+        user: null
+        password: null
         
