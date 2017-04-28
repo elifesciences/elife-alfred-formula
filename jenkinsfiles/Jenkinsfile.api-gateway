@@ -1,7 +1,7 @@
 elifePipeline {
     stage 'End2end', {
         lock('api-gateway--end2end') {
-            builderDeployRevision 'api-gateway--end2end', commit
+            builderDeployRevision 'api-gateway--end2end'
         }
     }
     
@@ -9,7 +9,7 @@ elifePipeline {
 
     stage 'Prod', {
         lock('api-gateway--prod') {
-            builderDeployRevision 'api-gateway--prod', commit
+            builderDeployRevision 'api-gateway--prod'
         }
     }
 }
