@@ -1,0 +1,15 @@
+elifePipeline {
+    stage 'End2end', {
+        lock('api-gateway--end2end') {
+            builderDeployRevision 'api-gateway--end2end', commit
+        }
+    }
+    
+    // TODO: continuumtest is not here yet for consistency
+
+    stage 'Prod', {
+        lock('api-gateway--prod') {
+            builderDeployRevision 'api-gateway--prod', commit
+        }
+    }
+}
