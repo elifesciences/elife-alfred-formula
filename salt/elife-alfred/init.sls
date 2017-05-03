@@ -323,6 +323,7 @@ jenkins-sudo-commands:
             - "jenkins    ALL=(ALL)    NOPASSWD: /srv/elife-spectrum/clean.sh"
             - "jenkins    ALL=(ALL)    NOPASSWD: /srv/elife-spectrum/update-kitchen-sinks-from-github.sh"
             - "jenkins    ALL=(ALL)    NOPASSWD: /srv/elife-spectrum/update-kitchen-sinks-from-s3.sh"
+            - "jenkins    ALL=(ALL)    NOPASSWD: /srv/elife-spectrum/load-small.sh"
 
 jenkins-slave-node-for-end2end-tests-folder:
     file.absent:
