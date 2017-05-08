@@ -94,7 +94,8 @@ jenkins-home-directory-ownership:
         - group: jenkins
         - mode: 755
 
-{% set deb_filename = 'jenkins_2.46.2_all.deb' %}
+{% set jenkins_version = '2.46.2' %}
+{% set deb_filename = 'jenkins_'+jenkins_version+'_all.deb' %}
 # the apt repository does not allow us to pin the version:
 # https://issues.jenkins-ci.org/browse/INFRA-92
 jenkins-download:
@@ -116,7 +117,7 @@ jenkins:
             - jenkins-download
             - pkg: oracle-java8-installer
         - unless:
-            - test $(dpkg-query --showformat='${Version}' --show jenkins) == "2.46.2"
+            - test $(dpkg-query --showformat='${Version}' --show jenkins) == "{{ jenkins_version }}"
 
     service.running:
         - enable: True
@@ -374,6 +375,7 @@ jenkins-cli:
             - test -e /usr/local/bin/jenkins-cli.jar
             - test -s /usr/local/bin/jenkins-cli.jar
             - jar tvf /usr/local/bin/jenkins-cli.jar
+            - java -jar /usr/local/bin/jenkins-cli.jar -version | grep {{ jenkins_version }}
 
     # wrapper script for the .jar
     file.managed:
@@ -383,6 +385,13 @@ jenkins-cli:
         - mode: 755
         - require:
             - cmd: jenkins-cli
+
+jenkins-cli-smoke-test:    
+    cmd.run:
+        - name: /usr/local/bin/jenkins-cli -version
+        - user: jenkins
+        - require:
+            - jenkins-cli
 
 # this requires a configured Jenkins, not one out of the box
 # Go to 'Manage Jenkins' > 'Configure Global Security'.
