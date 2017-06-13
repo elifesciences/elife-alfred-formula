@@ -248,6 +248,11 @@ builder-project-aws-credentials-jenkins:
         - require:
             - jenkins
 
+builder-project-dependencies:
+    pkg.installed:
+        - pkgs:
+            - make
+
 builder-project:
     builder.git_latest:
         - name: ssh://git@github.com/elifesciences/builder.git
@@ -260,6 +265,7 @@ builder-project:
         - require:
             - builder-project-aws-credentials-elife
             - builder-project-aws-credentials-jenkins
+            - builder-project-dependencies
 
     file.directory:
         - name: /srv/builder
