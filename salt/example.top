@@ -9,3 +9,5 @@ base:
         - elife.jenkins-scripts
         - elife.postfix
         - elife.postfix-ses
+        - elife.php7
+        - elife.yamldiff
