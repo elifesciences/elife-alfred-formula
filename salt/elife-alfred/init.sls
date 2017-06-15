@@ -282,7 +282,7 @@ builder-update:
         - name: /srv/builder/.no-delete-venv.flag
 
     cmd.run:
-        - name: ./update.sh --exclude virtualbox vagrant
+        - name: ./update.sh --exclude virtualbox vagrant ssh-agent ssh-credentials
         - cwd: /srv/builder
         - user: jenkins
         - require:
