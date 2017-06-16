@@ -4,7 +4,7 @@
 elifePipeline {
     def ciStacks = elifeCiStacks()
     def end2endStacks = elifeEnd2endStacks()
-    def restOfStacks = elifeSlaveStacks() + elifeAnonymousStacks()
+    def restOfStacks = elifeSlaveStacks()
 
     try {
         timeout(time:120, unit:'SECONDS') {
