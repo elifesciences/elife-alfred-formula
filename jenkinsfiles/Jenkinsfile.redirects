@@ -1,0 +1,13 @@
+elifePipeline {
+    stage 'Ci', {
+        lock('redirects--ci') {
+            builderUpdate 'redirects--ci'
+        }
+    }
+
+    stage 'Prod', {
+        lock('redirects--prod') {
+            builderUpdate 'redirects--prod'
+        }
+    }
+}
