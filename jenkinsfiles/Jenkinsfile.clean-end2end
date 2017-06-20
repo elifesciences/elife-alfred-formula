@@ -21,7 +21,7 @@ elifePipeline {
         stage "Journal-cms", {
             lock 'journal-cms--end2end', {
                 builderStart 'journal-cms--end2end'
-                builderCmd 'journal-cms--end2end', 'cd /srv/journal-cms/web && ../vendor/bin/drush si config_installer -y && ../vendor/bin/drush cr && sudo salt-call state.highstate --retcode-passthrough'
+                builderCmd 'journal-cms--end2end', 'cd /srv/journal-cms/web && ../vendor/bin/drush sql-drop -y && ../vendor/bin/drush si config_installer -y && ../vendor/bin/drush cr && sudo salt-call state.highstate --retcode-passthrough'
             }
         }
 
