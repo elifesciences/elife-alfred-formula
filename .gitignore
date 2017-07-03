@@ -1,3 +1,5 @@
+/pipelines/*.json
+/pipelines/*.log
 /salt/salt
 /salt/top.sls
 /salt/pillar/pillar
