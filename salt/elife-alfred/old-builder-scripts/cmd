@@ -1,6 +1,0 @@
-#!/bin/bash
-source /usr/local/old-builder-scripts/base
-argument=$1
-escapedArgument=${argument//=/\\=}
-/opt/elife-builder/bldr "cmd:$escapedArgument"
-
