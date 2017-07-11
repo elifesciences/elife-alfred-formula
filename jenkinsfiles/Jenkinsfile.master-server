@@ -1,0 +1,7 @@
+elifePipeline {
+    stage 'Master', {
+        lock('master-server') {
+            builderUpdate 'master-server--2017-06-22'
+        }
+    }
+}
