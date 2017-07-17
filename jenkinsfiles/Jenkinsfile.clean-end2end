@@ -4,6 +4,10 @@ elifePipeline {
             elifeEnd2endClean()
         }
 
+        stage "Github", {
+            sh "git clone git@github.com:elifesciences/elife-article-xml-end2end && cd elife-article-xml-end2end && git reset --hard 6fbf609 && git push origin -f master"
+        }
+
         stage "Elife-website", {
             lock 'elife-website--end2end', {
                 builderStart 'elife-website--end2end'
