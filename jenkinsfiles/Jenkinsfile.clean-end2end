@@ -8,6 +8,13 @@ elifePipeline {
             sh "git clone git@github.com:elifesciences/elife-article-xml-end2end && cd elife-article-xml-end2end && git reset --hard 6fbf609 && git push origin -f master"
         }
 
+        stage "Dashboard", {
+            lock 'elife-dashboard--end2end', {
+                builderStart 'elife-dashboard--end2end'
+                builderCmd 'elife-dashboard--end2end', 'cd /srv/elife-dashboard && ./clean.sh'
+            }
+        }
+
         stage "Elife-website", {
             lock 'elife-website--end2end', {
                 builderStart 'elife-website--end2end'
