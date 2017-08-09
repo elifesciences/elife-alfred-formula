@@ -8,4 +8,3 @@ alfred:
     jenkins:
         user: null
         password: null
-        

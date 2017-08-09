@@ -417,6 +417,16 @@ jenkins-statistics:
         - require:
             - jenkins-user-and-group
 
+jenkins-statistics-scripts:
+    file.recurse:
+        - name: /usr/local/pipelines/
+        - source: salt://elife-alfred/config/usr-local-pipelines
+        - user: {{ pillar.elife.deploy_user.username }}
+        - group: {{ pillar.elife.deploy_user.username }}
+        - file_mode: 555
+        - require:
+            - jenkins-statistics
+
 siege:
     pkg.installed
 
