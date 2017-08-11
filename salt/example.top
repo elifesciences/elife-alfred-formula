@@ -10,4 +10,5 @@ base:
         - elife.postfix
         - elife.postfix-ses
         - elife.php7
+        - elife.composer
         - elife.yamldiff
