@@ -5,7 +5,11 @@ elifePipeline {
         }
     }
     
-    // TODO: continuumtest is not here yet for consistency
+    stage 'Continuumtest', {
+        lock('api-gateway--continuumtest') {
+            builderUpdate 'api-gateway--continuumtest'
+        }
+    }
 
     stage 'Prod', {
         lock('api-gateway--prod') {
