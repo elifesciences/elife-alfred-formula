@@ -374,7 +374,7 @@ jenkins-diagnostic-tools:
 
 jenkins-cli:
     cmd.run:
-        - name: wget -O /usr/local/bin/jenkins-cli.jar http://localhost/jnlpJars/jenkins-cli.jar
+        - name: wget --no-check-certificate -O /usr/local/bin/jenkins-cli.jar http://localhost/jnlpJars/jenkins-cli.jar
         - require:
             - jenkins
         - unless:
