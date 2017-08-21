@@ -418,14 +418,29 @@ jenkins-statistics:
             - jenkins-user-and-group
 
 jenkins-statistics-scripts:
-    file.recurse:
-        - name: /usr/local/pipelines/
-        - source: salt://elife-alfred/config/usr-local-pipelines
-        - user: {{ pillar.elife.deploy_user.username }}
-        - group: {{ pillar.elife.deploy_user.username }}
-        - file_mode: 555
+    git.latest:
+        - name: ssh://git@github.com/elifesciences/pipeline-statistics.git
+        - target: /opt/pipeline-statistics/
+        - rev: master
+        - identity: {{ pillar.elife.projects_builder.key or '' }}
+        - force_fetch: True
+        - force_reset: True
         - require:
             - jenkins-statistics
+
+    file.directory:
+        - name: /opt/pipeline-statistics
+        - user: {{ pillar.elife.deploy_user.username }}
+        - group: {{ pillar.elife.deploy_user.username }}
+        - recurse:
+            - user
+            - group
+        - require:
+            - git: jenkins-statistics-scripts
+
+jenkins-statistics-scripts-old:
+    file.absent:
+        - name: /usr/local/pipelines
 
 siege:
     pkg.installed
