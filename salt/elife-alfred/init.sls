@@ -467,6 +467,7 @@ jenkins-statistics-checks-{{ pipeline.name }}:
     cron.present:
         - identifier: jenkins-statistics-checks-{{ pipeline.name }}
         - name: /usr/local/bin/pipeline-check {{ pipeline.name }} {{ pipeline.minutes }}
+        - user: {{ pillar.elife.deploy_user.username }}
         - minute: 10
         - hour: '*'
         - require:
