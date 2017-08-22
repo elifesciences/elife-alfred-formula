@@ -442,6 +442,7 @@ jenkins-statistics-scripts-old:
     file.absent:
         - name: /usr/local/pipelines
 
+# sends an email when called
 jenking-statistics-alert-script:
     file.managed:
         - name: /usr/local/bin/pipeline-alert
@@ -450,6 +451,16 @@ jenking-statistics-alert-script:
         - mode: 755
         - require:
             - jenkins-statistics-scripts
+
+# can check a pipeline health
+jenkins-statistics-checks-script:
+    file.managed:
+        - name: /usr/local/bin/pipeline-check
+        - source: salt://elife-alfred/config/usr-local-bin-pipeline-check
+        - template: jinja
+        - mode: 755
+        - require:
+            - jenkins-statistics-alert-script
 
 siege:
     pkg.installed
