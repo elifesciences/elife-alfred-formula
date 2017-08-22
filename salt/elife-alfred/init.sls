@@ -443,7 +443,7 @@ jenkins-statistics-scripts-old:
         - name: /usr/local/pipelines
 
 # sends an email when called
-jenking-statistics-alert-script:
+jenkins-statistics-alert-script:
     file.managed:
         - name: /usr/local/bin/pipeline-alert
         - source: salt://elife-alfred/config/usr-local-bin-pipeline-alert
@@ -461,6 +461,17 @@ jenkins-statistics-checks-script:
         - mode: 755
         - require:
             - jenkins-statistics-alert-script
+
+{% for pipeline_key, pipeline in pillar.alfred.pipeline_checks.iteritems() %}
+jenkins-statistics-checks-{{ pipeline.name }}:
+    cron.present:
+        - identifier: jenkins-statistics-checks-{{ pipeline.name }}
+        - name: /usr/local/bin/pipeline-check {{ pipeline.name }} {{ pipeline.minutes }}
+        - minute: 10
+        - hour: '*'
+        - require:
+            - jenkins-statistics-checks-script
+{% endfor %}
 
 siege:
     pkg.installed

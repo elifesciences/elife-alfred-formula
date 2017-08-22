@@ -9,3 +9,8 @@ alfred:
         user: null
         password: null
     maintainer: admin@example.com
+    pipeline_checks:
+        example:
+            name: test-example
+            minutes: 60
+
