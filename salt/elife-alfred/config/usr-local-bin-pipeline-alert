@@ -1,0 +1,6 @@
+#!/bin/bash
+set -e
+# pipe text to this script
+
+mail -s "${1:-Pipeline alert}" -a "From: alfred@elifesciences.org" {{ pillar.alfred.maintainer }}
+

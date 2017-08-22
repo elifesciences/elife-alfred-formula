@@ -8,3 +8,4 @@ alfred:
     jenkins:
         user: null
         password: null
+    maintainer: admin@example.com

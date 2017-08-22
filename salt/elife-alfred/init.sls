@@ -442,6 +442,15 @@ jenkins-statistics-scripts-old:
     file.absent:
         - name: /usr/local/pipelines
 
+jenking-statistics-alert-script:
+    file.managed:
+        - name: /usr/local/bin/pipeline-alert
+        - source: salt://elife-alfred/config/usr-local-bin-pipeline-alert
+        - template: jinja
+        - mode: 755
+        - require:
+            - jenkins-statistics-scripts
+
 siege:
     pkg.installed
 
