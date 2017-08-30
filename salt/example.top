@@ -5,6 +5,7 @@ base:
         - elife.java8
         - elife.nginx
         - elife-alfred
+        - elife.hub
         - elife.spectrum
         - elife.jenkins-scripts
         - elife.postfix
