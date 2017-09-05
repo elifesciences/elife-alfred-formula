@@ -1,13 +1,17 @@
 elifePipeline {
     stage 'End2end', {
-        lock('api-gateway--end2end') {
-            builderUpdate 'api-gateway--end2end'
+        lock('end2end') {
+            lock('api-gateway--end2end') {
+                builderUpdate 'api-gateway--end2end'
+            }
         }
     }
     
     stage 'Continuumtest', {
-        lock('api-gateway--continuumtest') {
-            builderUpdate 'api-gateway--continuumtest'
+        lock('continuumtest') {
+            lock('api-gateway--continuumtest') {
+                builderUpdate 'api-gateway--continuumtest'
+            }
         }
     }
 
