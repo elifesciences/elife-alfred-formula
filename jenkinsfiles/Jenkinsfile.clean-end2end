@@ -61,5 +61,12 @@ elifePipeline {
                 builderCmd 'observer--end2end', 'cd /srv/observer && ./manage.sh flush --no-input'
             }
         }
+
+        stage "Profiles", {
+            lock 'profiles--end2end', {
+                builderStart 'profiles--end2end'
+                builderCmd 'profiles--end2end', 'cd /srv/profiles && venv/bin/python manage.py clear'
+            }
+        }
     }
 }
