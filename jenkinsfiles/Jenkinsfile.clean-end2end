@@ -40,12 +40,7 @@ elifePipeline {
         }
 
         stage "Recommendations", {
-            lock 'recommendations--end2end', {
-                builderStart 'recommendations--end2end'
-                builderCmd 'recommendations--end2end', 'cd /srv/recommendations && php bin/console generate:database -d --env=end2end && php bin/console cache:clear --env=end2end'
-                // broken generate:database -d doesn't really delete data and fail silently, don't trust it
-                builderCmd 'recommendations--end2end', 'cd /srv/recommendations && echo DELETE FROM Rules > mysql -urecommendations -precommendations recommendations'
-            }
+            echo "Project is stateless, nothing to do"
         }
 
         stage "Search", {
