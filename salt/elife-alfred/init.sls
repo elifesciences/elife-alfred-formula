@@ -115,7 +115,7 @@ jenkins:
         - require:
             - jenkins-home-directory-ownership
             - jenkins-download
-            - pkg: oracle-java8-installer
+            - oracle-java8-installer
         - unless:
             - test $(dpkg-query --showformat='${Version}' --show jenkins) == "{{ jenkins_version }}"
 
