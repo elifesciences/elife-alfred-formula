@@ -32,6 +32,7 @@ elifePipeline {
         stage "Journal-cms", {
             lock 'journal-cms--end2end', {
                 builderStart 'journal-cms--end2end'
+                builderCmd 'journal-cms--end2end', 'crontab -r'
                 builderCmd 'journal-cms--end2end', 'cd /srv/journal-cms/web && ../vendor/bin/drush sql-drop -y'
                 builderCmd 'journal-cms--end2end', 'sudo rm -rf /srv/journal-cms'
                 builderCmd 'journal-cms--end2end', 'redis-cli flushall'
