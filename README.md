@@ -76,6 +76,12 @@ All the `elife*` and `builder*` elements in the pipeline definition are provided
 
 Not all the projects are in `Pull requests`: they have to be whitelisted in its configurations. Libraries are easily supported, as their builds are stateless and parallelizable; projects instead need the pipeline to take a `lock` step over the `ci` machine being used.
 
+### Spectrum
+
+The elife-spectrum itself contains all end2end tests, which is the most complex stage of a build. This is a Python project: [https://github.com/elifesciences/elife-spectrum].
+
+Projects run the subset of tests that covers them, which can range from a few seconds to a 10 minutes run time. For exmaple, lax is involved in all the [tests for article publishing](https://github.com/elifesciences/elife-spectrum/blob/master/spectrum/test_article.py#L15).
+
 ### Plugins
 
 Most of the interesting Jenkins features are provided by plugins, which are backed up with Alfred's Jenkins installation.
