@@ -1,0 +1,9 @@
+elifePipeline {
+    def end2endStacks = elifeEnd2endStacks()
+
+    stage 'End2end', {
+        lock ('end2end') {
+            builderStopAllLongTerm(end2endStacks)
+        }
+    }
+}
