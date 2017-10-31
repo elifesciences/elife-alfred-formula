@@ -8,6 +8,7 @@ base:
         - elife.postfix
         - elife.postfix-ses
         - elife.aws-cli
+        - elife.external-volume
         - elife.spectrum
         - elife-alfred
         #- elife-alfred.postfix
