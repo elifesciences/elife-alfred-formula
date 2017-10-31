@@ -3,13 +3,14 @@ base:
         - elife
         - elife.swapspace
         - elife.java8
-        - elife.nginx
-        - elife-alfred
-        - elife.hub
-        - elife.spectrum
         - elife.jenkins-scripts
+        - elife.nginx
         - elife.postfix
         - elife.postfix-ses
-        - elife.php7
-        - elife.composer
-        - elife.yamldiff
+        - elife.aws-cli
+        - elife.spectrum
+        - elife-alfred
+        #- elife-alfred.postfix
+        #- elife-alfred.spectrum-cron
+        - elife.hub
+        - elife.python3
