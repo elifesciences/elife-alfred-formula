@@ -88,6 +88,7 @@ jenkins:
 
     service.running:
         - enable: True
+        - init_delay: 10 # seconds. attempting to fetch the jenkins-cli too early will fail
         - watch:
             - file: /etc/default/jenkins
         - require:
@@ -334,10 +335,12 @@ jenkins-workspaces-cleanup-cron:
         - name: rm -rf /var/lib/jenkins/workspace/*
         - identifier: jenkins-workspaces-cleanup-cron
 
-jenkins-diagnostic-tools:
-    pkg.installed:
-        - pkgs:
-            - openjdk-7-jdk
+# disabled. 
+# state isn't required by anything. oracle java 8 installed. openjdk has it's own state file
+#jenkins-diagnostic-tools:
+#    pkg.installed:
+#        - pkgs:
+#            - openjdk-7-jdk
 
 jenkins-cli:
     cmd.run:
@@ -345,9 +348,8 @@ jenkins-cli:
         - require:
             - jenkins
         - unless:
-            - test -e /usr/local/bin/jenkins-cli.jar
-            - test -s /usr/local/bin/jenkins-cli.jar
-            - jar tvf /usr/local/bin/jenkins-cli.jar
+            - test -s /usr/local/bin/jenkins-cli.jar # file exists and is not empty
+            - jar tvf /usr/local/bin/jenkins-cli.jar # valid jar file
             - java -jar /usr/local/bin/jenkins-cli.jar -version | grep {{ jenkins_version }}
 
     # wrapper script for the .jar
