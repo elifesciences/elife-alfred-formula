@@ -160,12 +160,28 @@ jenkins-ssh:
 
 # for simplicity, users `elife` and `jenkins` on this instance
 # use the same credentials
+# we also remove existing id_rsa.pub as they won't match
+# the new private keys
+remove-alfred-leftover-public-key-from-elife-user:
+    file.absent:
+        - name: /home/{{ pillar.elife.deploy_user.username }}/.ssh/id_rsa.pub
+        - require:
+            - ssh-access-set
+            - file: jenkins-ssh
+
 add-alfred-key-to-elife-user:
     file.managed:
         - user: elife
         - name: /home/{{ pillar.elife.deploy_user.username }}/.ssh/id_rsa
         - source: salt://elife-alfred/config/var-lib-jenkins-.ssh-id_rsa
         - mode: 400
+        - require:
+            - ssh-access-set
+            - remove-alfred-leftover-public-key-from-elife-user
+
+remove-alfred-leftover-public-key-from-jenkins-user:
+    file.absent:
+        - name: /var/lib/jenkins/.ssh/id_rsa.pub
         - require:
             - file: jenkins-ssh
 
@@ -177,6 +193,7 @@ add-alfred-key-to-jenkins-home:
         - mode: 400
         - require:
             - file: jenkins-ssh
+            - remove-alfred-leftover-public-key-from-jenkins-user
 
 add-elife-gitconfig:
     file.managed:
