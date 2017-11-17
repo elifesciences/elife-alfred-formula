@@ -47,7 +47,7 @@ elifePipeline {
         stage "Search", {
             lock 'search--end2end', {
                 builderStart 'search--end2end'
-                builderCmd 'search--end2end', 'cd /srv/search && bin/wait-for-running-elasticsearch && php bin/console search:setup -d --env=end2end && php bin/console cache:clear --env=end2end'
+                builderCmdNode 'search--end2end', 1, 'cd /srv/search && bin/wait-for-running-elasticsearch && php bin/console search:setup -d --env=end2end && php bin/console cache:clear --env=end2end'
             }
         }
 
