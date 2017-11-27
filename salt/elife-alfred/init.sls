@@ -346,12 +346,6 @@ jenkins-junit-xml-cleanup-cron:
         - hour: 5
         - minute: 0 
 
-jenkins-workspaces-cleanup-cron:
-    cron.absent:
-        - user: jenkins
-        - name: rm -rf /var/lib/jenkins/workspace/*
-        - identifier: jenkins-workspaces-cleanup-cron
-
 # disabled. 
 # state isn't required by anything. oracle java 8 installed. openjdk has it's own state file
 #jenkins-diagnostic-tools:
