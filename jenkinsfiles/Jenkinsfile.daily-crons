@@ -1,0 +1,9 @@
+// operations act on nodes in the same environment in parallel (all `ciStacks` for example)
+elifePipeline {
+    def ciStacks = elifeCiStacks()
+
+    stage 'Ci', {
+        parallel actions
+        actions(ciStacks, 'run-parts /etc/cron.daily')
+    }
+}

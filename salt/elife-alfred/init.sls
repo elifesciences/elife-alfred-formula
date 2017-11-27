@@ -123,12 +123,11 @@ jenkins-user-and-group:
 # after several days of running it continuously.
 # Therefore, restart every night while no one is using it to ensure the JVM
 # gets a new object graph from scratch
+# UPDATE: Let's try not to do this anymore, now that builds are not as frequent as every 2 minutes.
 jenkins-periodical-restart:
-    cron.present:
+    cron.absent:
         - identifier: jenkins-periodical-restart
         - name: /etc/init.d/jenkins restart
-        - minute: 0
-        - hour: 4
         - require:
             - jenkins
 
