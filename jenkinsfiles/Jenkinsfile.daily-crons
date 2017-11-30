@@ -1,9 +1,8 @@
-// operations act on nodes in the same environment in parallel (all `ciStacks` for example)
+// operations act on stacks in the same environment in parallel (all `ciStacks` for example)
+// they act serially on nodes in the same stack however (`journal--prod--1` and `journal--prod--2` for example)
 elifePipeline {
-    def ciStacks = elifeCiStacks()
 
     stage 'Ci', {
-        parallel actions
-        actions(ciStacks, 'run-parts /etc/cron.daily')
+        builderRunAll(elifeCiStacks(), 'run-parts /etc/cron.daily')
     }
 }
