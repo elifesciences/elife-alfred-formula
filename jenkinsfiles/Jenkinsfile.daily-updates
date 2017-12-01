@@ -6,8 +6,8 @@ elifePipeline {
         builderRunAll(
             elifeCiStacks(),
             [
-                'sudo run-parts /etc/cron.daily',
-                'sudo /usr/local/bin/daily-system-update'
+                'sudo /usr/local/bin/daily-system-update',
+                'sudo /usr/local/bin/daily-security-update'
             ]
         )
     }
