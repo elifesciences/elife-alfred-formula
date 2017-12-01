@@ -3,6 +3,12 @@
 elifePipeline {
 
     stage 'Ci', {
-        builderRunAll(elifeCiStacks(), 'sudo run-parts /etc/cron.daily')
+        builderRunAll(
+            elifeCiStacks(),
+            [
+                'sudo run-parts /etc/cron.daily',
+                'sudo /usr/local/bin/daily-system-update'
+            ]
+        )
     }
 }
