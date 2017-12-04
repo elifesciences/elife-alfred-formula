@@ -8,7 +8,8 @@ elifePipeline {
             [
                 'sudo /usr/local/bin/daily-system-update',
                 'sudo /usr/local/bin/daily-security-update'
-            ]
+            ],
+            'approved'
         )
     }
 
@@ -18,7 +19,8 @@ elifePipeline {
             [
                 'sudo /usr/local/bin/daily-system-update',
                 'sudo /usr/local/bin/daily-security-update'
-            ]
+            ],
+            'approved'
         )
     }
 }
