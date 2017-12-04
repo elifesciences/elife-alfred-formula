@@ -11,4 +11,14 @@ elifePipeline {
             ]
         )
     }
+
+    stage 'End2end', {
+        builderRunAll(
+            elifeEnd2endStacks(),
+            [
+                'sudo /usr/local/bin/daily-system-update',
+                'sudo /usr/local/bin/daily-security-update'
+            ]
+        )
+    }
 }
