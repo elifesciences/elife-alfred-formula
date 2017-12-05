@@ -1,0 +1,5 @@
+elifePipeline {
+    stage 'Fetch', {
+        sh 'curl -v https://us-central1-elife-analytics.cloudfunctions.net/fetchAnnotations'
+    }
+}
