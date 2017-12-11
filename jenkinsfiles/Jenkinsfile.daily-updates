@@ -33,9 +33,13 @@ elifePipeline {
                 // TODO: extract variables describing what these commands are to reduce duplication
                 'sudo /usr/local/bin/daily-system-update',
             ],
+            // TODO: shall we do this at all?
             'approved'
         )
     }
 
+    // DO NOT reset prod or similar instances branch: leave in place the commit that is there
+
     // TODO: libraries nodes? elife-alfred--prod itself?
+    // TODO: destroy unneeded libraries nodes like powerful2 #thisisntevenmyfinalform
 }
