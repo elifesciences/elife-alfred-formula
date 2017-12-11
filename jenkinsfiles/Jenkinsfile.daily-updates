@@ -23,4 +23,19 @@ elifePipeline {
             'approved'
         )
     }
+
+    stage 'Sandboxes', {
+        builderRunAll(
+            elifeContinuumTestStacks(),
+            // TODO: demo
+            // TODO: continuumtestpreview
+            [
+                // TODO: extract variables describing what these commands are to reduce duplication
+                'sudo /usr/local/bin/daily-system-update',
+            ],
+            'approved'
+        )
+    }
+
+    // TODO: libraries nodes? elife-alfred--prod itself?
 }
