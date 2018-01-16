@@ -15,13 +15,6 @@ elifePipeline {
             }
         }
 
-        stage "Elife-website", {
-            lock 'elife-website--end2end', {
-                builderStart 'elife-website--end2end'
-                builderCmd 'elife-website--end2end', 'sudo salt-call state.highstate --retcode-passthrough'
-            }
-        }
-
         stage "Lax", {
             lock 'lax--end2end', {
                 builderStart 'lax--end2end'
