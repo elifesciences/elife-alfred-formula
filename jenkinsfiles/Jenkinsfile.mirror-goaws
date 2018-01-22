@@ -1,0 +1,18 @@
+elifePipeline {
+    elifeOnNode(
+        {
+            stage 'Pull', {
+                sh "docker pull pafortin/goaws:${params.image_tag}"
+            }
+
+            stage 'Tag', {
+                sh "docker tag pafortin/goaws:${params.image_tag} elifesciences/goaws:${params.image_tag}"
+            }
+
+            stage 'Push', {
+                sh "docker push elifesciences/goaws:${params.image_tag}"
+            }
+        },
+        'elife-libraries--ci'
+    )
+}
