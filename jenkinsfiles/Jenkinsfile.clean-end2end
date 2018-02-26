@@ -54,7 +54,7 @@ elifePipeline {
         stage "Profiles", {
             lock 'profiles--end2end', {
                 builderStart 'profiles--end2end'
-                builderCmd 'profiles--end2end', 'cd /srv/profiles && venv/bin/python manage.py clear'
+                builderCmd 'profiles--end2end', 'cd profiles && docker-compose exec -T wsgi venv/bin/python manage.py clear'
             }
         }
     }
