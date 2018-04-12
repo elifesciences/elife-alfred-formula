@@ -3,7 +3,8 @@
 // they also act on nodes in the same environment in parallel (all `ciStacks` for example)
 elifePipeline {
     def ciStacks = elifeCiStacks()
-    def end2endStacks = elifeEnd2endStacks()
+    // peerscout not part of the end2end test suite
+    def end2endStacks = elifeEnd2endStacks() + ['peerscout--end2end']
     def restOfStacks = elifeSlaveStacks()
 
     try {
