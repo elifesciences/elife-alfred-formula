@@ -1,5 +1,5 @@
 elifePipeline {
-    def filename = sh(script: 'date +"%Y-%m-%d"', returnStdout: true).trim()
+    def filename = sh(script: 'date +"%Y-%m-%d"', returnStdout: true).trim() + '.json'
 
     stage "Retrieve from New Relic", {
         sh "curl -H 'Accept: application/json' -H 'X-Query-Key: '\$NEW_RELIC_INSIGHTS_API_KEY 'https://insights-api.newrelic.com/v1/accounts/1451451/query?nrql=SELECT%20percentile%28backendDuration%2C50%29%20as%20%27Time%20to%20first%20Byte%27%2C%20percentile%28backendDuration%2C90%29%20as%20%27Time%20to%20first%20Byte%27%2C%20percentile%28backendDuration%2C95%29%20as%20%27Time%20to%20first%20Byte%27%20from%20PageView%20SINCE%207%20days%20ago%20TIMESERIES%201%20hour' >> ${filename}"
