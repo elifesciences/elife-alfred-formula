@@ -1,7 +1,7 @@
 elifePipeline {
     stage 'Master', {
         lock('master-server') {
-            builderUpdate 'master-server--2017-08-31'
+            sh "${env.BUILDER_PATH}bldr master.update"
         }
     }
 }
