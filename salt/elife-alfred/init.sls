@@ -237,6 +237,18 @@ builder-project-dependencies:
         - pkgs:
             - make
 
+{% set terraform_version = '0.11.5' %}
+{% set terraform_archive = 'terraform_' + terraform_version + '_linux_amd64.zip' %}
+terraform:
+    file.managed:
+        - name: /root/{{ terraform_archive }}
+        - source: https://releases.hashicorp.com/terraform/{{ terraform_version }}/{{ terraform_archive }}
+        - source_hash: md5=f8bc92ca4555bae298a17481b0ca8de6
+
+    cmd.run:
+        - name: unzip {{ terraform_archive }} && mv terraform /usr/local/bin/
+        - cwd: /root
+    
 builder-project:
     builder.git_latest:
         - name: ssh://git@github.com/elifesciences/builder.git
@@ -249,6 +261,7 @@ builder-project:
             - builder-project-aws-credentials-elife
             - builder-project-aws-credentials-jenkins
             - builder-project-dependencies
+            - terraform
 
     file.directory:
         - name: /srv/builder
