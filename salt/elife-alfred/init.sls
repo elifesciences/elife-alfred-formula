@@ -237,13 +237,14 @@ builder-project-dependencies:
         - pkgs:
             - make
 
-{% set terraform_version = '0.11.5' %}
+{% set terraform_version = '0.11.7' %}
+{% set terraform_hash = '3dce305de201522423cc388d57693794' %}
 {% set terraform_archive = 'terraform_' + terraform_version + '_linux_amd64.zip' %}
 terraform:
     file.managed:
         - name: /root/{{ terraform_archive }}
         - source: https://releases.hashicorp.com/terraform/{{ terraform_version }}/{{ terraform_archive }}
-        - source_hash: md5=f8bc92ca4555bae298a17481b0ca8de6
+        - source_hash: md5={{ terraform_hash }}
 
     cmd.run:
         - name: unzip {{ terraform_archive }} && mv terraform /usr/local/bin/
