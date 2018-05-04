@@ -479,3 +479,7 @@ tox:
         - name: tox == 2.9.1
         - require:
             - global-python-requisites
+
+shellcheck:
+    pkg.installed:
+        - name: shellcheck
