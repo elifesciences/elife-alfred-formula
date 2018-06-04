@@ -16,7 +16,7 @@ elifePipeline {
     stage 'Prod nodes', {
         builderRunAll(
             [
-                'journal--preview',
+                'journal--prod',
             ],
             [
                 'sudo /usr/local/bin/daily-system-update',
