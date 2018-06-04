@@ -44,15 +44,4 @@ elifePipeline {
             ]
         )
     }
-
-    // DO NOT reset prod or similar instances branch: leave in place the commit that is there
-    //stage 'Prod nodes', {
-    //    builderRunAll(
-    //        elifeProdStacks(),
-    //        [
-    //            'sudo /usr/local/bin/daily-system-update',
-    //            'sudo /usr/local/bin/daily-security-update'
-    //        ]
-    //    )
-    //}
 }
