@@ -3,7 +3,7 @@ import jenkins.model.Jenkins
 elifePipeline {
     stage 'Update AMI value', {
         checkout scm
-        # separate script to avoid approving tons of methods for this pipeline
+        // separate script to avoid approving tons of methods for this pipeline
         jenkinsCli "groovy = <jenkinsfiles/ec2-plugin-ami-update.groovy"
     }
 }
