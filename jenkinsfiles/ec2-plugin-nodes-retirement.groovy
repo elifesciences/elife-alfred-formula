@@ -1,3 +1,4 @@
+import jenkins.model.Jenkins
 import hudson.slaves.OfflineCause.SimpleOfflineCause
 import org.jvnet.localizer.Localizable
 
