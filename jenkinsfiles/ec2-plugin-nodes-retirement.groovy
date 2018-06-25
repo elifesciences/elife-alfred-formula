@@ -23,16 +23,16 @@ for (aSlave in Jenkins.instance.slaves) {
         aSlave.getComputer().setTemporarilyOffline(true, cause)
         aSlave.getComputer().doDoDelete()
     } else {
-		println('No action: ' + aSlave.name)
+		println("No action: ${aSlave.name}")
     }
 }
 
 for (aSlave in Jenkins.instance.slaves) {
     if (aSlave.getLabelString() == 'containers-jenkins-plugin') {
+		println("Waiting for offline: ${aSlave.name}")
         aSlave.getComputer().waitUntilOffline()
-		println('Offline: ' + aSlave.name)
 		while (!aSlave.getComputer().isIdle()) {
-			println('Waiting for idle: ' + aSlave.name)
+			println("Waiting for idle: ${aSlave.name}")
 			Thread.sleep(10000)
 		}
 		println("Delete: ${aSlave.name}")
