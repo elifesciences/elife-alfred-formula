@@ -7,7 +7,7 @@ elifePipeline {
     }
 
     def amiId
-    def amiName = sh(script: 'date +"%Y-%m-%dT%H:%M:%S"', returnStdout: true).trim()
+    def amiName = sh(script: 'date +"%Y%m%d%H%M%S"', returnStdout: true).trim()
     stage 'Generate AMI', {
         sh "BUILDER_NON_INTERACTIVE=1 /srv/builder/bldr tasks.create_ami:containers--jenkins-plugin-ami,name=${amiName} | tee ${amiName}.log" 
         amiId = sh(script: "cat ${amiName}.log | grep '^ami-'", returnStdout: true).trim()
