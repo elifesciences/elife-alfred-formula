@@ -3,7 +3,7 @@ import jenkins.model.Jenkins
 elifePipeline {
     stage 'Update AMI stack', {
         sh "/srv/builder/bldr tasks.remove_minion_key:containers--jenkins-plugin-ami" 
-        bldrUpdate 'containers--jenkins-plugin-ami'
+        builderUpdate 'containers--jenkins-plugin-ami'
     }
 
     def amiId
