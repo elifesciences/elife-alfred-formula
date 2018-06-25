@@ -21,7 +21,8 @@ elifePipeline {
         jenkinsCli "groovy = <jenkinsfiles/ec2-plugin-ami-update.groovy ${amiId}"
     }
 
-    // delete current agents? how to do so, and how to wait for them to finish their builds?
-    // would the plugin detect the AMI has changed and make a new one?
+    stage 'Retire outdated agents', {
+        jenkinsCli "groovy = <jenkinsfiles/ec2-plugin-nodes-retirement.groovy"
+    }
 }
 
