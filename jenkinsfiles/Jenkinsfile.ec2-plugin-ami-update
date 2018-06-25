@@ -1,10 +1,26 @@
 import jenkins.model.Jenkins
 
 elifePipeline {
+    stage 'Update AMI stack', {
+        sh "/srv/builder/bldr tasks.remove_minion_key:containers--jenkins-plugin-ami" 
+        bldrUpdate 'containers--jenkins-plugin-ami'
+    }
+
+    def amiId
+    def amiName = sh(script: 'date +"%Y-%m-%dT%H:%M:%S"', returnStdout: true).trim()
+    stage 'Generate AMI', {
+        sh "BUILDER_NON_INTERACTIVE=1 /srv/builder/bldr tasks.create_ami:containers--jenkins-plugin-ami,name=${amiName} | tee ${amiName}.log" 
+        amiId = sh(script: "cat ${amiName}.log | grep '^ami-'", returnStdout: true).trim()
+    }
+
     stage 'Update AMI value', {
         checkout scm
         // separate script to avoid approving tons of methods for this pipeline
-        jenkinsCli "groovy = <jenkinsfiles/ec2-plugin-ami-update.groovy"
+        // pass argument $amiId in some way
+        jenkinsCli "groovy = <jenkinsfiles/ec2-plugin-ami-update.groovy ${amiId}"
     }
+
+    // delete current agents? how to do so, and how to wait for them to finish their builds?
+    // would the plugin detect the AMI has changed and make a new one?
 }
 
