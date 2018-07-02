@@ -1,8 +1,13 @@
+import java.net.URLEncoder
+
 elifePipeline {
     def filename = sh(script: 'date +"%Y-%m-%dT%H:%M:%S"', returnStdout: true).trim() + '.json'
 
+    def query = "SELECT percentile(backendDuration,50) as 'Time to first Byte', percentile(backendDuration,90) as 'Time to first Byte', percentile(backendDuration,95) as 'Time to first Byte' from PageView FACET countryCode  SINCE 7 days ago TIMESERIES 1 day"
+
     stage "Retrieve from New Relic", {
-        sh "curl -H 'Accept: application/json' -H 'X-Query-Key: '\$NEW_RELIC_INSIGHTS_API_KEY 'https://insights-api.newrelic.com/v1/accounts/1451451/query?nrql=SELECT%20percentile%28backendDuration%2C50%29%20as%20%27Time%20to%20first%20Byte%27%2C%20percentile%28backendDuration%2C90%29%20as%20%27Time%20to%20first%20Byte%27%2C%20percentile%28backendDuration%2C95%29%20as%20%27Time%20to%20first%20Byte%27%20from%20PageView%20SINCE%207%20days%20ago%20TIMESERIES%201%20hour' >> ${filename}"
+        def encodedQuery = URLEncoder.encode(query, "UTF-8")
+        sh "curl -H 'Accept: application/json' -H 'X-Query-Key: '\$NEW_RELIC_INSIGHTS_API_KEY 'https://insights-api.newrelic.com/v1/accounts/1451451/query?nrql=$encodedQuery' >> ${filename}"
     }
 
     stage "Upload to S3", {
