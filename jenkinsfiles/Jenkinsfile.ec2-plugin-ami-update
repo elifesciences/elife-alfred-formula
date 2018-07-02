@@ -1,17 +1,20 @@
 import jenkins.model.Jenkins
 
+def stackname = 'containers--jenkins-plugin-ami'
+
 elifePipeline {
     stage 'Update AMI stack', {
-        sh "/srv/builder/bldr tasks.remove_minion_key:containers--jenkins-plugin-ami" 
-        builderUpdate 'containers--jenkins-plugin-ami'
+        sh "/srv/builder/bldr tasks.remove_minion_key:${stackname}" 
+        builderUpdate stackname
     }
 
     def amiId
     def generated = sh(script: 'date +"%Y%m%d%H%M%S"', returnStdout: true).trim()
     def amiName = "containers-${generated}"
     stage 'Generate AMI', {
-        sh "BUILDER_NON_INTERACTIVE=1 /srv/builder/bldr tasks.create_ami:containers--jenkins-plugin-ami,name=${amiName} | tee ${amiName}.log" 
+        sh "BUILDER_NON_INTERACTIVE=1 /srv/builder/bldr tasks.create_ami:${stackname},name=${amiName} | tee ${amiName}.log" 
         amiId = sh(script: "cat ${amiName}.log | grep '^ami-'", returnStdout: true).trim()
+        sh "/srv/builder/bldr stop:${stackname}"
     }
 
     stage 'Update AMI value', {
