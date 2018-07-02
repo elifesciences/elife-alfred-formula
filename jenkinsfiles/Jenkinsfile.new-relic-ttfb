@@ -3,7 +3,7 @@ import java.net.URLEncoder
 elifePipeline {
     def filename = sh(script: 'date +"%Y-%m-%dT%H:%M:%S"', returnStdout: true).trim() + '.json'
 
-    def query = "SELECT percentile(backendDuration,50) as 'Time to first Byte', percentile(backendDuration,90) as 'Time to first Byte', percentile(backendDuration,95) as 'Time to first Byte' from PageView FACET countryCode  SINCE 7 days ago TIMESERIES 1 day"
+    def query = "SELECT percentile(backendDuration,50) as 'Time to first Byte', percentile(backendDuration,90) as 'Time to first Byte', percentile(backendDuration,95) as 'Time to first Byte' from PageView FACET countryCode LIMIT 200 SINCE 7 days ago TIMESERIES 1 day"
 
     stage "Retrieve from New Relic", {
         def encodedQuery = URLEncoder.encode(query, "UTF-8")
