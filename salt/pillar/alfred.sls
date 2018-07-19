@@ -14,3 +14,9 @@ alfred:
             name: test-example
             minutes: 60
 
+elife:
+    kubectl:
+        directory: /var/lib/jenkins/.kube
+        username: jenkins
+        kubeconfigs:
+            config_dummy: "salt://elife-alfred/config/var-lib-jenkins-.kube-config_dummy"
