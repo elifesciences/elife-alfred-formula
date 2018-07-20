@@ -15,8 +15,7 @@ alfred:
             minutes: 60
 
 elife:
-    kubectl:
-        directory: /var/lib/jenkins/.kube
+    gcloud:
+        directory: /var/lib/jenkins/
         username: jenkins
-        kubeconfigs:
-            config_dummy: "salt://elife-alfred/config/var-lib-jenkins-.kube-config_dummy"
+        accounts: {} # cannot add accounts locally
