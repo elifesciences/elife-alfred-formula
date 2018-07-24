@@ -14,3 +14,8 @@ alfred:
             name: test-example
             minutes: 60
 
+elife:
+    gcloud:
+        directory: /var/lib/jenkins/
+        username: jenkins
+        accounts: {} # cannot add accounts locally

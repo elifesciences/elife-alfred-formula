@@ -15,3 +15,5 @@ base:
         #- elife-alfred.spectrum-cron
         - elife.hub
         - elife.python3
+        - elife.kubectl
+        - elife.gcloud
