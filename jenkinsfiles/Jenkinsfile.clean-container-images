@@ -13,8 +13,8 @@ elifePipeline {
         }
 
         lock 'elife-xpub--demo', {
-            builderStart 'elife-xpub--ci'
-            builderCmd 'elife-xpub--ci', 'docker-prune'
+            builderStart 'elife-xpub--demo'
+            builderCmd 'elife-xpub--demo', 'docker-prune'
         }
     }
 }
