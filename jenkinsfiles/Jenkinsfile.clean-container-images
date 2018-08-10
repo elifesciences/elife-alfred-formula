@@ -1,20 +1,20 @@
 elifePipeline {
     stage "elife-libraries" {
-        lock 'elife-libraries--ci', {
-            builderStart 'elife-libraries--ci'
-            builderCmd 'elife-libraries--ci', 'sudo docker-prune'
+        lock 'elife-xpub--ci', {
+            builderStart 'elife-xpub--ci'
+            builderCmd 'elife-xpub--ci', 'docker-prune'
         }
     }
 
     stage "elife--xpub", {
         lock 'elife-xpub--ci', {
             builderStart 'elife-xpub--ci'
-            builderCmd 'elife-xpub--ci', 'sudo docker-prune'
+            builderCmd 'elife-xpub--ci', 'docker-prune'
         }
 
         lock 'elife-xpub--demo', {
-            builderStart 'elife-xpub--demo'
-            builderCmd 'elife-xpub--demo', 'sudo docker-prune'
+            builderStart 'elife-xpub--ci'
+            builderCmd 'elife-xpub--ci', 'docker-prune'
         }
     }
 }
