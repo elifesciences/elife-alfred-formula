@@ -61,7 +61,7 @@ jenkins-home-directory-ownership:
         - group: jenkins
         - mode: 755
 
-{% set jenkins_version = '2.121.2' %}
+{% set jenkins_version = '2.121.3' %}
 {% set deb_filename = 'jenkins_'+jenkins_version+'_all.deb' %}
 # the apt repository does not allow us to pin the version:
 # https://issues.jenkins-ci.org/browse/INFRA-92
@@ -237,8 +237,8 @@ builder-project-dependencies:
         - pkgs:
             - make
 
-{% set terraform_version = '0.11.7' %}
-{% set terraform_hash = '3dce305de201522423cc388d57693794' %}
+{% set terraform_version = '0.11.8' %}
+{% set terraform_hash = 'a8843fa38e13e6f1be3c71cc2b759d1f' %}
 {% set terraform_archive = 'terraform_' + terraform_version + '_linux_amd64.zip' %}
 terraform:
     file.managed:
