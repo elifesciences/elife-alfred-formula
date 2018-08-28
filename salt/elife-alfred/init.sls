@@ -238,7 +238,7 @@ builder-project-dependencies:
             - make
 
 {% set terraform_version = '0.11.8' %}
-{% set terraform_hash = '3dce305de201522423cc388d57693794' %}
+{% set terraform_hash = 'a8843fa38e13e6f1be3c71cc2b759d1f' %}
 {% set terraform_archive = 'terraform_' + terraform_version + '_linux_amd64.zip' %}
 terraform:
     file.managed:
