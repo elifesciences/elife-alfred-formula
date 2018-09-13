@@ -321,13 +321,14 @@ jenkins-sudo-commands:
             - "Defaults    env_keep+=SPECTRUM_PROCESSES"
             - "Defaults    env_keep+=SPECTRUM_TIMEOUT"
             - "jenkins    ALL=(ALL)    NOPASSWD: /usr/local/builder-scripts/"
-            - "jenkins    ALL=(ALL)    NOPASSWD: /srv/elife-spectrum/execute.sh"
-            - "jenkins    ALL=(ALL)    NOPASSWD: /srv/elife-spectrum/execute-simplest-possible-test.sh"
             - "jenkins    ALL=(ALL)    NOPASSWD: /srv/elife-spectrum/checkout.sh"
             - "jenkins    ALL=(ALL)    NOPASSWD: /srv/elife-spectrum/clean.sh"
+            - "jenkins    ALL=(ALL)    NOPASSWD: /srv/elife-spectrum/execute.sh"
+            - "jenkins    ALL=(ALL)    NOPASSWD: /srv/elife-spectrum/execute-simplest-possible-test.sh"
+            - "jenkins    ALL=(ALL)    NOPASSWD: /srv/elife-spectrum/load-small.sh"
+            - "jenkins    ALL=(ALL)    NOPASSWD: /srv/elife-spectrum/reset-build.sh"
             - "jenkins    ALL=(ALL)    NOPASSWD: /srv/elife-spectrum/update-kitchen-sinks-from-github.sh"
             - "jenkins    ALL=(ALL)    NOPASSWD: /srv/elife-spectrum/update-kitchen-sinks-from-s3.sh"
-            - "jenkins    ALL=(ALL)    NOPASSWD: /srv/elife-spectrum/load-small.sh"
 
 jenkins-slave-node-for-end2end-tests-folder:
     file.absent:
