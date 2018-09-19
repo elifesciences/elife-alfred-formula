@@ -1,6 +1,6 @@
 #!/bin/bash
 {% if salt['elife.cfg']('cfn.outputs.DomainName') %}
-exec java -jar /usr/local/bin/jenkins-cli.jar -s http://localhost:8080 -ssh -user {{ pillar.alfred.jenkins.user }}
+exec java -jar /usr/local/bin/jenkins-cli.jar -s http://localhost:8080 -ssh -user {{ pillar.alfred.jenkins.user }} "$@"
 {% else %}
 exec java -jar /usr/local/bin/jenkins-cli.jar -s http://localhost:8080 "$@"
 {% endif %}
