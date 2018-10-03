@@ -57,5 +57,12 @@ elifePipeline {
                 builderCmd 'profiles--end2end', 'cd profiles && docker-compose exec -T wsgi venv/bin/python manage.py clear'
             }
         }
+
+        stage 'Digests', {
+            lock 'digests--end2end', {
+                builderStart 'digests--end2end'
+                builderCmd 'digests--end2end', 'cd digests && docker-compose run -T wsgi venv/bin/python app/manage.py flush --noinput'
+            }
+        }
     }
 }
