@@ -1,11 +1,4 @@
 elifePipeline {
-    def commit
-
-    stage 'Checkout', {
-        checkout scm
-        commit = elifeGitRevision()
-    }
-    
     stage 'Deploy to title-length', {
         builderDeployRevision('journal--title-length', 'content-header-title-length')
     }
