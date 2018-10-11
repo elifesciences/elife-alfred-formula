@@ -61,7 +61,7 @@ elifePipeline {
         stage 'Digests', {
             lock 'digests--end2end', {
                 builderStart 'digests--end2end'
-                builderCmd 'digests--end2end', 'cd digests && docker-compose run -T wsgi venv/bin/python app/manage.py flush --noinput'
+                builderCmd 'digests--end2end', 'cd digests && docker-compose exec -T wsgi venv/bin/python app/manage.py flush --noinput'
             }
         }
     }
