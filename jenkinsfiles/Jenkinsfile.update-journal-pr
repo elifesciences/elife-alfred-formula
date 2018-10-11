@@ -3,7 +3,7 @@ branch = params.branch
 
 elifePipeline {
     stage "Deploy to ${environment}", {
-        builderDeployRevision("journal--${environment}', branch)
+        builderDeployRevision("journal--${environment}", branch)
     }
 }
 
