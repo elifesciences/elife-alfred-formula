@@ -1,0 +1,9 @@
+environment = "pr-${params.pr_number}"
+branch = params.branch
+
+elifePipeline {
+    stage "Deploy to ${environment}", {
+        builderDeployRevision("journal--${environment}', branch)
+    }
+}
+
