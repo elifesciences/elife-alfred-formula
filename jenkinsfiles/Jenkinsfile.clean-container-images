@@ -5,16 +5,4 @@ elifePipeline {
             builderCmd 'elife-xpub--ci', 'docker-prune'
         }
     }
-
-    stage "elife--xpub", {
-        lock 'elife-xpub--ci', {
-            builderStart 'elife-xpub--ci'
-            builderCmd 'elife-xpub--ci', 'docker-prune'
-        }
-
-        lock 'elife-xpub--demo', {
-            builderStart 'elife-xpub--demo'
-            builderCmd 'elife-xpub--demo', 'docker-prune'
-        }
-    }
 }
