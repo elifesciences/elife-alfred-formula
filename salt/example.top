@@ -9,10 +9,8 @@ base:
         - elife.postfix-ses
         - elife.aws-cli
         - elife.external-volume
-        - elife.spectrum
         - elife-alfred
         #- elife-alfred.postfix
-        #- elife-alfred.spectrum-cron
         - elife.hub
         - elife.python3
         - elife.kubectl
