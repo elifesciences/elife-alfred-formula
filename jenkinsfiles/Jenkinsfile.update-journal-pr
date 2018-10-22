@@ -4,6 +4,7 @@ branch = params.branch
 elifePipeline {
     stage "Deploy to ${environment}", {
         builderDeployRevision("journal--${environment}", branch)
+        echo "Go to https://${environment}--journal.elifesciences.org"
     }
 }
 
