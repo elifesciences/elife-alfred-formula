@@ -24,7 +24,7 @@ elifePipeline {
         sh "/srv/builder/bldr stop:${stackname}"
     }
 
-    stage 'Downstream'. {
+    stage 'Downstream', {
         build job: 'process-ami-update', wait: false, parameters: [string(name: 'release', value: '1804'), string(name: 'amiId', value: amiId)]
     }
 }
