@@ -14,13 +14,14 @@ elifePipeline {
         sh "/srv/builder/bldr launch:${project},${alternative}" 
     }
 
-    //def amiId
-    //def generated = sh(script: 'date +"%Y%m%d%H%M%S"', returnStdout: true).trim()
-    //def amiName = "${project}-${alternative}-${generated}"
-    //stage 'Generate AMI', {
-    //    sh "BUILDER_NON_INTERACTIVE=1 /srv/builder/bldr tasks.create_ami:${stackname},name=${amiName} | tee ${amiName}.log" 
-    //    amiId = sh(script: "cat ${amiName}.log | grep '^ami-'", returnStdout: true).trim()
-    //    sh "/srv/builder/bldr stop:${stackname}"
-    //}
+    def amiId
+    def generated = sh(script: 'date +"%Y%m%d%H%M%S"', returnStdout: true).trim()
+    def amiName = "${project}-${alternative}-${generated}"
+    stage 'Generate AMI', {
+        sh "BUILDER_NON_INTERACTIVE=1 /srv/builder/bldr tasks.create_ami:${stackname},name=${amiName} | tee ${amiName}.log" 
+        amiId = sh(script: "cat ${amiName}.log | grep '^ami-'", returnStdout: true).trim()
+        // TODO: perhaps destroy? Separate stage for sure
+        sh "/srv/builder/bldr stop:${stackname}"
+    }
 }
 
