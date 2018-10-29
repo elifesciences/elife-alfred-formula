@@ -1,0 +1,5 @@
+elifePipeline {
+    stage "Continuumtest simplest possible test", {
+        elifeSimplestPossibleTest "continuumtest"
+    }
+}
