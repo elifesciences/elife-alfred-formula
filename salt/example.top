@@ -14,4 +14,4 @@ base:
         - elife.hub
         - elife.python3
         - elife.kubectl
-        - elife.gcloud
+        - elife.helm
