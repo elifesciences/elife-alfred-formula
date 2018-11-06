@@ -318,6 +318,8 @@ jenkins-sudo-commands:
         - name: /etc/sudoers
         - text:
             - "jenkins    ALL=(ALL)    NOPASSWD: /usr/local/builder-scripts/"
+            - "jenkins    ALL=(ALL)    NOPASSWD: /usr/bin/kubectl"
+            - "jenkins    ALL=(ALL)    NOPASSWD: /usr/local/bin/helm"
 
 jenkins-slave-node-for-end2end-tests-folder:
     file.absent:
