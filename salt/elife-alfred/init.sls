@@ -465,8 +465,8 @@ siege-log-file:
         - mode: 666
 
 tox:
-    pip.installed:
-        - name: tox == 2.9.1
+    cmd.run:
+        - name: pip install tox==2.9.1
         - require:
             - global-python-requisites
 
