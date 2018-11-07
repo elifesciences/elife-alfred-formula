@@ -4,6 +4,7 @@ elifePipeline {
         checkout scm
         // ["902", ...]
         def oldPullRequest = jenkinsCli("groovy = <jenkinsfiles/old-pull-requests.groovy elife-xpub", true).trim().split("\n")
+        echo "Found old pull requests: ${oldPullRequest}"
     }
 
     stage "Delete Helm releases", {
