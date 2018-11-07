@@ -11,7 +11,10 @@ elifePipeline {
         // ["elife-xpub--pr-902", ...]
         def releases = sh(script: "sudo -u elife -H helm ls elife-xpub-- --output json | jq -r '.Releases[].Name'", returnStdout: true).trim().split("\n")
         for (pr in oldPullRequests) {
-            println(pr) 
+            def oldRelease = "elife-xpub--pr-${pr}"
+            if (releases.contains(oldRelease)) {
+                sh "sudo -u elife -H helm delete ${oldRelease}"
+            }
         }
     }
 }
