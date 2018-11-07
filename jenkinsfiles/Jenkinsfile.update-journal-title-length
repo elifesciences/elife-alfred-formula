@@ -1,5 +1,0 @@
-elifePipeline {
-    stage 'Deploy to title-length', {
-        builderDeployRevision('journal--title-length', 'content-header-title-length')
-    }
-}
