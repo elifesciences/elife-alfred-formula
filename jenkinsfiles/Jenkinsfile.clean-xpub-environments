@@ -3,7 +3,7 @@ elifePipeline {
     stage "Calculate old pull requests", {
         checkout scm
         // ["902", ...]
-        def oldPullRequest = jenkinsCli("groovy = <jenkinsfiles/old-pull-requests.groovy elife-xpub").trim().split("\n")
+        def oldPullRequest = jenkinsCli("groovy = <jenkinsfiles/old-pull-requests.groovy elife-xpub", true).trim().split("\n")
     }
 
     stage "Delete Helm releases", {
