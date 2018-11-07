@@ -1,6 +1,7 @@
 elifePipeline {
     def pullRequests
     stage "Calculate old pull requests", {
+        checkout scm
         // ["902", ...]
         def oldPullRequest = jenkinsCli("groovy = <jenkinsfiles/old-pull-requests.groovy elife-xpub").trim().split("\n")
     }
