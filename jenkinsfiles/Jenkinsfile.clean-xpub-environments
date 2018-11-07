@@ -9,7 +9,7 @@ elifePipeline {
 
     stage "Delete Helm releases", {
         // ["elife-xpub--pr-902", ...]
-        def releases = sh(script: "helm ls elife-xpub-- --output json | jq -r '.Releases[].Name'", returnStdout: false).trim().split("\n")
+        def releases = sh(script: "sudo -u elife -H helm ls elife-xpub-- --output json | jq -r '.Releases[].Name'", returnStdout: false).trim().split("\n")
         for (pr in oldPullRequest) {
             println(pr) 
         }
