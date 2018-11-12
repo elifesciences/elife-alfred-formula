@@ -64,5 +64,12 @@ elifePipeline {
                 builderCmd 'digests--end2end', 'cd digests && docker-compose exec -T wsgi venv/bin/python app/manage.py flush --noinput'
             }
         }
+
+        stage 'Xpub', {
+            lock 'elife-xpub--end2end', {
+                builderStart 'elife-xpub--end2end'
+                builderCmdNode 'elife-xpub--end2end', 1, 'cd /srv/elife-xpub && DROP=1 setup-database.sh'
+            }
+        }
     }
 }
