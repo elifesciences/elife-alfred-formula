@@ -12,7 +12,8 @@ elifePipeline {
         def releases = sh(script: "sudo -u elife -H helm ls elife-xpub-- --output json | jq -r '.Releases[].Name'", returnStdout: true).trim().split("\n").toList()
         echo "Found current releases: ${releases}"
         for (pr in oldPullRequests) {
-            def oldRelease = "elife-xpub--pr-${pr}"
+            // avoid GStringImpl clash with ArrayList<String>
+            def oldRelease = "elife-xpub--pr-${pr}".toString()
             if (releases.contains(oldRelease)) {
                 sh "sudo -u elife -H helm delete ${oldRelease}"
             }
