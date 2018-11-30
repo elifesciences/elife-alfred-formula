@@ -1,0 +1,12 @@
+elifePipeline {
+    def stackname = 'journal-cms--continuumtest'
+    def backupLocation = 's3://elife-app-backups/journal-cms/'
+
+    stage 'Retrieve files', {
+        def searchPrefix = sh(script: "echo `date +%Y%m`/`date -d "-1 days" +%Y%m%d`", returnStdout: true).trim()
+        def downloadPrefix = backupLocation + sh(script: "date +%Y%m", returnStdout: true).trim() + "/"
+        def databaseArchive = sh(script: "aws s3 ls ${backupLocation}${searchPrefix} | grep prod | grep elife_2_0 | awk \'{print \$4}\'", returnStdout: true).trim()
+        def filesArchive = sh(script: "aws s3 ls ${backupLocation}${searchPrefix} | grep prod | grep archive | awk \'{print \$4}\'", returnStdout: true).trim()
+        builderCmd stackname, "aws s3 cp ${downloadPrefix}${databaseArchive} /ext/tmp/"
+    }
+}
