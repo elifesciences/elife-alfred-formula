@@ -5,7 +5,7 @@ elifePipeline {
     stage 'Credentials generation', {
         def assumeRoleOutput = sh(script: 'aws sts assume-role --role-arn arn:aws:iam::512686554592:role/journal-cms--prod--ReadBackups --role-session-name | jq .Credentials | tee journal-cms-backup-temporary-credentials.json', returnStdout: true)
         def credentials = readJSON text: assumeRoleOutput
-        def environmentSecrets = "export AWS_ACCESS_KEY_ID=${credentials.AccessKeyId} AWS_SECRET_ACCESS_KEY=${credentials.SecretAccessKey AWS_SESSION_TOKEN=${credentials.SessionToken}"
+        def environmentSecrets = "export AWS_ACCESS_KEY_ID=${credentials.AccessKeyId} AWS_SECRET_ACCESS_KEY=${credentials.SecretAccessKey} AWS_SESSION_TOKEN=${credentials.SessionToken}"
         writeFile file: 'backups.env', text: environmentSecrets
     }
 
@@ -13,5 +13,8 @@ elifePipeline {
         def workingDirectory = pwd()
         sh "${env.BUILDER_PATH}bldr upload_file:${stackname},${pwd}/backups.env,/tmp/backups.env,overwrite=true,confirm=true"
         builderCmd 'journal-cms--continuumtest', 'source /tmp/backups.env && scripts/download-backup.sh'
+    }
+
+    stage 'Restore database', {
     }
 }
