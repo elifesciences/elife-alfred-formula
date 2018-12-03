@@ -11,7 +11,7 @@ elifePipeline {
 
     stage 'Retrieve files', {
         def workingDirectory = pwd()
-        sh "${env.BUILDER_PATH}bldr upload_file:${stackname},${pwd}/backups.env,/tmp/backups.env,overwrite=true,confirm=true"
+        sh "${env.BUILDER_PATH}bldr upload_file:${stackname},${workingDirectory}/backups.env,/tmp/backups.env,overwrite=true,confirm=true"
         builderCmd 'journal-cms--continuumtest', 'source /tmp/backups.env && scripts/download-backup.sh'
     }
 
