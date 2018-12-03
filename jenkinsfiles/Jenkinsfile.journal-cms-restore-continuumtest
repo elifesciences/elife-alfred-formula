@@ -15,6 +15,11 @@ elifePipeline {
         builderCmd 'journal-cms--continuumtest', 'source /tmp/backups.env && scripts/download-backup.sh'
     }
 
-    stage 'Restore database', {
+    stage 'Restore backup', {
+        builderCmd 'journal-cms--continuumtest', "scripts/restore-backup.sh"
+    }
+
+    stage 'Redeploy', {
+        builderCmd 'journal-cms--continuumtest', "sudo salt-call state.highstate"
     }
 }
