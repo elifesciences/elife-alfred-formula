@@ -3,7 +3,7 @@ elifePipeline {
     def backupLocation = 's3://elife-app-backups/journal-cms/'
 
     stage 'Credentials generation', {
-        def assumeRoleOutput = sh(script: 'aws sts assume-role --role-arn arn:aws:iam::512686554592:role/journal-cms--prod--ReadBackups --role-session-name | jq .Credentials | tee journal-cms-backup-temporary-credentials.json', returnStdout: true)
+        def assumeRoleOutput = sh(script: 'aws sts assume-role --role-arn arn:aws:iam::512686554592:role/journal-cms--prod--ReadBackups --role-session-name process-journal-cms-restore-continuumtest | jq .Credentials | tee journal-cms-backup-temporary-credentials.json', returnStdout: true)
         def credentials = readJSON text: assumeRoleOutput
         def environmentSecrets = "export AWS_ACCESS_KEY_ID=${credentials.AccessKeyId} AWS_SECRET_ACCESS_KEY=${credentials.SecretAccessKey} AWS_SESSION_TOKEN=${credentials.SessionToken}"
         writeFile file: 'backups.env', text: environmentSecrets
