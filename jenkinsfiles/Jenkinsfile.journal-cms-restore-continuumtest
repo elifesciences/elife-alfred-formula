@@ -9,17 +9,19 @@ elifePipeline {
         writeFile file: 'backups.env', text: environmentSecrets
     }
 
-    stage 'Retrieve files', {
-        def workingDirectory = pwd()
-        sh "${env.BUILDER_PATH}bldr upload_file:${stackname},${workingDirectory}/backups.env,/tmp/backups.env,overwrite=true,confirm=true"
-        builderCmd 'journal-cms--continuumtest', 'cd /srv/journal-cms && source /tmp/backups.env && scripts/download-backup.sh'
-    }
+    lock (stackname) {
+        stage 'Retrieve files', {
+            def workingDirectory = pwd()
+            sh "${env.BUILDER_PATH}bldr upload_file:${stackname},${workingDirectory}/backups.env,/tmp/backups.env,overwrite=true,confirm=true"
+            builderCmd 'journal-cms--continuumtest', 'cd /srv/journal-cms && source /tmp/backups.env && scripts/download-backup.sh'
+        }
 
-    stage 'Restore backup', {
-        builderCmd 'journal-cms--continuumtest', "cd /srv/journal-cms && scripts/restore-backup.sh"
-    }
+        stage 'Restore backup', {
+            builderCmd 'journal-cms--continuumtest', "cd /srv/journal-cms && scripts/restore-backup.sh"
+        }
 
-    stage 'Redeploy', {
-        builderCmd 'journal-cms--continuumtest', "sudo salt-call state.highstate"
+        stage 'Redeploy', {
+            builderCmd 'journal-cms--continuumtest', "sudo salt-call state.highstate"
+        }
     }
 }
