@@ -24,7 +24,7 @@ Jenkins 2 provides a Pipeline plugin by default (evolution of the Workflow plugi
 Jenkins 2 pipelines are defined as groovy scripts such as:
 
 ```
-lifePipeline {
+elifePipeline {
     def commit
     stage 'Checkout', {
         checkout scm
@@ -63,24 +63,24 @@ lifePipeline {
 This pipeline has several stages; more can be added with other `stage` sections.
 `sh` steps run scripts inside the workspace where the project has been checked out with the new commit. `step` statements can delegate to any generic Jenkins step.
 
-All the `elife*` and `builder*` elements in the pipeline definition are provided by a [Git repository of custom steps](https://github.com/elifesciences/elife-jenkins-workflow-libs) (written in Groovy too) that is imported into Jenkins. These steps are pushed to the remote `ssh://$USERNAME@$JENKINS:16022/workflowLibs.git` to deploy them into the Jenkins instance.
+All the `elife*` and `builder*` elements in the pipeline definition are provided by a [Git repository of custom steps](https://github.com/elifesciences/elife-jenkins-workflow-libs) (written in Groovy too) that is imported into Jenkins. These steps are [pushed automatically](https://alfred.elifesciences.org/job/test-elife-jenkins-workflow-libs/) into Jenkins.
 
 ### Pipelines
 
-- `test-*` pipelines bring a project from `develop` to `approved` if it passed all specified tests.
-- `prod-*` pipelines bring a project from `approved` to `master` and deploy it.
-- `library-*` pipelines builds the `master` of libraries, which have no standalone deploy. Sometimes libraries are deployed on servers in their `master` versions, so in that case their pipelines build the `develop` branch and merge it to `master` once it passes the tests.
-- `process-*` pipelines perform a custom periodical task, behaving like a cron on steroids.
-- `dependency-*` pipelines open pull requests to a project, with suggested changes like library updates.
+- `test-*` pipelines bring a project from `develop` to `approved` if it passed all specified tests. Typically used `ci`, `end2end`, `continuumtest`|`staging` environments.
+- `prod-*` pipelines bring a project from `approved` to `master` and deploys it. Typically uses `prod` environments.
+- `libraries/*` pipelines builds the `master` of libraries, which have no standalone deploy. Sometimes libraries are deployed on servers in their `master` versions, so in that case their pipelines build the `develop` branch and merge it to `master` once it passes the tests.
+- `process/*` pipelines perform a custom periodical task, behaving like a cron on steroids.
+- `dependencies/*` pipelines open pull requests to a project, with suggested changes like library updates.
 - `Pull Requests (*)` folders contain one subfolder per-project or per-library. They build the branches of pull requests to the official repositories according to their Jenkinsfile.
 
-Not all the projects are in `Pull requests`: they have to be whitelisted in its configurations. Libraries are easily supported, as their builds are stateless and parallelizable; projects instead need the pipeline to take a `lock` step over the `ci` machine being used.
+Not all the projects are in `Pull requests`: they have to be whitelisted in its [configuration](https://alfred.elifesciences.org/job/pull-requests-projects/configure). Libraries are easily supported, as their builds are stateless and parallelizable; projects instead need the pipeline to build onto a `containers` agent or to take a `lock` step over the `ci` machine being used.
 
 ### Spectrum
 
 The elife-spectrum itself contains all end2end tests, which is the most complex stage of a build. This is a Python project: [https://github.com/elifesciences/elife-spectrum].
 
-Projects run the subset of tests that covers them, which can range from a few seconds to a 10 minutes run time. For exmaple, lax is involved in all the [tests for article publishing](https://github.com/elifesciences/elife-spectrum/blob/master/spectrum/test_article.py#L15).
+Projects run the subset of tests that covers them, which can range from a few seconds to a 10 minutes run time. For example, lax is involved in all the [tests for article publishing](https://github.com/elifesciences/elife-spectrum/blob/master/spectrum/test_article.py#L15).
 
 ### Plugins
 
@@ -99,7 +99,7 @@ Most of the interesting Jenkins features are provided by plugins, which are back
 
 ## Builder
 
-Under the covers Jenkins is delegating the deployment of projects and their test runs to builder. The stack is composed as follows:
+Under the covers Jenkins is delegating the deployment of projects and their test runs to [builder](https://github.com/elifesciences/builder/). The stack is composed as follows:
 
 - `/srv/builder` is the modern, open sourced builder.
 - `/usr/local/jenkins-scripts` contains miscellaneous scripts like `verifyjunitxml.py` that can be run without external dependencies. Nothing very interesting.
@@ -118,10 +118,10 @@ In order to provide a consistent infrastructure for every project and a single d
 
 - Support the `dev` and `ci` configurations: used in `dev`elopment and in the `ci` testing cluster, this configuration isolates the project from other projects and the external world. Unit tests and code coverage metrics run at this level, providing feedback over the basic correctness and quality of the code.
 - Support the `end2end` configuration: used in the `end2end` testing cluster, this configuration connects the project to all its `end2end` neighbors and allows to run tests which move data between projects and test their collaboration. Still this configuration stubs external dependencies not under the administration of eLife (e.g. PMC) or use their preproduction services where provided.
-- Support the `continuumtest` configuration: used in the `continuumtest` exploratory cluster to run manual tests and exploratory tests where a human eye is needed. This configuration connects each project to its `continuumtest` neighbors.
+- Support the `continuumtest`|`staging` configuration: used in the `continuumtest`|`staging` exploratory cluster to run manual tests and exploratory tests where a human eye is needed. This configuration connects each project to its `continuumtest` neighbors.
 - Support the `prod` configuration: used in the `prod` cluster, this configuration is the one that serves the real user. It connects all projects together and with the real world.
 
-It is more important for the cluster names to be consistent than to be perfectly fitting. It should be impossible for clusters to communicate with each other (i.e. if it happens something is horribly wrong).
+It should be forbidden for different environments to communicate with each other (i.e. if it happens something is horribly wrong), unless it's a read only operation.
 
 The configuration of a project is chosen according to the stack where it is deployed (e.g. `elife-bot--continuumtest` vs. `elife-bot--ci` vs. `lax--end2end`) The configuration will not be chosen according to the branch that is deployed.
 
