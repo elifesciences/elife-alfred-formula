@@ -130,4 +130,3 @@ The configuration of a project is chosen according to the stack where it is depl
 - Pull requests should be directed at `develop`. The project tests should always be runnable over a branch, while the end2end tests are limited to run on the mainline right now.
 - It is the project's pipeline responsibility to merge `develop` into `approved` when all automated tests are passing.
 - It is the project's pipeline responsibility to merge `approved` into `master` upon deployment into production, which happens by triggering the `prod-$PROJECT` pipeline automatically (or optionally manually upon arrival into `approved` if the project owners do not feel confident.)
-- Whatever branch can be deployed on the `continuumtest` instances, but if you want the most recent version of the code that has passed all tests you should go for the `approved` branch.
