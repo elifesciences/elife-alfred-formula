@@ -1,0 +1,15 @@
+elifePipeline {
+    node('containers-jenkins-plugin') {
+        stage 'Pull', {
+            sh "docker pull atmoz/sftp:alpine"
+        }
+
+        stage 'Tag', {
+            sh "docker tag atmoz/sftp:alpine elifesciences/sftp:${params.image_tag}"
+        }
+
+        stage 'Push', {
+            sh "docker push elifesciences/sftp:${params.image_tag}"
+        }
+    }
+}
