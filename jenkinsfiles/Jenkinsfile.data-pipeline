@@ -1,0 +1,13 @@
+elifePipeline {
+    stage 'Staging', {
+        lock('data-pipeline--staging') {
+            builderUpdate 'data-pipeline--staging'
+        }
+    }
+    
+    stage 'Prod', {
+        lock('data-pipeline--prod') {
+            builderUpdate 'data-pipeline--prod'
+        }
+    }
+}
