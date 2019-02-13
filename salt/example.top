@@ -9,6 +9,7 @@ base:
         - elife.postfix-ses
         - elife.aws-cli
         - elife.external-volume
+        - elife.vault-client
         - elife-alfred
         #- elife-alfred.postfix
         - elife.hub
