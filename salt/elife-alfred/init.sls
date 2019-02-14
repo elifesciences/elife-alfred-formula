@@ -288,23 +288,10 @@ builder-update:
             - builder-project-aws-credentials-jenkins
             - file: builder-update
 
-builder-settings:
-    file.managed:
-        - name: /srv/builder/settings.yml
-        - source: salt://elife-alfred/config/srv-builder-settings.yml
-        - user: jenkins
-        - group: jenkins
-        - require:
-            - builder-project
-            - builder-update
-
-
 builder-logrotate:
     file.managed:
         - name: /etc/logrotate.d/builder
         - source: salt://elife-alfred/config/etc-logrotate.d-builder
-        - require:
-            - builder-settings
 
 # jenkins customizations
 alfred-assets:
