@@ -68,7 +68,7 @@ elifePipeline {
         stage 'Xpub', {
             lock 'elife-xpub--end2end', {
                 builderStart 'elife-xpub--end2end'
-                builderCmdNode 'elife-xpub--end2end', 1, 'cd /srv/elife-xpub && DROP=1 setup-database.sh'
+                builderCmdNode 'elife-xpub--end2end', 1, 'cd /srv/elife-xpub && TIMEOUT=30 wait-database.sh && DROP=1 setup-database.sh'
             }
         }
     }
