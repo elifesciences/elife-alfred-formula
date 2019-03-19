@@ -20,10 +20,12 @@ vault-approle-vault-wrapper:
         - require:
             - vault-approle-environment-variables
 
-{% if salt['elife.only_on_aws']() %}
-vault-approle-vault-wrapper:
+vault-approle-vault-wrapper-smoke-test:
     cmd.run:
-        - name: /usr/local/bin/vault token lookup > /dev/null
+{% if salt['elife.only_on_aws']() %}
+        - name: /usr/local/bin/vault.sh token lookup > /dev/null
+{% else %}
+        - name: which vault.sh
+{% endif %}
         - require:
             - vault-approle-vault-wrapper
-{% endif %}
