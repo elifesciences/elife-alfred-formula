@@ -4,13 +4,7 @@ vault-approle-environment-variables:
         - contents: |
             export VAULT_ADDR={{ pillar.alfred.vault.addr or '' }}
             export VAULT_ROLE_ID={{ pillar.alfred.vault.role_id or '' }}
-            export VAULT_SECRET_ID={{ pillar.alfred.vault.role_id or '' }}
-
-    environ.setenv:
-        - value:
-            VAULT_ADDR: {{ pillar.alfred.vault.addr }}
-            VAULT_ROLE_ID: {{ pillar.alfred.vault.role_id }}
-            VAULT_SECRET_ID: {{ pillar.alfred.vault.role_id }}
+            export VAULT_SECRET_ID={{ pillar.alfred.vault.secret_id or '' }}
 
 vault-approle-vault-wrapper:
     file.managed:
