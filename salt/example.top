@@ -10,6 +10,7 @@ base:
         - elife.aws-cli
         - elife.external-volume
         - elife.vault-client
+        - elife-alfred.vault-approle
         - elife-alfred
         #- elife-alfred.postfix
         - elife.hub
