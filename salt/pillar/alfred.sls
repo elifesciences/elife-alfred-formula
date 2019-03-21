@@ -13,6 +13,10 @@ alfred:
         example:
             name: test-example
             minutes: 60
+    vault:
+        addr: null
+        role_id: null
+        secret_id: null
 
 elife:
     gcloud:

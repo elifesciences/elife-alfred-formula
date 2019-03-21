@@ -130,3 +130,10 @@ The configuration of a project is chosen according to the stack where it is depl
 - Pull requests should be directed at `develop`. The project tests should always be runnable over a branch, while the end2end tests are limited to run on the mainline right now.
 - It is the project's pipeline responsibility to merge `develop` into `approved` when all automated tests are passing.
 - It is the project's pipeline responsibility to merge `approved` into `master` upon deployment into production, which happens by triggering the `prod-$PROJECT` pipeline automatically (or optionally manually upon arrival into `approved` if the project owners do not feel confident.)
+
+## Vault
+
+The pillar show [the dependency on an external Vault server](salt/pillar/alfred.sls) to be used through `vault.sh`.
+
+The `vault.sh` script authenticates using the [AppRole](https://www.vaultproject.io/docs/auth/approle.html) method and re-issues a short-lived token every time that token expires. It can be used by any build section running on the Jenkins master.
+
