@@ -25,7 +25,6 @@ for (aSlave in Jenkins.instance.slaves) {
 		println("Retire: ${aSlave.name}")
         toRetire.add(aSlave)
         aSlave.getComputer().setTemporarilyOffline(true, cause)
-        aSlave.getComputer().doDoDelete()
     } else {
 		println("No action: ${aSlave.name}")
     }
