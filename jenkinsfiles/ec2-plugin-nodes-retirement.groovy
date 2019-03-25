@@ -19,10 +19,11 @@ class RetirementOfflineMessage extends org.jvnet.localizer.Localizable {
 def cause = SimpleOfflineCause.create(new RetirementOfflineMessage())
 
 println("Jenkins slaves: ${Jenkins.instance.slaves.size()}")
-// TODO: clone list to use it in the next for()?
+def toRetire = []
 for (aSlave in Jenkins.instance.slaves) {
     if (aSlave.getLabelString() == 'containers-jenkins-plugin') {
 		println("Retire: ${aSlave.name}")
+        toRetire.add(aSlave)
         aSlave.getComputer().setTemporarilyOffline(true, cause)
         aSlave.getComputer().doDoDelete()
     } else {
@@ -30,8 +31,8 @@ for (aSlave in Jenkins.instance.slaves) {
     }
 }
 
-println("Jenkins slaves after deletions started: ${Jenkins.instance.slaves.size()}")
-for (aSlave in Jenkins.instance.slaves) {
+println("Jenkins slaves being retired: ${toRetire.size()}")
+for (aSlave in toRetire) {
     if (aSlave.getLabelString() == 'containers-jenkins-plugin') {
 		println("Waiting for offline: ${aSlave.name}")
         aSlave.getComputer().waitUntilOffline()
