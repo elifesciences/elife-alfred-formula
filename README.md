@@ -133,7 +133,7 @@ The configuration of a project is chosen according to the stack where it is depl
 
 ## Vault
 
-The pillar show [the dependency on an external Vault server](salt/pillar/alfred.sls) to be used through `vault.sh`.
+The pillar show [the dependency on an external Vault server](salt/pillar/alfred.sls) to be used through `vault-login.sh`.
 
-The `vault.sh` script authenticates using the [AppRole](https://www.vaultproject.io/docs/auth/approle.html) method and re-issues a short-lived token every time that token expires. It can be used by any build section running on the Jenkins master.
+The `vault-login.sh` script authenticates using the [AppRole](https://www.vaultproject.io/docs/auth/approle.html) method and issues a short-lived token every time it is used. It can be used by any build section running on the Jenkins master.
 
