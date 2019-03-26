@@ -8,8 +8,8 @@ vault-approle-environment-variables:
 
 vault-approle-vault-wrapper:
     file.managed:
-        - name: /usr/local/bin/vault.sh
-        - source: salt://elife-alfred/config/usr-local-bin-vault.sh
+        - name: /usr/local/bin/vault-login.sh
+        - source: salt://elife-alfred/config/usr-local-bin-vault-login.sh
         - mode: 755
         - require:
             - vault-approle-environment-variables
@@ -17,9 +17,11 @@ vault-approle-vault-wrapper:
 vault-approle-vault-wrapper-smoke-test:
     cmd.run:
 {% if salt['elife.only_on_aws']() %}
-        - name: /usr/local/bin/vault.sh token lookup > /dev/null
+        - name: /usr/local/bin/vault-login.sh && vault token lookup > /dev/null
 {% else %}
         - name: which vault.sh
 {% endif %}
         - require:
             - vault-approle-vault-wrapper
+
+# TODO: remove /usr/local/bin/vault.sh when not used anymore
