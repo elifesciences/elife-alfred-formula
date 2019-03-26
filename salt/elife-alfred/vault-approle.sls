@@ -17,7 +17,7 @@ vault-approle-vault-wrapper:
 vault-approle-vault-wrapper-smoke-test:
     cmd.run:
 {% if salt['elife.only_on_aws']() %}
-        - name: /usr/local/bin/vault-login.sh && vault token lookup > /dev/null
+        - name: /usr/local/bin/vault-login.sh && source /etc/profile && vault token lookup > /dev/null
 {% else %}
         - name: which vault.sh
 {% endif %}
