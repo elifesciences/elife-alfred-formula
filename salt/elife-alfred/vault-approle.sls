@@ -23,8 +23,3 @@ vault-approle-vault-wrapper-smoke-test:
 {% endif %}
         - require:
             - vault-approle-vault-wrapper
-
-# TODO: remove once propagates
-vault.sh-removal:
-    file.absent:
-        - name: /usr/local/bin/vault.sh
