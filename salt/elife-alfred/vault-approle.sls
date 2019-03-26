@@ -24,4 +24,7 @@ vault-approle-vault-wrapper-smoke-test:
         - require:
             - vault-approle-vault-wrapper
 
-# TODO: remove /usr/local/bin/vault.sh when not used anymore
+# TODO: remove once propagates
+vault.sh-removal:
+    file.absent:
+        - name: /usr/local/bin/vault.sh
