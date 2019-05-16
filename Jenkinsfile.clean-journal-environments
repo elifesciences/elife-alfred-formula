@@ -1,0 +1,17 @@
+elifePipeline {
+    def oldPullRequests
+    stage "Calculate old pull requests", {
+        checkout scm
+        // ["902", ...]
+        oldPullRequests = jenkinsCli("groovy = <jenkinsfiles/old-pull-requests.groovy journal", true).trim().split("\n")
+        echo "Found old pull requests: ${oldPullRequests}"
+    }
+
+    stage "Delete stacks", {
+        for (pr in oldPullRequests) {
+            // avoid GStringImpl clash with ArrayList<String>
+            def oldStack = "journal--pr-${pr}".toString()
+            sh "${env.BUILDER_PATH}bldr ensure_destroyed:${oldStack}"
+        }
+    }
+}
