@@ -1,0 +1,9 @@
+elifePipeline {
+    stage 'Checkout', {
+        checkout scm
+    }
+
+    stage 'Deploy to demo', {
+        builderDeployRevision 'recommendations--demo', 'master'
+    }
+}
