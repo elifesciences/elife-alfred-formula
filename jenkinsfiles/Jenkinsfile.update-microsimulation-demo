@@ -4,6 +4,6 @@ elifePipeline {
     }
 
     stage 'Deploy to demo', {
-        builderDeployRevision 'recommendations--demo', 'master'
+        builderDeployRevision 'microsimulation-demo--demo', 'master'
     }
 }
