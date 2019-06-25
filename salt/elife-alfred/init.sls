@@ -346,7 +346,7 @@ jenkins-junit-xml-cleanup-cron:
 
 jenkins-cli:
     cmd.run:
-        - name: wget --no-check-certificate -O /usr/local/bin/jenkins-cli.jar http://localhost:8080/jnlpJars/jenkins-cli.jar
+        - name: wget --no-check-certificate --tries 3 -O /usr/local/bin/jenkins-cli.jar http://localhost:8080/jnlpJars/jenkins-cli.jar
         - require:
             - jenkins
         - unless:
