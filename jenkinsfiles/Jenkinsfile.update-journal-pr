@@ -1,5 +1,5 @@
 environment = "pr-${params.pr_number}"
-branch = params.branch
+tag = params.tag
 
 elifePipeline {
     stage "Launch stack", {
@@ -7,7 +7,7 @@ elifePipeline {
     }
 
     stage "Deploy to ${environment}", {
-        builderDeployRevision("journal--${environment}", branch)
+        builderDeployRevision("journal--${environment}", tag)
         echo "Go to https://${environment}--journal.elifesciences.org"
     }
 }
