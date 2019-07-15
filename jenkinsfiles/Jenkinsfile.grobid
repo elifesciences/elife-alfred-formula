@@ -1,7 +1,11 @@
 elifePipeline {
     node('containers-jenkins-plugin') {
+        def commit
+
         stage "Checkout", {
             sh "rm -rf grobid && git clone git@github.com:elifesciences/grobid.git"
+            commit = sh "cd grobid && git rev-parse HEAD"
+            echo "commit: ${commit}"
         }
     }
 }
