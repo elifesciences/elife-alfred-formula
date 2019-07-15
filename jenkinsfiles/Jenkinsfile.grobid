@@ -1,0 +1,7 @@
+elifePipeline {
+    node('containers-jenkins-plugin') {
+        stage "Checkout", {
+            sh "rm -rf grobid && git clone git@github.com:elifesciences/grobid.git"
+        }
+    }
+}
