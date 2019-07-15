@@ -25,7 +25,7 @@ elifePipeline {
     }
 
     stage 'Downstream', {
-        build job: 'process-ami-update', wait: false, parameters: [string(name: 'release', value: '1804'), string(name: 'amiId', value: amiId)]
+        build job: '../dependencies/dependencies-builder-ami-update', wait: false, parameters: [string(name: 'release', value: '1804'), string(name: 'amiId', value: amiId)]
     }
 }
 
