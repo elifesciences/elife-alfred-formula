@@ -3,7 +3,7 @@ elifePipeline {
         def commit
 
         stage "Checkout", {
-            sh "rm -rf grobid && git clone git@github.com:elifesciences/grobid.git"
+            sh "rm -rf grobid && git clone -b catchall git@github.com:elifesciences/grobid.git"
             commit = sh(returnStdout: true, script: "cd grobid && git rev-parse HEAD").trim()
             echo "commit: ${commit}"
         }
