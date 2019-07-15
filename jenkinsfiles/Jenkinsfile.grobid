@@ -10,7 +10,7 @@ elifePipeline {
 
         stage "Build Image", {
             // we are using a blank version as the commit hash wouldn't be a valid version
-            sh "cd grobid && docker build -t elifesciences/grobid_unstable:${commit} --build-arg GROBID_VERSION="
+            sh "docker build -t elifesciences/grobid_unstable:${commit} --build-arg GROBID_VERSION= ./grobid"
         }
     }
 }
