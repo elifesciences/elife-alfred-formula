@@ -11,8 +11,15 @@ elifePipeline {
         stage "Build Image", {
             dir('grobid') {
                 // we are using a blank version as the commit hash wouldn't be a valid version
-                sh "docker build -t elifesciences/grobid_unstable:${commit} --build-arg GROBID_VERSION= ."
+                sh "docker build -t elifesciences/grobid:${commit} --build-arg GROBID_VERSION= ."
             }
+        }
+
+        stage 'Push unstable image', {
+            def image = DockerImage.elifesciences(this, 'grobid', commit)
+            def unstable_image = image.addSuffixAndTag('_unstable', commit)
+            unstable_image.tag('latest').push()
+            unstable_image.push()
         }
     }
 }
