@@ -20,8 +20,8 @@ elifePipeline {
             builderCmd 'journal-cms--continuumtest', "cd /srv/journal-cms && scripts/restore-backup.sh"
         }
 
-        stage 'Redeploy', {
-            builderCmd 'journal-cms--continuumtest', "sudo salt-call state.highstate --retcode-passthrough"
+        stage 'Redeploy master', {
+            builderDeployRevision 'journal-cms--continuumtest', 'master'
         }
     }
 }
