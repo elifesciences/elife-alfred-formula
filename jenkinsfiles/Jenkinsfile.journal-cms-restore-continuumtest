@@ -21,7 +21,7 @@ elifePipeline {
         }
 
         stage 'Redeploy', {
-            builderCmd 'journal-cms--continuumtest', "sudo salt-call state.highstate"
+            builderCmd 'journal-cms--continuumtest', "sudo salt-call state.highstate --retcode-passthrough"
         }
     }
 }
