@@ -1,0 +1,15 @@
+elifePipeline {
+    node('containers-jenkins-plugin') {
+        stage 'Pull', {
+            sh "docker pull pandoc/core:${params.image_tag}"
+        }
+
+        stage 'Tag', {
+            sh "docker tag pandoc/core:${params.image_tag} elifesciences/pandoc:${params.image_tag}"
+        }
+
+        stage 'Push', {
+            sh "docker push elifesciences/pandoc:${params.image_tag}"
+        }
+    }
+}
