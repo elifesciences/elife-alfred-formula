@@ -9,7 +9,10 @@ elifePipeline {
 
     stage "Delete Helm releases", {
         // ["elife-xpub--pr-902", ...]
-        def releases = sh(script: "sudo -u elife -H helm ls elife-xpub-- --output json | jq -r '.Releases[].Name'", returnStdout: true).trim().split("\n").toList()
+        def releases = sh([
+            script: "set -o pipefail; sudo -u elife -H helm ls elife-xpub-- --output json | jq -r '.Releases[].Name'",
+            returnStdout: true
+        ]).trim().split("\n").toList()
         echo "Found current releases: ${releases}"
         for (pr in oldPullRequests) {
             // avoid GStringImpl clash with ArrayList<String>
