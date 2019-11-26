@@ -10,7 +10,7 @@ elifePipeline {
     stage "Delete Helm releases", {
         // ["elife-xpub--pr-902", ...]
         def releases = sh([
-            script: "./elife-xpub-helm-releases.sh",
+            script: "jenkinsfiles/elife-xpub-helm-releases.sh",
             returnStdout: true
         ]).trim().split("\n").toList()
         echo "Found current releases: ${releases}"
