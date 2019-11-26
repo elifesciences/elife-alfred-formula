@@ -18,7 +18,7 @@ elifePipeline {
             // avoid GStringImpl clash with ArrayList<String>
             def oldRelease = "elife-xpub--pr-${pr}".toString()
             if (releases.contains(oldRelease)) {
-                sh "sudo -u elife -H helm delete ${oldRelease}"
+                sh "helm delete ${oldRelease}"
             }
         }
     }
