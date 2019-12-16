@@ -433,7 +433,7 @@ jenkins-statistics-checks-script:
         - require:
             - jenkins-statistics-alert-script
 
-{% for pipeline_key, pipeline in pillar.alfred.pipeline_checks.iteritems() %}
+{% for pipeline_key, pipeline in pillar.alfred.pipeline_checks.items() %}
 jenkins-statistics-checks-{{ pipeline.name }}:
     cron.present:
         - identifier: jenkins-statistics-checks-{{ pipeline.name }}
