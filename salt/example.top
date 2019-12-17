@@ -14,6 +14,5 @@ base:
         - elife-alfred
         #- elife-alfred.postfix
         - elife.hub
-        - elife.python3
         - elife.kubectl
         - elife.helm
