@@ -12,6 +12,6 @@ minutes="${2:-60}"
 
 cd /opt/pipeline-statistics
 output=$(mktemp)
-if ! python pipeline-last-success-check.py "/var/lib/jenkins/statistics/$pipeline.json" "$minutes" 2>&1 | tee "$output"; then
+if ! python3 pipeline-last-success-check.py "/var/lib/jenkins/statistics/$pipeline.json" "$minutes" 2>&1 | tee "$output"; then
     /usr/local/bin/pipeline-alert "Pipeline $pipeline has stopped running" < "$output"
 fi
