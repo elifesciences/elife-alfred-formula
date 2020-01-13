@@ -455,7 +455,7 @@ siege-log-file:
 
 tox:
     cmd.run:
-        - name: pip install tox==2.9.1
+        - name: python3 -m pip install tox==2.9.1
         - require:
             - global-python-requisites
 
