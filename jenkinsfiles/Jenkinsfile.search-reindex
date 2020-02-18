@@ -1,11 +1,11 @@
 elifePipeline {
-    stage 'Deploy on continuumtest', {
+    stage 'Reindex continuumtest', {
         lock('search--continuumtest') {
             builderCmdNode 'search--continuumtest', 1, "cd /srv/search; ./bin/reindex elife_search_reindex_${env.BUILD_NUMBER}"
         }
     }
 
-    stage 'Deploy', {
+    stage 'Reindex prod', {
         lock('search--prod') {
             elifeSlack "Reindex *search* on *prod* (<${env.RUN_DISPLAY_URL}|Build>)", "#deployments"
             builderCmdNode 'search--prod', 1, "cd /srv/search; ./bin/reindex elife_search_reindex_${env.BUILD_NUMBER}"
