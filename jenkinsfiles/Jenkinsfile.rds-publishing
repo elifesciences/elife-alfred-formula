@@ -8,7 +8,7 @@ elifePipeline {
     }
 
     stage 'Deploy search', {
-        build job: '../prod-journal', wait: true
+        build job: '../prod-search', wait: true
     }
 
     stage 'Reindex search', {
