@@ -1,0 +1,17 @@
+elifePipeline {
+    stage 'Notify', {
+        elifeSlack "Publishing RDS articles on *prod* (<${env.RUN_DISPLAY_URL}|Build>)", "#deployments"
+    }
+
+    stage 'Deploy journal', {
+        build job: '../prod-journal', wait: true
+    }
+
+    stage 'Deploy search', {
+        build job: '../prod-search', wait: true
+    }
+
+    stage 'Reindex search', {
+        builderCmdNode 'search--prod', 1, "cd /srv/search; ./bin/reindex-rds"
+    }
+}
