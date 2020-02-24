@@ -281,7 +281,7 @@ builder-update:
     cmd.run:
         - name: ./update.sh --exclude virtualbox vagrant ssh-agent ssh-credentials vault
         - cwd: /srv/builder
-        - user: jenkins
+        - runas: jenkins
         - require:
             - builder-project
             - builder-project-aws-credentials-elife
@@ -366,7 +366,7 @@ jenkins-cli:
 jenkins-cli-smoke-test:    
     cmd.run:
         - name: /usr/local/bin/jenkins-cli -version
-        - user: jenkins
+        - runas: jenkins
         - require:
             - jenkins-cli
 
@@ -376,7 +376,7 @@ jenkins-cli-smoke-test:
 #jenkins-cli-validation:    
 #    cmd.run:
 #        - name: /usr/local/bin/jenkins-cli
-#        - user: jenkins
+#        - runas: jenkins
 #        - require:
 #            - jenkins-cli
 
