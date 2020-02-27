@@ -1,9 +1,11 @@
 elifePipeline {
     node('containers-jenkins-plugin') {
         def commit
+        def revision = params.revision ? params.revision : 'catchall'
+        def tag = params.revision ? params.revision : 'latest'
 
         stage "Checkout", {
-            sh "rm -rf grobid && git clone -b catchall git@github.com:elifesciences/grobid.git"
+            sh "rm -rf grobid && git clone -b ${revision} git@github.com:elifesciences/grobid.git"
             commit = sh(returnStdout: true, script: "cd grobid && git rev-parse HEAD").trim()
             echo "commit: ${commit}"
         }
@@ -18,7 +20,7 @@ elifePipeline {
         stage 'Push unstable image', {
             def image = DockerImage.elifesciences(this, 'grobid', commit)
             def unstable_image = image.addSuffixAndTag('_unstable', commit)
-            unstable_image.tag('latest').push()
+            unstable_image.tag(tag).push()
             unstable_image.push()
         }
     }
