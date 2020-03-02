@@ -5,7 +5,12 @@ elifePipeline {
         def tag = params.revision ? params.revision : 'latest'
 
         stage "Checkout", {
-            sh "rm -rf grobid && git clone -b ${revision} git@github.com:elifesciences/grobid.git"
+            sh(
+                "rm -rf grobid"
+                + " && git clone -b catchall git@github.com:elifesciences/grobid.git"
+                + " && cd grobid"
+                + " && git checkout ${revision}"
+            )
             commit = sh(returnStdout: true, script: "cd grobid && git rev-parse HEAD").trim()
             echo "commit: ${commit}"
         }
