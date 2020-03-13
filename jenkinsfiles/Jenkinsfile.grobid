@@ -28,5 +28,11 @@ elifePipeline {
             unstable_image.tag(tag).push()
             unstable_image.push()
         }
+
+        stage 'Trigger grobid tag update', {
+            build job:  '../dependencies/dependencies-sciencebeam-trainer-update-grobid',
+                        wait: false,
+                        parameters: [string(name: 'grobid_tag', value: commit)]
+        }
     }
 }
