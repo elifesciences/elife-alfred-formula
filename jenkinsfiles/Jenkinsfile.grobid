@@ -30,7 +30,7 @@ elifePipeline {
         }
 
         stage 'Trigger grobid tag update', {
-            build job:  'dependencies/dependencies-sciencebeam-trainer-update-grobid',
+            build job:  '../dependencies/dependencies-sciencebeam-trainer-update-grobid',
                         wait: false,
                         parameters: [string(name: 'grobid_tag', value: commit)]
         }
