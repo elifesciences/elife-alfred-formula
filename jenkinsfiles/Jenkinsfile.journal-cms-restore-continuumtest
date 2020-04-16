@@ -11,11 +11,11 @@ elifePipeline {
 
     lock (stackname) {
         stage 'Retrieve files', {
-            withEnv(['BLDR_BACKEND=threadbare']) {
+            //withEnv(['BLDR_BACKEND=threadbare']) {
                 def workingDirectory = pwd()
                 sh "${env.BUILDER_PATH}bldr upload_file:${stackname},${workingDirectory}/backups.env,/tmp/backups.env,overwrite=true,confirm=true"
                 builderCmd 'journal-cms--continuumtest', 'cd /srv/journal-cms && source /tmp/backups.env && scripts/download-backup.sh'
-            }
+            //}
         }
 
         stage 'Restore backup', {
