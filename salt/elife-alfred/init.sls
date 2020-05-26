@@ -8,6 +8,7 @@ srv-directory-linked:
     cmd.run:
         - name: mv /srv/* /ext/srv
         - onlyif:
+            # /srv is not a symlink
             - test ! -L /srv
         - require:
             - srv-directory
@@ -260,6 +261,7 @@ builder-project:
         - force_reset: True
         - target: /srv/builder
         - require:
+            - srv-directory-linked
             - builder-project-aws-credentials-elife
             - builder-project-aws-credentials-jenkins
             - builder-project-dependencies
