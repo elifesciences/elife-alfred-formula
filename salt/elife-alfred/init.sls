@@ -67,6 +67,7 @@ jenkins-home-directory-ownership:
 # https://issues.jenkins-ci.org/browse/INFRA-92
 jenkins-download:
     cmd.run:
+        # todo: switch this to file.managed to prevent downloading on every highstate
         - name: |
             wget https://pkg.jenkins.io/debian-stable/binary/{{ deb_filename }}
             # for non-LTS versions:
