@@ -8,6 +8,7 @@ srv-directory-linked:
     cmd.run:
         - name: mv /srv/* /ext/srv
         - onlyif:
+            # /srv is not a symlink
             - test ! -L /srv
         - require:
             - srv-directory
@@ -67,6 +68,7 @@ jenkins-home-directory-ownership:
 # https://issues.jenkins-ci.org/browse/INFRA-92
 jenkins-download:
     cmd.run:
+        # todo: switch this to file.managed to prevent downloading on every highstate
         - name: |
             wget https://pkg.jenkins.io/debian-stable/binary/{{ deb_filename }}
             # for non-LTS versions:
@@ -259,6 +261,7 @@ builder-project:
         - force_reset: True
         - target: /srv/builder
         - require:
+            - srv-directory-linked
             - builder-project-aws-credentials-elife
             - builder-project-aws-credentials-jenkins
             - builder-project-dependencies

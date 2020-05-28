@@ -23,3 +23,4 @@ vault-approle-vault-wrapper-smoke-test:
 {% endif %}
         - require:
             - vault-approle-vault-wrapper
+            - vault-client
