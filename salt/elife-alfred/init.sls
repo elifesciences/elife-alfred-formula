@@ -340,13 +340,6 @@ jenkins-junit-xml-cleanup-cron:
         - hour: 5
         - minute: 0 
 
-# disabled. 
-# state isn't required by anything. oracle java 8 installed. openjdk has it's own state file
-#jenkins-diagnostic-tools:
-#    pkg.installed:
-#        - pkgs:
-#            - openjdk-7-jdk
-
 jenkins-cli:
     cmd.run:
         - name: wget --no-check-certificate --tries 3 -O /usr/local/bin/jenkins-cli.jar http://localhost:8080/jnlpJars/jenkins-cli.jar
@@ -448,8 +441,12 @@ jenkins-statistics-checks-{{ pipeline.name }}:
             - jenkins-statistics-checks-script
 {% endfor %}
 
-siege:
-    pkg.installed
+alfred-packages:
+    pkg.installed:
+        - pkgs:
+            - siege
+            - shellcheck
+            - git-lfs
 
 siege-log-file:
     file.managed:
@@ -462,6 +459,3 @@ tox:
         - require:
             - global-python-requisites
 
-shellcheck:
-    pkg.installed:
-        - name: shellcheck
