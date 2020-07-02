@@ -84,8 +84,9 @@ jenkins:
         - require:
             - jenkins-home-directory-ownership
             - jenkins-download
-            - oracle-java8-installer
+            - java8
         - unless:
+            # the version of the Jenkins package configuration is equal to the package installed
             - test $(dpkg-query --showformat='${Version}' --show jenkins) == "{{ jenkins_version }}"
 
     service.running:
@@ -116,20 +117,6 @@ jenkins-args:
 jenkins-user-and-group:
     cmd.run:
         - name: echo "Jenkins user and group have already been created by the package installation"
-        - require:
-            - jenkins
-
-# ah, Java...
-# probably because of some builds running every 2 minutes, Jenkins suffers
-# from a memory leak that brings to a `java.lang.OutOfMemoryError: PermGen space`
-# after several days of running it continuously.
-# Therefore, restart every night while no one is using it to ensure the JVM
-# gets a new object graph from scratch
-# UPDATE: Let's try not to do this anymore, now that builds are not as frequent as every 2 minutes.
-jenkins-periodical-restart:
-    cron.absent:
-        - identifier: jenkins-periodical-restart
-        - name: /etc/init.d/jenkins restart
         - require:
             - jenkins
 
@@ -315,6 +302,18 @@ jenkins-slave-node-for-end2end-tests-folder:
     file.absent:
         - name: /var/lib/jenkins-end2end-runner
 
+
+# todo: install these plugins once on dev builds
+# SCM?
+# AnsiColor
+# Timestamper
+# Github
+# Github API
+# Pipeline
+# BlueOcean
+# Gradle
+
+
 # Jenkins plugin backs up here 
 jenkins-thin-backup-plugin-target:
     file.directory:
@@ -325,7 +324,7 @@ jenkins-thin-backup-plugin-target:
         - require:
             - jenkins
 
-# UBR transports the local backup to a durable destination like S3
+# UBR transports the local backup to S3
 jenkins-ubr-backup:
     file.managed:
         - name: /etc/ubr/jenkins-backup.yaml
@@ -447,6 +446,7 @@ alfred-packages:
             - siege
             - shellcheck
             - git-lfs
+            - nodejs # for 'npm' and npm releases
 
 siege-log-file:
     file.managed:
