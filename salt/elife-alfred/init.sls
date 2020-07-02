@@ -446,7 +446,7 @@ alfred-packages:
             - siege
             - shellcheck
             - git-lfs
-            - nodejs # for 'npm' and npm releases
+            - npm # for 'npm' and npm releases
 
 siege-log-file:
     file.managed:
