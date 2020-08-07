@@ -173,7 +173,7 @@ Jenkins will create and destroy `containers-jenkins-plugin` instances as necessa
 the `Instance Cap` setting under Cloud -> Amazon EC2 -> Advanced.
 
 To prevent Jenkins from using these slave instances as regular job runners, [their usage settings](https://alfred.elifesciences.org/computer/) 
-need to be changed. Against each slave (there should be 3), change the **Usage** setting to *Only build jobs with label 
+need to be changed. In Jenkins configure screen, change the AMI **Usage** setting to *Only build jobs with label
 expressions matching this node*.
 
 Warn:
