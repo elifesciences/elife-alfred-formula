@@ -96,6 +96,7 @@ Most of the interesting Jenkins features are provided by plugins, which are back
 - `Lockable Resources Plugin` to allow lock acquisition and release and coordinate builds so that they do not use the same environments at the same time.
 - `Thin Backup` for backupping Jenkins, its plugins and its configuration.
 - `Workspace Cleanup Plugin` to free space from workspaces remains after a build has finished.
+- `AWS EC2 Plugin` to manage a pool of EC2 instances for building container images.
 
 ## Builder
 
@@ -137,3 +138,45 @@ The pillar show [the dependency on an external Vault server](salt/pillar/alfred.
 
 The `vault-login.sh` script authenticates using the [AppRole](https://www.vaultproject.io/docs/auth/approle.html) method and issues a short-lived token every time it is used. It can be used by any build section running on the Jenkins master.
 
+## Further
+
+Below are longer explanations with more detailed configuration information.
+
+### Plugins
+
+#### AWS EC2
+
+Jenkins uses the [AWS EC2 plugin](https://plugins.jenkins.io/ec2/) to manage AWS EC2 instances that will build container images.
+
+Configuration for this plugin can be found in the [Jekins configuration](https://alfred.elifesciences.org/configure) 
+under the "Cloud" heading.
+
+This plugin uses an AMI image as a 'template' to create new instances from. These new instances have the label 
+`containers-jenkins-plugin` and are not accessible through builder.
+
+The AMI image is created from a [builder](https://github.com/elifesciences/builder)-managed project called `containers`.
+
+The Jenkins process "[process-ec2-plugin-ami-updater](https://alfred.elifesciences.org/job/process/job/process-ec2-plugin-ami-update/)" 
+will:
+
+1. create an AMI image from a running `containers` instance called `containers--jenkins-plugin-ami`
+2. update the AWS EC2 plugin configuration with the new AMI details
+3. terminate old instances of these containers running under the old AMI matching the label `containers-jenkins-plugin`
+4. stop the `containers--jenkins-plugin-ami` instance
+
+Note:
+
+* If the AMI instance is *destroyed* through builder, it's private key will be destroyed as well. It's this private key 
+that is used to connect to `containers-jenkins-plugin` instances and a copy is stored in the Jenkins configuration.
+
+Jenkins will create and destroy `containers-jenkins-plugin` instances as necessary, with the upper limit controlled by
+the `Instance Cap` setting under Cloud -> Amazon EC2 -> Advanced.
+
+To prevent Jenkins from using these slave instances as regular job runners, [their usage settings](https://alfred.elifesciences.org/computer/) 
+need to be changed. Against each slave (there should be 3), change the **Usage** setting to *Only build jobs with label 
+expressions matching this node*.
+
+Warn:
+
+* Jenkins and AWS EC2 should be monitored after the creation of a new AMI. Problems connecting may see EC2 instances 
+created and destroyed endlessly.
