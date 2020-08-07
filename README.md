@@ -180,3 +180,5 @@ Warn:
 
 * Jenkins and AWS EC2 should be monitored after the creation of a new AMI. Problems connecting may see EC2 instances 
 created and destroyed endlessly.
+
+Examples of [Jenkinsfiles using `containers-jenkins-plugin`](https://github.com/search?l=Groovy&q=org%3Aelifesciences+containers-jenkins-plugin&type=Code).
