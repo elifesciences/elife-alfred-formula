@@ -164,13 +164,12 @@ will:
 3. terminate old instances of these containers running under the old AMI matching the label `containers-jenkins-plugin`
 4. stop the `containers--jenkins-plugin-ami` instance
 
-Note:
-
-* If the AMI instance is *destroyed* through builder, it's private key will be destroyed as well. It's this private key 
-that is used to connect to `containers-jenkins-plugin` instances and a copy is stored in the Jenkins configuration.
-
 Jenkins will create and destroy `containers-jenkins-plugin` instances as necessary, with the upper limit controlled by
 the `Instance Cap` setting under Cloud -> Amazon EC2 -> Advanced.
+
+Jenkins can access these `containers-jenkins-plugin` instances using either the private key created for the AMI instance,
+or the `elife-alfred-user`. If the AMI instance is *destroyed* through builder, it's private key will be destroyed as 
+well.
 
 To prevent Jenkins from using these slave instances as regular job runners, [their usage settings](https://alfred.elifesciences.org/computer/) 
 need to be changed. In Jenkins configure screen, change the AMI **Usage** setting to *Only build jobs with label
