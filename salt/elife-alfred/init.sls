@@ -1,3 +1,10 @@
+jenkins-process-dependencies:
+    pkg.installed:
+        - pkgs:
+            # process "dependencies-elife-spectrum-update-kitchen-sinks-github"
+            # it updates a set of test fixtures periodically
+            - libxml2-utils # xmllint
+
 srv-directory:
     file.directory:
         - name: /ext/srv
