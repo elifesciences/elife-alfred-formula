@@ -17,8 +17,16 @@ elifePipeline {
 
         stage "Build Image", {
             dir('grobid') {
+                def dockerfile = "Dockerfile"
+                if (new File("Dockerfile.crf").exists()) {
+                    // GROBID 0.6.2+ contains Dockerfile.crf and Dockerfile.delft
+                    dockerfile = "Dockerfile.crf"
+                }
                 // we are using a blank version as the commit hash wouldn't be a valid version
-                sh "docker build -t elifesciences/grobid:${commit} --build-arg GROBID_VERSION= ."
+                sh "docker build \
+                    -f ${dockerfile} \
+                    -t elifesciences/grobid:${commit} \
+                    --build-arg GROBID_VERSION= ."
             }
         }
 
