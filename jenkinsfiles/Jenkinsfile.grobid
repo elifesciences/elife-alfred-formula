@@ -18,7 +18,7 @@ elifePipeline {
         stage "Build Image", {
             dir('grobid') {
                 def dockerfile = "Dockerfile"
-                if (new File("Dockerfile.crf").exists()) {
+                if (fileExists("Dockerfile.crf")) {
                     // GROBID 0.6.2+ contains Dockerfile.crf and Dockerfile.delft
                     dockerfile = "Dockerfile.crf"
                 }
