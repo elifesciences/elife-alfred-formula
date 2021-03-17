@@ -465,3 +465,8 @@ tox:
         - require:
             - global-python-requisites
 
+github-aliases-file:
+    file.serialize:
+        - name: /etc/github-email-aliases.json
+        - formatter: json
+        - dataset_pillar: elife:github_email_aliases

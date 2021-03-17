@@ -1,6 +1,10 @@
 #!/bin/bash
+# pipe text to this script:
+# $ echo "test" | /path/to/script
 set -e
-# pipe text to this script
 
-mail -s "${1:-Pipeline alert}" -a "From: alfred@elifesciences.org" {{ pillar.alfred.maintainer }}
+mail \
+    --subject "${1:-Pipeline alert}" \
+    --append "From: alfred@elifesciences.org" \
+    {{ pillar.alfred.maintainer }}
 
