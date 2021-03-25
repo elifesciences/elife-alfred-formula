@@ -20,6 +20,10 @@ alfred:
         secret_id: null
 
 elife:
+    github_email_aliases:
+        bar: bar@example.com
+        foo: foo@example.org
+
     gcloud:
         directory: /var/lib/jenkins/
         username: jenkins

@@ -69,19 +69,18 @@ jenkins-home-directory-ownership:
         - group: jenkins
         - mode: 755
 
-{% set jenkins_version = '2.204.2' %}
+{% set jenkins_version = '2.249.1' %}
 {% set deb_filename = 'jenkins_'+jenkins_version+'_all.deb' %}
 # the apt repository does not allow us to pin the version:
 # https://issues.jenkins-ci.org/browse/INFRA-92
 jenkins-download:
     cmd.run:
-        # todo: switch this to file.managed to prevent downloading on every highstate
         - name: |
             wget https://pkg.jenkins.io/debian-stable/binary/{{ deb_filename }}
             # for non-LTS versions:
             #wget http://pkg.jenkins-ci.org/debian/binary/{{ deb_filename }}
         - unless:
-            - test -e {{ deb_filename }}
+            # file exists and isn't empty
             - test -s {{ deb_filename }}
 
 jenkins:
@@ -466,3 +465,8 @@ tox:
         - require:
             - global-python-requisites
 
+github-aliases-file:
+    file.serialize:
+        - name: /etc/github-email-aliases.json
+        - formatter: json
+        - dataset_pillar: elife:github_email_aliases

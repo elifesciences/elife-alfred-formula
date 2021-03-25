@@ -1,8 +1,0 @@
-elifePipeline {
-    stage "elife-libraries", {
-        lock 'elife-xpub--ci', {
-            builderStart 'elife-xpub--ci'
-            builderCmd 'elife-xpub--ci', 'docker-prune'
-        }
-    }
-}
