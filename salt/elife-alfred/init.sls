@@ -69,7 +69,7 @@ jenkins-home-directory-ownership:
         - group: jenkins
         - mode: 755
 
-{% set jenkins_version = '2.249.1' %}
+{% set jenkins_version = '2.277.4' %}
 {% set deb_filename = 'jenkins_'+jenkins_version+'_all.deb' %}
 # the apt repository does not allow us to pin the version:
 # https://issues.jenkins-ci.org/browse/INFRA-92
@@ -153,7 +153,7 @@ jenkins-ssh:
             - jenkins
 
 # for simplicity, users `elife` and `jenkins` on this instance
-# use the same credentials
+# use the same credentials.
 # we also remove existing id_rsa.pub as they won't match
 # the new private keys
 remove-alfred-leftover-public-key-from-elife-user:
