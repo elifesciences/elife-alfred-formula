@@ -100,6 +100,7 @@ jenkins:
         - init_delay: 10 # seconds. attempting to fetch the jenkins-cli too early will fail
         - watch:
             - file: /etc/default/jenkins
+            - file: builder-non-interactive
         - require:
             - cmd: jenkins
 
@@ -204,6 +205,13 @@ add-jenkins-gitconfig:
         - mode: 664
         - require:
             - jenkins
+
+builder-non-interactive:
+    file.append:
+        - name: /etc/environment
+        - text: "BUILDER_NON_INTERACTIVE=1"
+        - unless:
+            - grep 'BUILDER_NON_INTERACTIVE=1' /etc/environment
 
 builder-project-aws-credentials-elife:
     file.managed:
