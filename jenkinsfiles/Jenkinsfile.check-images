@@ -1,0 +1,29 @@
+def timeoutOverride = 240
+
+elifePipeline({
+
+    stackname = 'iiif--devchk2'
+
+    lock(stackname) {
+    
+        stage 'start image checker', {
+            builderStart stackname
+            // update formulas?
+            // run highstate?   
+        }
+    
+        stage 'update image list', {
+            builderCmd stackname "./list-all-figures.sh" "/opt/iiif-deviation-checker"
+        }
+
+        stage 'check images', {
+            builderCmd stackname "./devchk --article-image-list all-figures.log --prev-results-dir report"
+        }
+        
+        stage 'check images (second pass)', {
+            // a second pass on just those images that were unsuccessful.
+            builderCmd stackname "./devchk --article-image-list all-figures.log --just-unsuccessful --prev-results-dir report"
+        }
+    }
+
+}, timeoutOverride)
