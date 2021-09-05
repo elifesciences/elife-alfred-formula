@@ -25,11 +25,11 @@ elifePipeline({
 
             stage "check images", {
                 builderCmd(stackname, "rm -rf report/ report.json report.tar.gz report-summary.txt", "/opt/iiif-deviation-checker", concurrency="serial")
-                builderCmd(stackname, "./devchk --article-image-list all-figures.log", "/opt/iiif-deviation-checker", concurrency="serial")
+                builderCmd(stackname, "./devchk --article-image-list all-figures.log", "/opt/iiif-deviation-checker", concurrency="serial") || true
             }
 
             stage "check images (second pass)", {
-                builderCmd(stackname, "./devchk --article-image-list all-figures.log --just-unsuccessful --prev-results-dir report", "/opt/iiif-deviation-checker", concurrency="serial")
+                builderCmd(stackname, "./devchk --article-image-list all-figures.log --just-unsuccessful --prev-results-dir report", "/opt/iiif-deviation-checker", concurrency="serial") || true
             }
 
             stage "report", {
