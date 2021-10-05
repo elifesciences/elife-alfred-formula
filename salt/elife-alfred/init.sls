@@ -88,7 +88,7 @@ jenkins:
         - require:
             - jenkins-home-directory-ownership
             - jenkins-download
-            - java8
+            - java11
         - unless:
             # the version of the Jenkins package configuration is equal to the package installed
             - test $(dpkg-query --showformat='${Version}' --show jenkins) == "{{ jenkins_version }}"
