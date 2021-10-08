@@ -69,7 +69,7 @@ jenkins-home-directory-ownership:
         - group: jenkins
         - mode: 755
 
-{% set jenkins_version = '2.303.1' %}
+{% set jenkins_version = '2.303.3' %}
 {% set deb_filename = 'jenkins_'+jenkins_version+'_all.deb' %}
 # 2021-10-25: the apt repository does not allow us to pin the version:
 # - https://issues.jenkins-ci.org/browse/INFRA-92
