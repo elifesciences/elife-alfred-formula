@@ -69,13 +69,14 @@ jenkins-home-directory-ownership:
         - group: jenkins
         - mode: 755
 
-{% set jenkins_version = '2.303.3' %}
+{% set jenkins_version = '2.303.2' %}
 {% set deb_filename = 'jenkins_'+jenkins_version+'_all.deb' %}
 # 2021-10-25: the apt repository does not allow us to pin the version:
 # - https://issues.jenkins-ci.org/browse/INFRA-92
 jenkins-download:
     cmd.run:
-        - name: wget https://get.jenkins.io/debian-stable/{{ deb_filename }}
+        - name: |
+            wget https://pkg.jenkins.io/debian-stable/binary/{{ deb_filename }}
         - unless:
             # file exists and isn't empty
             - test -s {{ deb_filename }}
