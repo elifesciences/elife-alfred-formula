@@ -75,8 +75,7 @@ jenkins-home-directory-ownership:
 # - https://issues.jenkins-ci.org/browse/INFRA-92
 jenkins-download:
     cmd.run:
-        - name: |
-            wget https://pkg.jenkins.io/debian-stable/binary/{{ deb_filename }}
+        - name: wget https://get.jenkins.io/debian-stable/{{ deb_filename }}
         - unless:
             # file exists and isn't empty
             - test -s {{ deb_filename }}
