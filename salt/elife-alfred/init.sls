@@ -211,6 +211,13 @@ builder-non-interactive:
         - unless:
             - grep 'BUILDER_NON_INTERACTIVE=1' /etc/environment
 
+builder-highstate-no-colours:
+    file.append:
+        - name: /etc/environment
+        - text: "SALT_NO_COLOR=1"
+        - unless:
+            - grep 'SALT_NO_COLOR=1' /etc/environment
+
 builder-project-aws-credentials-elife:
     file.managed:
         - name: /home/{{ pillar.elife.deploy_user.username }}/.aws/credentials
