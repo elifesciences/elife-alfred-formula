@@ -3,7 +3,7 @@ tag = params.tag
 
 elifePipeline {
     stage "Launch stack", {
-        if (builderCmd("journal--${environment}", "checks.stack_exists:steady=True")) {
+        if (builderCmd("journal--${environment}", "checks.stack_exists")) {
             echo "stack exists and is not being updated."
         }
         else {
