@@ -1,10 +1,12 @@
+import org.jenkinsci.plugins.pipeline.modeldefinition.Utils
+
 environment = "pr-${params.pr_number}"
 tag = params.tag
 
 elifePipeline {
     stage "Launch stack", {
-        if (builderCmd("journal--${environment}", "checks.stack_exists")) {
-            echo "stack exists."
+        when (builderCmd("journal--${environment}", "checks.stack_exists")) {
+            Utils.markStageSkippedForConditional("Launch stack")
         }
         else {
             # 'skip' here refers to project alt-config selection.
