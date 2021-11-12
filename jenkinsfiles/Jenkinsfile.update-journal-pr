@@ -5,7 +5,7 @@ tag = params.tag
 
 elifePipeline {
     stage "Launch stack", {
-        if (builderCmd("journal--${environment}", "checks.stack_exists")) {
+        if (sh "${env.BUILDER_PATH}bldr checks.stack_exists:journal,${environment}") {
             Utils.markStageSkippedForConditional("Launch stack")
         }
         else {
