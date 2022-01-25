@@ -1,0 +1,11 @@
+import org.jenkinsci.plugins.pipeline.modeldefinition.Utils
+
+instance_id = "pr-${params.pr_number}"
+tag = params.tag
+
+elifePipeline {
+    stage "Destroy stack", {
+        sh(script: "${env.BUILDER_PATH}bldr ensure_destroyed:journal--${instance_id}", returnStatus: true)
+    }
+}
+
