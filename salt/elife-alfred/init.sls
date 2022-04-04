@@ -76,7 +76,7 @@ jenkins-home-directory-ownership:
 jenkins-download:
     cmd.run:
         - name: |
-            wget https://pkg.jenkins.io/debian-stable/binary/{{ deb_filename }}
+            wget --quiet https://pkg.jenkins.io/debian-stable/binary/{{ deb_filename }}
         - unless:
             # file exists and isn't empty
             - test -s {{ deb_filename }}
@@ -244,6 +244,7 @@ builder-project-dependencies:
     pkg.installed:
         - pkgs:
             - make
+            - gcc
 
 {% set terraform_version = '0.11.13' %}
 {% set terraform_hash = 'efb07c8894d65a942e62f18a99349bb4' %}
@@ -360,7 +361,7 @@ jenkins-junit-xml-cleanup-cron:
 
 jenkins-cli:
     cmd.run:
-        - name: wget --no-check-certificate --tries 3 -O /usr/local/bin/jenkins-cli.jar http://localhost:8080/jnlpJars/jenkins-cli.jar
+        - name: wget --quiet --no-check-certificate --tries 3 -O /usr/local/bin/jenkins-cli.jar http://localhost:8080/jnlpJars/jenkins-cli.jar
         - require:
             - jenkins
         - unless:
@@ -465,7 +466,6 @@ alfred-packages:
             - siege
             - shellcheck
             - git-lfs
-            - npm # for 'npm' and npm releases
 
 siege-log-file:
     file.managed:
