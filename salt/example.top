@@ -7,7 +7,7 @@ base:
         {% if osrelease == "18.04" %}
         - elife.nodejs6 # for 'npm' and npm releases
         {% else %}
-        - elife.nodejs # for 'npm' and npm releases
+        - elife.nodejs16 # for 'npm' and npm releases
         {% endif %}
         - elife.jenkins-scripts
         - elife.nginx
