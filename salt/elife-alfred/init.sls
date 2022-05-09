@@ -69,10 +69,8 @@ jenkins-home-directory-ownership:
         - group: jenkins
         - mode: 755
 
-{% set jenkins_version = '2.303.2' %}
+{% set jenkins_version = '2.332.3' %}
 {% set deb_filename = 'jenkins_'+jenkins_version+'_all.deb' %}
-# 2021-10-25: the apt repository does not allow us to pin the version:
-# - https://issues.jenkins-ci.org/browse/INFRA-92
 jenkins-download:
     cmd.run:
         - name: |
@@ -258,7 +256,7 @@ terraform:
     cmd.run:
         - name: unzip {{ terraform_archive }} && mv terraform /usr/local/bin/
         - cwd: /root
-    
+
 builder-project:
     builder.git_latest:
         - name: ssh://git@github.com/elifesciences/builder.git
