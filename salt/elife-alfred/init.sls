@@ -4,6 +4,7 @@ jenkins-process-dependencies:
             # process "dependencies-elife-spectrum-update-kitchen-sinks-github"
             # it updates a set of test fixtures periodically
             - libxml2-utils # xmllint
+            - daemon # lsh@2022-05-09: has been removed from builder-base but needed by jenkins below apparently
 
 srv-directory:
     file.directory:
