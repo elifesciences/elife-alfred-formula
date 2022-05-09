@@ -80,7 +80,7 @@ jenkins-download:
             # file exists and isn't empty
             - test -s {{ deb_filename }}
 
-jenkins:
+jenkins-install:
     cmd.run:
         # configuration will be tweaked by file.replace state
         - name: dpkg --force-confnew -i {{ deb_filename }}
@@ -92,6 +92,36 @@ jenkins:
             # the version of the Jenkins package configuration is equal to the package installed
             - test $(dpkg-query --showformat='${Version}' --show jenkins) == "{{ jenkins_version }}"
 
+# lsh@2022-05-09: jenkins upgrade now uses systemctl to execute jenkins, 
+# unfortunately this bypasses shell profiles ("/etc/profile.d/*") which, for better or worse, we rely on.
+# this override executes jenkins using bash. the leading ExecStart= is so systemd can 'reset' params that take lists.
+jenkins-systemd-service-override:
+    file.managed:
+        - name: /etc/systemd/system/jenkins.service.d/override.conf
+        - source: salt://elife-alfred/config/etc-systemd-system-jenkins.service.d-override.conf
+        - makedirs: true
+        - require:
+            - jenkins-install
+
+jenkins-jvm-defaults:
+    file.replace:
+        - name: /etc/default/jenkins
+        - pattern: '^JAVA_ARGS=".*"'
+        # default PermSize seems to be 166MB on a t2.medium, make it 256m instead
+        - repl: 'JAVA_ARGS="-Djava.awt.headless=true -Duser.timezone=Europe/London -XX:MaxPermSize=256m -Djenkins.branch.WorkspaceLocatorImpl.PATH_MAX=30"'
+        - require: 
+            - jenkins-install
+
+jenkins-default-args:
+    # 1 month login sessions
+    file.replace:
+        - name: /etc/default/jenkins
+        - pattern: '^JENKINS_ARGS=.*'
+        - repl: 'JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT --sessionTimeout=43200"'
+        - require: 
+            - jenkins-install
+
+jenkins:
     service.running:
         - enable: True
         - init_delay: 10 # seconds. attempting to fetch the jenkins-cli too early will fail
@@ -99,24 +129,10 @@ jenkins:
             - file: /etc/default/jenkins
             - file: builder-non-interactive
         - require:
-            - cmd: jenkins
-
-    file.replace:
-        - name: /etc/default/jenkins
-        - pattern: '^JAVA_ARGS=".*"'
-        # default PermSize seems to be 166MB on a t2.medium
-        - repl: 'JAVA_ARGS="-Djava.awt.headless=true -Duser.timezone=Europe/London -XX:MaxPermSize=256m -Djenkins.branch.WorkspaceLocatorImpl.PATH_MAX=30"'
-        - require: 
-            - cmd: jenkins
-
-jenkins-args:
-    # 1 month login sessions
-    file.replace:
-        - name: /etc/default/jenkins
-        - pattern: '^JENKINS_ARGS=.*'
-        - repl: 'JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT --sessionTimeout=43200"'
-        - require: 
-            - cmd: jenkins
+            - jenkins-install
+            - jenkins-systemd-service-override
+            - jenkins-jvm-defaults
+            - jenkins-default-args
 
 jenkins-user-and-group:
     cmd.run:
