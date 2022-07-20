@@ -1,1 +1,1 @@
-elifeFormula('elife-alfred', '', null, ['s2004'])
+elifeFormula('elife-alfred')
