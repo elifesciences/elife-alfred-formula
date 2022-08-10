@@ -1,0 +1,11 @@
+elifePipeline {
+    stage "Report", {
+        def shellCmd = "${env.BUILDER_PATH}bldr report.long_running_large_ec2_instances"
+        output = sh(script: shellCmd, returnStdout:true)
+        output = output.trim()
+        if (output != "") {
+            mail subject: "Results for \"process-report-long-running-ec2-instances\"", to: "l.skibinski@elifesciences.org", from: "alfred@elifesciences.org", replyTo: "no-reply@elifesciences.org", body: "Long running large (or unknown) ec2 instances running:\n\n${output}\n\n${BUILD_URL}"
+            echo "email sent to l.skibinski@elifesciences.org"
+        }
+    }
+}
