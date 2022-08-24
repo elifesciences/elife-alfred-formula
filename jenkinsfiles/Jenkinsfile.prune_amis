@@ -1,0 +1,6 @@
+elifePipeline {
+    stage "Prune AMIs", {
+        def shellCmd = "${env.BUILDER_PATH}bldr tasks.delete_all_amis_to_prune"
+        sh(script: shellCmd)
+    }
+}
