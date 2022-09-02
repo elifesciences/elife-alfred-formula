@@ -349,15 +349,17 @@ jenkins-slave-node-for-end2end-tests-folder:
 # Gradle
 
 
-# Jenkins plugin backs up here 
+# Jenkins plugin backs up here
+# lsh@2022-09-02: moved to /ext volume
 jenkins-thin-backup-plugin-target:
     file.directory:
-        - name: /var/local/jenkins-backup
+        - name: /ext/jenkins-backup
         - user: jenkins
         - group: jenkins
         - dir_mode: 755
         - require:
             - jenkins
+            - srv-directory
 
 # UBR transports the local backup to S3
 jenkins-ubr-backup:
