@@ -1,9 +1,8 @@
 elifePipeline({
     elifeProjectByEnvByNode(params.project, params.envlist, { project, env, node ->
         def stackname = "${project}--${env}"
-        builderCmdNode(stackname, node, "sudo cat /etc/salt/minion_id")
-        //builderCmdNode(stackname, node, "sudo /usr/local/bin/daily-security-update");
-        //builderRunTask("aws.ec2.restart", stackname, node)
-        //builderCmdNode(stackname, node, "sudo /usr/local/bin/daily-system-update");
+        builderCmdNode(stackname, node, "sudo /usr/local/bin/daily-security-update");
+        builderRunTask("aws.ec2.restart_node", stackname, node)
+        builderCmdNode(stackname, node, "sudo /usr/local/bin/daily-system-update");
     })
 })
