@@ -1,0 +1,14 @@
+elifePipeline({
+    project_envlist = [
+        ["lax", "ci,continuumtest,end2end"]
+    ]
+    actions = [:]
+    for (int i = 0; i < project_envlist.size(); i++) {
+        project = project_envlist[i][0]
+        envlist = project_envlist[i][1]
+        actions[project] = {
+            elifeUpdateProjectByEnv(project, envlist);
+        }
+    }
+    parallel actions
+})

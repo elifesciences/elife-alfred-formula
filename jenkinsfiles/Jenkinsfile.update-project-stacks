@@ -1,0 +1,3 @@
+elifePipeline({
+    elifeUpdateProjectByEnv(params.project, params.envlist);
+})
