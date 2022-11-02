@@ -1,8 +1,25 @@
 elifePipeline({
     // there has to be a list of these things out there, right?
     project_envlist = [
-        ["lax", "ci,continuumtest,end2end"],
-        ["journal", "ci,preview,continuumtest,continuumtestpreview,demo,end2end"]
+        ["annotations", "continuumtest,end2end"],
+        ["api-dummy", "demo"],
+        ["api-gateway", "continuumtest,end2end"],
+        ["bioprotocol", "continuumtest,ci,end2end"],
+        ["digests", "continuumtest,end2end"],
+        ["elife-bot", "continuumtest,ci,end2end"],
+        ["elife-dashboard", "continuumtest,ci,end2end"],
+        ["elife-libraries", "powerful3,spectrum,load,ci"],
+        ["elife-metrics", "continuumtest,ci,end2end"],
+        ["iiif", "continuumtest,ci,end2end"],
+        ["journal-cms", "continuumtest,ci,end2end"],
+        ["journal", "continuumtestpreview,demo,preview,continuumtest,end2end"],
+        ["lax", "continuumtest,ci,end2end"],
+        ["observer", "ci,end2end"],
+        ["personalised-covers", "continuumtest,ci,end2end"],
+        ["profiles", "continuumtest,end2end"],
+        ["recommendations", "continuumtest,ci,end2end"],
+        ["redirects", "ci"],
+        ["search", "continuumtest,ci,end2end"],
     ]
     actions = [:]
     for (int i = 0; i < project_envlist.size(); i++) {
