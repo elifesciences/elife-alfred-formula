@@ -33,7 +33,11 @@ elifePipeline({
     }
     parallel actions
 
+    // these should be run after the above complete successfully
+    // todo: does `parallel` block?
+
     special_project_envlist = [
+        ["api-gateway", "prod"], // gut feeling
         //["master-server", "prod"], // requires vault to be unlocked after restart
         //["elife-alfred", "prod"], // will shutdown the machine orchestrating the update!
     ]
