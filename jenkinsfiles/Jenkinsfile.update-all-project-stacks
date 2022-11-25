@@ -32,4 +32,10 @@ elifePipeline({
         }
     }
     parallel actions
+
+    special_project_envlist = [
+        //["master-server", "prod"], // requires vault to be unlocked after restart
+        //["elife-alfred", "prod"], // will shutdown the machine orchestrating the update!
+    ]
+
 })
