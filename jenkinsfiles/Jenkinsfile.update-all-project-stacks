@@ -3,7 +3,7 @@ elifePipeline({
     project_envlist = [
         ["annotations", "continuumtest,end2end,prod"],
         ["api-dummy", "demo"],
-        ["api-gateway", "continuumtest,end2end"],
+        ["api-gateway", "continuumtest,end2end,prod"],
         ["bastion", "prod"],
         ["bioprotocol", "continuumtest,ci,end2end,prod"],
         ["digests", "continuumtest,end2end,prod"],
@@ -33,13 +33,9 @@ elifePipeline({
     }
     parallel actions
 
-    // these should be run after the above complete successfully
-    // todo: does `parallel` block?
-
-    special_project_envlist = [
-        ["api-gateway", "prod"], // gut feeling
-        //["master-server", "prod"], // requires vault to be unlocked after restart
-        //["elife-alfred", "prod"], // will shutdown the machine orchestrating the update!
+    // these can't be run as part of the above.
+    special_cases = [
+        ["master-server", "prod"], // requires Vault to be unlocked after restart
+        ["elife-alfred", "prod"],  // will shutdown the machine orchestrating the update!
     ]
-
 })
