@@ -107,8 +107,10 @@ jenkins-jvm-defaults:
     file.replace:
         - name: /etc/default/jenkins
         - pattern: '^JAVA_ARGS=".*"'
-        # default PermSize seems to be 166MB on a t2.medium, make it 256m instead
-        - repl: 'JAVA_ARGS="-Djava.awt.headless=true -Duser.timezone=Europe/London -XX:MaxPermSize=256m -Djenkins.branch.WorkspaceLocatorImpl.PATH_MAX=30"'
+        # giorgio@2016-08: default PermSize seems to be 166MB on a t2.medium, make it 256m instead
+        # lsh@2023-02-01: HEARTBEAT_CHECK_INTERVAL of 5m (300s) added to avoid jenkins killing jobs during an activity spike:
+        # - https://github.com/elifesciences/issues/issues/7889
+        - repl: 'JAVA_ARGS="-Djava.awt.headless=true -Duser.timezone=Europe/London -XX:MaxPermSize=256m -Djenkins.branch.WorkspaceLocatorImpl.PATH_MAX=30 -Dorg.jenkinsci.plugins.durabletask.BourneShellScript.HEARTBEAT_CHECK_INTERVAL=300"'
         - require: 
             - jenkins-install
 
