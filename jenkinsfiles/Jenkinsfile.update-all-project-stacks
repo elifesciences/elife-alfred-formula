@@ -23,17 +23,24 @@ elifePipeline({
         ["search", "continuumtest,ci,end2end,prod"],
         
         // no reason for these to be run sequentially
-        ["elife-libraries--powerful3", "powerful3"],
-        ["elife-libraries--spectrum", "spectrum"],
-        ["elife-libraries--load", "load"],
-        ["elife-libraries--ci", "ci"],
+        ["elife-libraries", "powerful3", "elife-libraries--powerful3"],
+        ["elife-libraries", "spectrum", "elife-libraries--spectrum"],
+        ["elife-libraries", "load", "elife-libraries--load"],
+        ["elife-libraries", "ci", "elife-libraries--ci"],
     ]
     actions = [:]
     for (int i = 0; i < project_envlist.size(); i++) {
         final project = project_envlist[i][0]
         final envlist = project_envlist[i][1]
-        actions[project] = {
-            elifeUpdateProjectByEnv(project.toString(), envlist.toString());
+        final label
+        if project_envlist[i].size() == 3 {
+            label = project_envlist[i][2]
+        }
+        else {
+            label = project
+        }
+        actions[label] = {
+            elifeUpdateProjectByEnv(project.toString(), envlist.toString())
         }
     }
     parallel actions
