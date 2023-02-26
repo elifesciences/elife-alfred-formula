@@ -9,7 +9,6 @@ elifePipeline({
         ["digests", "continuumtest,end2end,prod"],
         ["elife-bot", "continuumtest,ci,end2end,prod"],
         ["elife-dashboard", "continuumtest,ci,end2end,prod"],
-        ["elife-libraries", "powerful3,spectrum,load,ci"],
         ["elife-metrics", "continuumtest,ci,end2end,prod"],
         ["iiif", "continuumtest,ci,end2end,prod"],
         ["journal-cms", "continuumtest,ci,end2end,prod"],
@@ -22,6 +21,12 @@ elifePipeline({
         ["recommendations", "continuumtest,ci,end2end,prod"],
         ["redirects", "ci,prod"],
         ["search", "continuumtest,ci,end2end,prod"],
+        
+        // no reason for these to be run sequentially
+        ["elife-libraries--powerful3", "powerful3"],
+        ["elife-libraries--spectrum", "spectrum"],
+        ["elife-libraries--load", "load"],
+        ["elife-libraries--ci", "ci"],
     ]
     actions = [:]
     for (int i = 0; i < project_envlist.size(); i++) {
