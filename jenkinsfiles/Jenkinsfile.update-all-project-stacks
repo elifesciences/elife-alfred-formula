@@ -9,7 +9,6 @@ elifePipeline({
         ["digests", "continuumtest,end2end,prod"],
         ["elife-bot", "continuumtest,ci,end2end,prod"],
         ["elife-dashboard", "continuumtest,ci,end2end,prod"],
-        ["elife-libraries", "powerful3,spectrum,load,ci"],
         ["elife-metrics", "continuumtest,ci,end2end,prod"],
         ["iiif", "continuumtest,ci,end2end,prod"],
         ["journal-cms", "continuumtest,ci,end2end,prod"],
@@ -22,13 +21,26 @@ elifePipeline({
         ["recommendations", "continuumtest,ci,end2end,prod"],
         ["redirects", "ci,prod"],
         ["search", "continuumtest,ci,end2end,prod"],
+        
+        // no reason for these to be run sequentially
+        ["elife-libraries", "powerful3", "elife-libraries--powerful3"],
+        ["elife-libraries", "spectrum", "elife-libraries--spectrum"],
+        ["elife-libraries", "load", "elife-libraries--load"],
+        ["elife-libraries", "ci", "elife-libraries--ci"],
     ]
     actions = [:]
     for (int i = 0; i < project_envlist.size(); i++) {
         final project = project_envlist[i][0]
         final envlist = project_envlist[i][1]
-        actions[project] = {
-            elifeUpdateProjectByEnv(project.toString(), envlist.toString());
+        final label
+        if project_envlist[i].size() == 3 {
+            label = project_envlist[i][2]
+        }
+        else {
+            label = project
+        }
+        actions[label] = {
+            elifeUpdateProjectByEnv(project.toString(), envlist.toString())
         }
     }
     parallel actions
