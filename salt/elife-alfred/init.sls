@@ -70,7 +70,7 @@ jenkins-home-directory-ownership:
         - group: jenkins
         - mode: 755
 
-{% set jenkins_version = '2.332.3' %}
+{% set jenkins_version = '2.387.1' %}
 {% set deb_filename = 'jenkins_'+jenkins_version+'_all.deb' %}
 jenkins-download:
     cmd.run:
