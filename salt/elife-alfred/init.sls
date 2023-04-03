@@ -1,6 +1,14 @@
 # configures a jenkins environment without depending on a jenkins server, nginx or builder.
 # jenkins agents can use this (elife-alfred/init.sls) to run the same tests `elife-alfred--prod` currently does.
 
+jenkins-process-dependencies:
+    pkg.installed:
+        - pkgs:
+            # process "dependencies-elife-spectrum-update-kitchen-sinks-github"
+            # it updates a set of test fixtures periodically
+            - libxml2-utils # xmllint
+            - daemon # lsh@2022-05-09: has been removed from builder-base but needed by jenkins below apparently
+
 srv-directory:
     file.directory:
         - name: /ext/srv

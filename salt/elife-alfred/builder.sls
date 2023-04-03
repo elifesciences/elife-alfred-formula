@@ -17,17 +17,17 @@ builder-highstate-no-colours:
         - unless:
             - grep 'SALT_NO_COLOR=1' /etc/environment
 
-# why does the elife user need aws credentials?
-#builder-project-aws-credentials-elife:
-#    file.managed:
-#        - name: /home/{{ pillar.elife.deploy_user.username }}/.aws/credentials
-#        - source: salt://elife-alfred/config/var-lib-jenkins-.aws-credentials
-#        - template: jinja
-#        - user: {{ pillar.elife.deploy_user.username }}
-#        - group: {{ pillar.elife.deploy_user.username }}
-#        - makedirs: True
-#        - require:
-#            - jenkins
+# lsh@2023-04-03: why does the elife user need aws credentials?
+builder-project-aws-credentials-elife:
+    file.managed:
+        - name: /home/{{ pillar.elife.deploy_user.username }}/.aws/credentials
+        - source: salt://elife-alfred/config/var-lib-jenkins-.aws-credentials
+        - template: jinja
+        - user: {{ pillar.elife.deploy_user.username }}
+        - group: {{ pillar.elife.deploy_user.username }}
+        - makedirs: True
+        - require:
+            - jenkins
 
 builder-project-aws-credentials-jenkins:
     file.managed:
@@ -46,6 +46,7 @@ builder-project-dependencies:
             - make
             - gcc
 
+# lsh@2023-04-03: remove, terraform is now installed by builder
 {% set terraform_version = '0.11.13' %}
 {% set terraform_hash = 'efb07c8894d65a942e62f18a99349bb4' %}
 {% set terraform_archive = 'terraform_' + terraform_version + '_linux_amd64.zip' %}
