@@ -263,19 +263,6 @@ builder-project-dependencies:
             - make
             - gcc
 
-{% set terraform_version = '0.11.13' %}
-{% set terraform_hash = 'efb07c8894d65a942e62f18a99349bb4' %}
-{% set terraform_archive = 'terraform_' + terraform_version + '_linux_amd64.zip' %}
-terraform:
-    file.managed:
-        - name: /root/{{ terraform_archive }}
-        - source: https://releases.hashicorp.com/terraform/{{ terraform_version }}/{{ terraform_archive }}
-        - source_hash: md5={{ terraform_hash }}
-
-    cmd.run:
-        - name: unzip {{ terraform_archive }} && mv terraform /usr/local/bin/
-        - cwd: /root
-
 builder-project:
     builder.git_latest:
         - name: ssh://git@github.com/elifesciences/builder.git
@@ -289,7 +276,6 @@ builder-project:
             - builder-project-aws-credentials-elife
             - builder-project-aws-credentials-jenkins
             - builder-project-dependencies
-            - terraform
 
     file.directory:
         - name: /srv/builder
@@ -306,7 +292,7 @@ builder-update:
         - name: /srv/builder/.no-delete-venv.flag
 
     cmd.run:
-        - name: ./update.sh --exclude virtualbox vagrant ssh-agent ssh-credentials vault
+        - name: ./update.sh --exclude virtualbox vagrant ssh-agent ssh-credentials vault terraform
         - cwd: /srv/builder
         - runas: jenkins
         - require:
