@@ -1,14 +1,14 @@
 elifePipeline {
     stage "Report", {
-        withCredentials([string(credentialsId: "process-github-repo-security-alerts", variable: 'GITHUB_TOKEN')]) {
-            def shellCmd = "GITHUB_TOKEN=${GITHUB_TOKEN} /usr/bin/github-repo-security-alerts"
-            output = sh(script: shellCmd, returnStdout:true)
-            output = output.trim()
-            if (output != "") {
-                mail subject: "Results for \"process-github-repo-security-alerts\"", to: "l.skibinski@elifesciences.org", from: "alfred@elifesciences.org", replyTo: "no-reply@elifesciences.org", body: "Outstanding Dependabot alerts found:\n\n${output}\n\n${BUILD_URL}"
-                echo "email sent to techalerts@elifesciences.org"
-            }
+        environment {
+            GITHUB_TOKEN = credentials('process-github-repo-security-alerts')
         }
-
+        def shellCmd = 'GITHUB_TOKEN=$GITHUB_TOKEN /usr/bin/github-repo-security-alerts'
+        output = sh(script: shellCmd, returnStdout:true)
+        output = output.trim()
+        if (output != "") {
+            mail subject: "Results for \"process-github-repo-security-alerts\"", to: "l.skibinski@elifesciences.org", from: "alfred@elifesciences.org", replyTo: "no-reply@elifesciences.org", body: "Outstanding Dependabot alerts found:\n\n${output}\n\n${BUILD_URL}"
+            echo "email sent to techalerts@elifesciences.org"
+        }
     }
 }
