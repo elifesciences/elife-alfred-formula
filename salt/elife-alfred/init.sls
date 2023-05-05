@@ -488,3 +488,11 @@ github-aliases-file:
         - name: /etc/github-email-aliases.json
         - formatter: json
         - dataset_pillar: elife:github_email_aliases
+
+install-github-repo-security-alerts:
+    file.managed:
+        - name: /usr/bin/github-repo-security-alerts
+        - source: https://github.com/elifesciences/github-repo-security-alerts/releases/download/0.0.1/linux-amd64
+        - source_hash: d476d745c3cd4b23377f3a81faad443a67425ad4fe40a1f19ddec5c6f56c3b97
+        - mode: 755
+
