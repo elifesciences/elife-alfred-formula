@@ -3,7 +3,7 @@ elifePipeline {
         environment {
             GITHUB_TOKEN = credentials('process-github-repo-security-alerts')
         }
-        def shellCmd = 'GITHUB_TOKEN=$GITHUB_TOKEN /usr/bin/github-repo-security-alerts'
+        def shellCmd = 'GITHUB_TOKEN=${GITHUB_TOKEN} /usr/bin/github-repo-security-alerts'
         output = sh(script: shellCmd, returnStdout:true)
         output = output.trim()
         if (output != "") {
