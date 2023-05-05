@@ -5,7 +5,7 @@ elifePipeline {
             output = sh(script: shellCmd, returnStdout:true)
             output = output.trim()
             if (output != "") {
-                mail subject: "Results for \"process-github-repo-security-alerts\"", to: "l.skibinski@elifesciences.org", from: "alfred@elifesciences.org", replyTo: "no-reply@elifesciences.org", body: "Outstanding Dependabot alerts found:\n\n${output}\n\n${BUILD_URL}"
+                mail subject: "Results for \"process-github-repo-security-alerts\"", to: "techalerts@elifesciences.org", from: "alfred@elifesciences.org", replyTo: "no-reply@elifesciences.org", body: "Outstanding Dependabot alerts found:\n\n${output}\n\n${BUILD_URL}"
                 echo "email sent to techalerts@elifesciences.org"
             }
         }
