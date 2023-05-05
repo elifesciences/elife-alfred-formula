@@ -1,7 +1,7 @@
 elifePipeline {
     stage "Report", {
         withCredentials([string(credentialsId: "process-github-repo-security-alerts", variable: 'GITHUB_TOKEN')]) {
-            def shellCmd = "GITHUB_TOKEN=${GITHUB_TOKEN} /usr/bin/github-repo-security-alerts"
+            def shellCmd = 'GITHUB_TOKEN=${GITHUB_TOKEN} /usr/bin/github-repo-security-alerts'
             output = sh(script: shellCmd, returnStdout:true)
             output = output.trim()
             if (output != "") {
