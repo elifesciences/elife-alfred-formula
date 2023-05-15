@@ -1,0 +1,25 @@
+elifePipeline {
+    stage 'Reindex search continuumtest', {
+        lock('search--continuumtest') {
+            builderCmdNode 'search--continuumtest', 1, "cd /srv/search; ./bin/reindex-reviewed-preprints"
+        }
+    }
+
+    stage 'Reimport to journal-cms continuumtest', {
+        lock('journal-cms--continuumtest') {
+            builderCmdNode 'journal-cms--continuumtest', 1, "cd /srv/journal-cms/web; ../vendor/bin/drush reviewed-preprint:import-all"
+        }
+    }
+
+    stage 'Reindex search prod', {
+        lock('search--prod') {
+            builderCmdNode 'search--prod', 1, "cd /srv/search; ./bin/reindex-reviewed-preprints"
+        }
+    }
+
+    stage 'Reimport to journal-cms prod', {
+        lock('journal-cms--prod') {
+            builderCmdNode 'journal-cms--prod', 1, "cd /srv/journal-cms/web; ../vendor/bin/drush reviewed-preprint:import-all"
+        }
+    }
+}

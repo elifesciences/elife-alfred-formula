@@ -8,7 +8,9 @@ alfred:
         channel_hook: null
     jenkins:
         user: null
-        password: null
+        # lsh@2021-05-17: was used once but no longer. see:
+        # - salt/elife-alfred/config/usr-local-bin-jenkins-cli
+        #password: null
     maintainer: admin@example.com
     pipeline_checks:
         example:

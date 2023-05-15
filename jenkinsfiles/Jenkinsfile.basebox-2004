@@ -1,7 +1,7 @@
 import jenkins.model.Jenkins
 
 def project = 'basebox'
-def alternative = '1804'
+def alternative = '2004'
 def stackname = "${project}--${alternative}"
 
 elifePipeline {
@@ -25,7 +25,7 @@ elifePipeline {
     }
 
     stage 'Downstream', {
-        build job: '../dependencies/dependencies-builder-ami-update', wait: false, parameters: [string(name: 'release', value: '1804'), string(name: 'amiId', value: amiId)]
+        build job: '../dependencies/dependencies-builder-ami-update', wait: false, parameters: [string(name: 'release', value: '2004'), string(name: 'amiId', value: amiId)]
     }
 }
 

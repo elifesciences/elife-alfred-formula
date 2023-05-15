@@ -14,6 +14,7 @@ vault-approle-vault-wrapper:
         - require:
             - vault-approle-environment-variables
 
+
 vault-approle-vault-wrapper-smoke-test:
     cmd.run:
 {% if salt['elife.only_on_aws']() %}
@@ -21,6 +22,8 @@ vault-approle-vault-wrapper-smoke-test:
 {% else %}
         - name: which vault-login.sh
 {% endif %}
+        # lsh@2022-11-02: fixes 'source' not available in 'sh' shell.
+        - shell: /bin/bash
         - require:
             - vault-approle-vault-wrapper
             - vault-client
