@@ -1,3 +1,11 @@
+jenkins-process-dependencies:
+    pkg.installed:
+        - pkgs:
+            # process "dependencies-elife-spectrum-update-kitchen-sinks-github"
+            # it updates a set of test fixtures periodically
+            - libxml2-utils # xmllint
+            - daemon # lsh@2022-05-09: has been removed from builder-base but needed by jenkins below apparently
+
 srv-directory:
     file.directory:
         - name: /ext/srv
@@ -62,57 +70,71 @@ jenkins-home-directory-ownership:
         - group: jenkins
         - mode: 755
 
-{% set jenkins_version = '2.204.2' %}
+{% set jenkins_version = '2.387.1' %}
 {% set deb_filename = 'jenkins_'+jenkins_version+'_all.deb' %}
-# the apt repository does not allow us to pin the version:
-# https://issues.jenkins-ci.org/browse/INFRA-92
 jenkins-download:
     cmd.run:
-        # todo: switch this to file.managed to prevent downloading on every highstate
         - name: |
-            wget https://pkg.jenkins.io/debian-stable/binary/{{ deb_filename }}
-            # for non-LTS versions:
-            #wget http://pkg.jenkins-ci.org/debian/binary/{{ deb_filename }}
+            wget --quiet https://pkg.jenkins.io/debian-stable/binary/{{ deb_filename }}
         - unless:
-            - test -e {{ deb_filename }}
+            # file exists and isn't empty
             - test -s {{ deb_filename }}
 
-jenkins:
+jenkins-install:
     cmd.run:
         # configuration will be tweaked by file.replace state
         - name: dpkg --force-confnew -i {{ deb_filename }}
         - require:
             - jenkins-home-directory-ownership
             - jenkins-download
-            - java8
+            - java11
         - unless:
             # the version of the Jenkins package configuration is equal to the package installed
             - test $(dpkg-query --showformat='${Version}' --show jenkins) == "{{ jenkins_version }}"
 
-    service.running:
-        - enable: True
-        - init_delay: 10 # seconds. attempting to fetch the jenkins-cli too early will fail
-        - watch:
-            - file: /etc/default/jenkins
+# lsh@2022-05-09: jenkins upgrade now uses systemctl to execute jenkins, 
+# unfortunately this bypasses shell profiles ("/etc/profile.d/*") which, for better or worse, we rely on.
+# this override executes jenkins using bash. the leading ExecStart= is so systemd can 'reset' params that take lists.
+jenkins-systemd-service-override:
+    file.managed:
+        - name: /etc/systemd/system/jenkins.service.d/override.conf
+        - source: salt://elife-alfred/config/etc-systemd-system-jenkins.service.d-override.conf
+        - makedirs: true
         - require:
-            - cmd: jenkins
+            - jenkins-install
 
+jenkins-jvm-defaults:
     file.replace:
         - name: /etc/default/jenkins
         - pattern: '^JAVA_ARGS=".*"'
-        # default PermSize seems to be 166MB on a t2.medium
-        - repl: 'JAVA_ARGS="-Djava.awt.headless=true -Duser.timezone=Europe/London -XX:MaxPermSize=256m -Djenkins.branch.WorkspaceLocatorImpl.PATH_MAX=30"'
+        # giorgio@2016-08: default PermSize seems to be 166MB on a t2.medium, make it 256m instead
+        # lsh@2023-02-01: HEARTBEAT_CHECK_INTERVAL of 5m (300s) added to avoid jenkins killing jobs during an activity spike:
+        # - https://github.com/elifesciences/issues/issues/7889
+        - repl: 'JAVA_ARGS="-Djava.awt.headless=true -Duser.timezone=Europe/London -XX:MaxPermSize=256m -Djenkins.branch.WorkspaceLocatorImpl.PATH_MAX=30 -Dorg.jenkinsci.plugins.durabletask.BourneShellScript.HEARTBEAT_CHECK_INTERVAL=300"'
         - require: 
-            - cmd: jenkins
+            - jenkins-install
 
-jenkins-args:
+jenkins-default-args:
     # 1 month login sessions
     file.replace:
         - name: /etc/default/jenkins
         - pattern: '^JENKINS_ARGS=.*'
         - repl: 'JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT --sessionTimeout=43200"'
         - require: 
-            - cmd: jenkins
+            - jenkins-install
+
+jenkins:
+    service.running:
+        - enable: True
+        - init_delay: 10 # seconds. attempting to fetch the jenkins-cli too early will fail
+        - watch:
+            - file: /etc/default/jenkins
+            - file: builder-non-interactive
+        - require:
+            - jenkins-install
+            - jenkins-systemd-service-override
+            - jenkins-jvm-defaults
+            - jenkins-default-args
 
 jenkins-user-and-group:
     cmd.run:
@@ -147,7 +169,7 @@ jenkins-ssh:
             - jenkins
 
 # for simplicity, users `elife` and `jenkins` on this instance
-# use the same credentials
+# use the same credentials.
 # we also remove existing id_rsa.pub as they won't match
 # the new private keys
 remove-alfred-leftover-public-key-from-elife-user:
@@ -199,6 +221,20 @@ add-jenkins-gitconfig:
         - require:
             - jenkins
 
+builder-non-interactive:
+    file.append:
+        - name: /etc/environment
+        - text: "BUILDER_NON_INTERACTIVE=1"
+        - unless:
+            - grep 'BUILDER_NON_INTERACTIVE=1' /etc/environment
+
+builder-highstate-no-colours:
+    file.append:
+        - name: /etc/environment
+        - text: "SALT_NO_COLOR=1"
+        - unless:
+            - grep 'SALT_NO_COLOR=1' /etc/environment
+
 builder-project-aws-credentials-elife:
     file.managed:
         - name: /home/{{ pillar.elife.deploy_user.username }}/.aws/credentials
@@ -225,20 +261,8 @@ builder-project-dependencies:
     pkg.installed:
         - pkgs:
             - make
+            - gcc
 
-{% set terraform_version = '0.11.13' %}
-{% set terraform_hash = 'efb07c8894d65a942e62f18a99349bb4' %}
-{% set terraform_archive = 'terraform_' + terraform_version + '_linux_amd64.zip' %}
-terraform:
-    file.managed:
-        - name: /root/{{ terraform_archive }}
-        - source: https://releases.hashicorp.com/terraform/{{ terraform_version }}/{{ terraform_archive }}
-        - source_hash: md5={{ terraform_hash }}
-
-    cmd.run:
-        - name: unzip {{ terraform_archive }} && mv terraform /usr/local/bin/
-        - cwd: /root
-    
 builder-project:
     builder.git_latest:
         - name: ssh://git@github.com/elifesciences/builder.git
@@ -252,7 +276,6 @@ builder-project:
             - builder-project-aws-credentials-elife
             - builder-project-aws-credentials-jenkins
             - builder-project-dependencies
-            - terraform
 
     file.directory:
         - name: /srv/builder
@@ -269,7 +292,7 @@ builder-update:
         - name: /srv/builder/.no-delete-venv.flag
 
     cmd.run:
-        - name: ./update.sh --exclude virtualbox vagrant ssh-agent ssh-credentials vault
+        - name: ./update.sh --exclude virtualbox vagrant ssh-agent ssh-credentials vault terraform
         - cwd: /srv/builder
         - runas: jenkins
         - require:
@@ -314,15 +337,17 @@ jenkins-slave-node-for-end2end-tests-folder:
 # Gradle
 
 
-# Jenkins plugin backs up here 
+# Jenkins plugin backs up here
+# lsh@2022-09-02: moved to /ext volume
 jenkins-thin-backup-plugin-target:
     file.directory:
-        - name: /var/local/jenkins-backup
+        - name: /ext/jenkins-backup
         - user: jenkins
         - group: jenkins
         - dir_mode: 755
         - require:
             - jenkins
+            - srv-directory
 
 # UBR transports the local backup to S3
 jenkins-ubr-backup:
@@ -341,7 +366,7 @@ jenkins-junit-xml-cleanup-cron:
 
 jenkins-cli:
     cmd.run:
-        - name: wget --no-check-certificate --tries 3 -O /usr/local/bin/jenkins-cli.jar http://localhost:8080/jnlpJars/jenkins-cli.jar
+        - name: wget --quiet --no-check-certificate --tries 3 -O /usr/local/bin/jenkins-cli.jar http://localhost:8080/jnlpJars/jenkins-cli.jar
         - require:
             - jenkins
         - unless:
@@ -446,7 +471,6 @@ alfred-packages:
             - siege
             - shellcheck
             - git-lfs
-            - npm # for 'npm' and npm releases
 
 siege-log-file:
     file.managed:
@@ -458,4 +482,17 @@ tox:
         - name: python3 -m pip install tox==2.9.1
         - require:
             - global-python-requisites
+
+github-aliases-file:
+    file.serialize:
+        - name: /etc/github-email-aliases.json
+        - formatter: json
+        - dataset_pillar: elife:github_email_aliases
+
+install-github-repo-security-alerts:
+    file.managed:
+        - name: /usr/bin/github-repo-security-alerts
+        - source: https://github.com/elifesciences/github-repo-security-alerts/releases/download/0.0.1/linux-amd64
+        - source_hash: d476d745c3cd4b23377f3a81faad443a67425ad4fe40a1f19ddec5c6f56c3b97
+        - mode: 755
 

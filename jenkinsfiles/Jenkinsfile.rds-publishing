@@ -1,6 +1,6 @@
 elifePipeline {
     stage 'Notify', {
-        elifeSlack "Publishing RDS articles on *prod* (<${env.RUN_DISPLAY_URL}|Build>)", "#deployments"
+        elifeSlack "Publishing ERA articles and Reviewed Preprints on *prod* (<${env.RUN_DISPLAY_URL}|Build>)", "#deployments"
     }
 
     stage 'Deploy journal', {
@@ -13,5 +13,12 @@ elifePipeline {
 
     stage 'Reindex search', {
         builderCmdNode 'search--prod', 1, "cd /srv/search; ./bin/reindex-rds"
+        builderCmdNode 'search--prod', 1, "cd /srv/search; ./bin/reindex-reviewed-preprints"
+    }
+
+    stage 'Trigger archive workflows', {
+        sh "wget -O /tmp/era-articles.yaml https://raw.githubusercontent.com/elifesciences/builder-configuration/master/pillar/era-articles.yaml"
+        sh "/usr/local/jenkins-scripts/archive_era_articles.sh -i /tmp/era-articles.yaml -e prod"
+        sh "rm -f /tmp/era-articles.yaml"
     }
 }

@@ -1,0 +1,53 @@
+elifePipeline({
+    // there has to be a list of these things out there, right?
+    project_envlist = [
+        ["annotations", "continuumtest,end2end,prod"],
+        ["api-dummy", "demo"],
+        ["api-gateway", "continuumtest,end2end,prod"],
+        ["bastion", "prod"],
+        ["bioprotocol", "continuumtest,ci,end2end,prod"],
+        ["digests", "continuumtest,end2end,prod"],
+        ["elife-bot", "continuumtest,ci,end2end,prod"],
+        ["elife-dashboard", "continuumtest,ci,end2end,prod"],
+        ["elife-metrics", "continuumtest,ci,end2end,prod"],
+        ["iiif", "continuumtest,ci,end2end,prod"],
+        ["journal-cms", "continuumtest,ci,end2end,prod"],
+        ["journal", "continuumtestpreview,demo,preview,continuumtest,end2end,prod"],
+        ["lax", "continuumtest,ci,end2end,prod"],
+        ["observer", "ci,end2end,prod"],
+        ["pattern-library", "prod"],
+        ["personalised-covers", "continuumtest,ci,end2end,prod"],
+        ["profiles", "continuumtest,end2end,prod"],
+        ["recommendations", "continuumtest,ci,end2end,prod"],
+        ["redirects", "ci,prod"],
+        ["search", "continuumtest,ci,end2end,prod"],
+        
+        // no reason for these to be run sequentially
+        ["elife-libraries", "powerful3", "elife-libraries--powerful3"],
+        ["elife-libraries", "spectrum", "elife-libraries--spectrum"],
+        ["elife-libraries", "load", "elife-libraries--load"],
+        ["elife-libraries", "ci", "elife-libraries--ci"],
+    ]
+    actions = [:]
+    for (int i = 0; i < project_envlist.size(); i++) {
+        final project = project_envlist[i][0]
+        final envlist = project_envlist[i][1]
+        final label
+        if (project_envlist[i].size() == 3) {
+            label = project_envlist[i][2]
+        }
+        else {
+            label = project
+        }
+        actions[label] = {
+            elifeUpdateProjectByEnv(project.toString(), envlist.toString())
+        }
+    }
+    parallel actions
+
+    // these can't be run as part of the above.
+    special_cases = [
+        ["master-server", "prod"], // requires Vault to be unlocked after restart
+        ["elife-alfred", "prod"],  // will shutdown the machine orchestrating the update!
+    ]
+})

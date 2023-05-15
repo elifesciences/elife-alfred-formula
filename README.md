@@ -113,7 +113,7 @@ In order to provide a consistent infrastructure for every project and a single d
 
 - have an executable `project_tests.sh` files which runs the project's own tests and exiting with 0 only if the tests are successful.
 - Have `project_tests.sh` produce a `build/*.xml` file with the results of the build in the standard JUnit XML format. The 'build/' folder may be used to collect other information, such as static analysis, linting and coverage results. More than one `build/*.xml` file (e.g. PHPUnit and PHPSpec) are welcome.
-- Be ready to work after the `./bldr deploy:$stackname,$cluster` command has finished running. No necessity for starting something manually when in `end2end`, `continuumtest` and `prod`. For previous environments "ready to work" means ready to run the project tests.
+- Be ready to work after the `./bldr launch:$stackname,$cluster` command has finished running. No necessity for starting something manually when in `end2end`, `continuumtest` and `prod`. For previous environments "ready to work" means ready to run the project tests.
 
 ### Configurations
 

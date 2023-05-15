@@ -40,7 +40,7 @@ elifePipeline {
         stage "Search", {
             lock 'search--end2end', {
                 builderStart 'search--end2end'
-                builderCmdNode 'search--end2end', 1, 'cd /srv/search && bin/wait-for-running-elasticsearch && php bin/console search:setup -d --env=end2end && php bin/console cache:clear --env=end2end'
+                builderCmdNode 'search--end2end', 1, 'cd /srv/search && bin/wait-for-running-opensearch && php bin/console search:setup -d --env=end2end && php bin/console cache:clear --env=end2end'
             }
         }
 
@@ -65,13 +65,5 @@ elifePipeline {
             }
         }
 
-        stage 'Xpub', {
-            lock 'elife-xpub--end2end', {
-                builderStart 'elife-xpub--end2end'
-                builderCmdNode 'elife-xpub--end2end', 1, 'cd /srv/elife-xpub && TIMEOUT=30 wait-database.sh && DROP=1 setup-database.sh'
-                // MECA SFTP server simulator
-                builderCmdNode 'elife-xpub--end2end', 1, 'cd /var/nginx-public-folders/meca/ && rm -f *.zip'
-            }
-        }
     }
 }

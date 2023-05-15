@@ -1,0 +1,7 @@
+import org.jenkinsci.plugins.pipeline.modeldefinition.Utils
+
+elifePipeline {
+    stage "Destroy stack", {
+        sh(script: "${env.BUILDER_PATH}bldr ensure_destroyed:journal--pr-${params.pr_number}", returnStatus: true)
+    }
+}

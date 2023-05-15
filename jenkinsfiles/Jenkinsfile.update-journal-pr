@@ -1,9 +1,19 @@
+import org.jenkinsci.plugins.pipeline.modeldefinition.Utils
+
 environment = "pr-${params.pr_number}"
 tag = params.tag
 
 elifePipeline {
     stage "Launch stack", {
-        sh "${env.BUILDER_PATH}bldr launch:journal,${environment},skip"
+        result = sh(script: "${env.BUILDER_PATH}bldr checks.stack_exists:journal--${environment}", returnStatus: true)
+        stack_exists = result == 0
+        if (stack_exists) {
+            Utils.markStageSkippedForConditional("Launch stack")
+        }
+        else {
+            // 'skip' here refers to project alt-config selection.
+            sh "${env.BUILDER_PATH}bldr launch:journal,${environment},skip"
+        }
     }
 
     stage "Deploy to ${environment}", {
