@@ -15,6 +15,7 @@ base:
         - elife.postfix-ses
         - elife.aws-cli
         - elife.external-volume
+        - elife.external-volume-srv
         - elife.vault-client
         - elife-alfred.vault-approle
         - elife-alfred

@@ -6,28 +6,6 @@ jenkins-process-dependencies:
             - libxml2-utils # xmllint
             - daemon # lsh@2022-05-09: has been removed from builder-base but needed by jenkins below apparently
 
-srv-directory:
-    file.directory:
-        - name: /ext/srv
-        - require:
-            - mount-external-volume
-
-srv-directory-linked:
-    cmd.run:
-        - name: mv /srv/* /ext/srv
-        - onlyif:
-            # /srv is not a symlink
-            - test ! -L /srv
-        - require:
-            - srv-directory
-
-    file.symlink:
-        - name: /srv
-        - target: /ext/srv
-        - force: True
-        - require:
-            - cmd: srv-directory-linked
-
 jenkins-home-directory:
     file.directory:
         - name: /ext/jenkins
