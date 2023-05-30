@@ -470,7 +470,7 @@ github-aliases-file:
 install-github-repo-security-alerts:
     file.managed:
         - name: /usr/bin/github-repo-security-alerts
-        - source: https://github.com/elifesciences/github-repo-security-alerts/releases/download/0.1.0/linux-amd64
-        - source_hash: d77952d51dd28ed9d9e0e2811ad2d3e77e4fb550787b1c935a99b07561246673
+        - source: https://github.com/elifesciences/github-repo-security-alerts/releases/download/0.1.1/linux-amd64
+        - source_hash: 87f885174ba632962d07a584df559d066244e2c4049d0ca85f481139e247daf4
         - mode: 755
 
