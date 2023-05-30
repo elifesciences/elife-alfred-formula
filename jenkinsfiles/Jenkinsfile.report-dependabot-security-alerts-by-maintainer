@@ -1,0 +1,23 @@
+elifePipeline {
+    stage "Report", {
+        withCredentials([string(credentialsId: "process-github-repo-security-alerts", variable: 'GITHUB_TOKEN')]) {
+            // download latest list of project maintainers
+            sh('curl --header "Authorization: Bearer ${GITHUB_TOKEN}" "https://raw.githubusercontent.com/elifesciences/elife-playbook/master/maintainers-txt-report.json" --output project-maintainers.json')
+
+            // generate a report of maintainer => projects => alert-list
+            output = sh(script: 'GITHUB_TOKEN=${GITHUB_TOKEN} /usr/bin/github-repo-security-alerts project-maintainers.json', returnStdout:true)
+            output = output.trim()
+            if (output != "") {
+                def report = readJSON(text: output)
+                report.each{maintainer, project_map -> 
+                    // format just this slice of the report
+                    body = writeJSON(returnText: true, json: project_map, pretty: 4)
+
+                    //mail subject: "Results for \"process-github-repo-security-alerts\"", to: "${maintainer}", from: "alfred@elifesciences.org", replyTo: "no-reply@elifesciences.org", body: "Outstanding Dependabot alerts found:\n\n${body}\n\n${BUILD_URL}"
+                    mail subject: "Results for \"process-github-repo-security-alerts\"", to: "l.skibinski@elifesciences.org", from: "alfred@elifesciences.org", replyTo: "no-reply@elifesciences.org", body: "Outstanding Dependabot alerts found for ${maintainer}:\n\n${body}\n\n${BUILD_URL}"
+                    echo "email sent to ${maintainer}"
+                }
+            }
+        }
+    }
+}
