@@ -11,7 +11,7 @@ elifePipeline {
                 def report = readJSON(text: output)
                 report.each{maintainer, project_map -> 
                     // format just this slice of the report
-                    body = writeJSON(returnText: true, json: project_map, pretty: true)
+                    body = writeJSON(returnText: true, json: project_map, pretty: 4)
 
                     //mail subject: "Results for \"process-github-repo-security-alerts\"", to: "${maintainer}", from: "alfred@elifesciences.org", replyTo: "no-reply@elifesciences.org", body: "Outstanding Dependabot alerts found:\n\n${body}\n\n${BUILD_URL}"
                     mail subject: "Results for \"process-github-repo-security-alerts\"", to: "l.skibinski@elifesciences.org", from: "alfred@elifesciences.org", replyTo: "no-reply@elifesciences.org", body: "Outstanding Dependabot alerts found for ${maintainer}:\n\n${body}\n\n${BUILD_URL}"
