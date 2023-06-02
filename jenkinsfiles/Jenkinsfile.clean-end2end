@@ -5,7 +5,7 @@ elifePipeline {
         }
 
         stage "Github", {
-            sh "rm -rf elife-article-xml-end2end && git clone git@github.com:elifesciences/elife-article-xml-end2end && cd elife-article-xml-end2end && git reset --hard 6fbf609 && git push origin -f master"
+            sh "rm -rf elife-article-xml-end2end && git clone git@github.com:elifesciences/elife-article-xml-end2end && cd elife-article-xml-end2end && git reset --hard 0655ca8 && git push origin -f master"
         }
 
         stage "Dashboard", {
