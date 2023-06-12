@@ -43,7 +43,12 @@ elifePipeline({
             elifeUpdateProjectByEnv(project.toString(), envlist.toString())
         }
     }
-    parallel actions
+
+    // run the actions in parallel, but continue on any failures.
+    // the build will still be marked as failed.
+    catchError {
+        parallel actions
+    }
 
     // these can't be run as part of the above.
     // their order is debateable, but they should *not* be run in parallel.
