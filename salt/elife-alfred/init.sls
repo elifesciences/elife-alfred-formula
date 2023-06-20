@@ -466,7 +466,7 @@ siege-log-file:
 #            - global-python-requisites
 tox:
     cmd.run:
-        - name: python -m pip uninstall tox -y
+        - name: python3 -m pip uninstall tox -y
         - require:
             - global-python-requisites
 
