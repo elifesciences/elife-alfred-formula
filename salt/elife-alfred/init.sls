@@ -455,9 +455,18 @@ siege-log-file:
         - name: /var/log/siege.log
         - mode: 666
 
+# lsh@2023-06-20: tox is no longer being used to run tests and is being removed everywhere.
+# it's also not a good idea to install python libraries outside of a venv.
+# - https://github.com/elifesciences/issues/issues/7071
+# - https://github.com/elifesciences/issues/issues/8198
+#tox:
+#    cmd.run:
+#        - name: python3 -m pip install tox==2.9.1
+#        - require:
+#            - global-python-requisites
 tox:
     cmd.run:
-        - name: python3 -m pip install tox==2.9.1
+        - name: python3 -m pip uninstall tox -y
         - require:
             - global-python-requisites
 
