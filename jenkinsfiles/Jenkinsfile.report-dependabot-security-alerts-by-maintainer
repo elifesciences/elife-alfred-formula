@@ -4,6 +4,10 @@ elifePipeline {
             // download latest list of project maintainers
             sh('curl --header "Authorization: Bearer ${GITHUB_TOKEN}" "https://raw.githubusercontent.com/elifesciences/elife-playbook/master/maintainers-txt-report.json" --output project-maintainers.json')
 
+            echo "--- debug: got maintainers"
+            sh(script: 'cat project-maintainers.json')
+            echo "---"
+
             // download the latest security alert checker
             sh('''
                 set -e
