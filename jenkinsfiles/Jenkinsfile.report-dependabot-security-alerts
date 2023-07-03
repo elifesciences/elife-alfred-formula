@@ -4,7 +4,7 @@ elifePipeline {
             // download the latest security alert checker
             sh('''
                 set -e
-                curl https://github.com/elifesciences/github-repo-security-alerts/releases/latest/download/linux-amd64 --output github-repo-security-alerts
+                curl https://github.com/elifesciences/github-repo-security-alerts/releases/latest/download/linux-amd64 --location --output github-repo-security-alerts
                 chmod +x github-repo-security-alerts
             ''')
 
