@@ -476,10 +476,8 @@ github-aliases-file:
         - formatter: json
         - dataset_pillar: elife:github_email_aliases
 
-install-github-repo-security-alerts:
-    file.managed:
+# lsh@2023-07-03: remove. this file is now downloaded in a Jenkins file
+remove-github-repo-security-alerts:
+    file.absent:
         - name: /usr/bin/github-repo-security-alerts
-        - source: https://github.com/elifesciences/github-repo-security-alerts/releases/download/0.1.1/linux-amd64
-        - source_hash: 87f885174ba632962d07a584df559d066244e2c4049d0ca85f481139e247daf4
-        - mode: 755
 

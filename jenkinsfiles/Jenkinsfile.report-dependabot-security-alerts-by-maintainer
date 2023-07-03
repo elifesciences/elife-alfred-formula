@@ -4,8 +4,15 @@ elifePipeline {
             // download latest list of project maintainers
             sh('curl --header "Authorization: Bearer ${GITHUB_TOKEN}" "https://raw.githubusercontent.com/elifesciences/elife-playbook/master/maintainers-txt-report.json" --output project-maintainers.json')
 
+            // download the latest security alert checker
+            sh('''
+                set -e
+                curl https://github.com/elifesciences/github-repo-security-alerts/releases/latest/download/linux-amd64 --output github-repo-security-alerts
+                chmod +x github-repo-security-alerts
+            ''')
+
             // generate a report of maintainer => projects => alert-list
-            output = sh(script: 'GITHUB_TOKEN=${GITHUB_TOKEN} /usr/bin/github-repo-security-alerts project-maintainers.json', returnStdout:true)
+            output = sh(script: 'GITHUB_TOKEN=${GITHUB_TOKEN} ./github-repo-security-alerts project-maintainers.json', returnStdout:true)
             output = output.trim()
             if (output != "") {
                 def report = readJSON(text: output)
