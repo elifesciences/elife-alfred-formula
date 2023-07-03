@@ -14,6 +14,10 @@ elifePipeline {
             // generate a report of maintainer => projects => alert-list
             output = sh(script: 'GITHUB_TOKEN=${GITHUB_TOKEN} ./github-repo-security-alerts project-maintainers.json', returnStdout:true)
             output = output.trim()
+            echo "--- debug: got output"
+            echo output
+            echo "---"
+            
             if (output != "") {
                 def report = readJSON(text: output)
                 report.each{maintainer, project_map -> 
@@ -21,7 +25,7 @@ elifePipeline {
                     body = writeJSON(returnText: true, json: project_map, pretty: 4)
 
                     // alert the maintainer responsible
-                    mail subject: "Daily dependabot security alerts", to: "${maintainer}", from: "alfred@elifesciences.org", replyTo: "no-reply@elifesciences.org", body: "Outstanding Dependabot security alerts found for ${maintainer}:\n\n${body}\n\n${BUILD_URL}"
+                    //mail subject: "Daily dependabot security alerts", to: "${maintainer}", from: "alfred@elifesciences.org", replyTo: "no-reply@elifesciences.org", body: "Outstanding Dependabot security alerts found for ${maintainer}:\n\n${body}\n\n${BUILD_URL}"
                     echo "email sent to ${maintainer}"
                 }
             }
