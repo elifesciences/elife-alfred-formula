@@ -22,7 +22,7 @@ elifePipeline({
         ["redirects", "ci,prod"],
         ["search", "continuumtest,ci,end2end,prod"],
 
-        // no reason for these to be run sequentially
+        // no reason for library instances to be run sequentially
         ["elife-libraries", "powerful3", "elife-libraries--powerful3"],
         ["elife-libraries", "spectrum", "elife-libraries--spectrum"],
         ["elife-libraries", "load", "elife-libraries--load"],
@@ -58,12 +58,11 @@ elifePipeline({
         // executing the update from the `elife-libraries--ci` instance.
         ["elife-alfred", "prod"],
 
-        // Vault is unavailable after a reboot until unsealed by a highstate.
-        // Minions that:
-        // 1. depend on secrets stored in Vault that override a dummy default value
-        // 2. run a highstate between `master-server--prod` reboot and the Vault unseal
-        // *may* receive incorrect configuration.
+        // is needed by minions to receive their highstate configuration
         ["master-server", "prod"],
+
+        // infrastructure monitor. probably best to do this one last.
+        ["monitor", "prod"],
     ]
     for (int i = 0; i < special_cases.size(); i++) {
         final project = special_cases[i][0]
