@@ -1,0 +1,25 @@
+elifePipeline {
+    project = params.project_name             // "lax", "elife-bot", ...
+    project_env = params.project_environment  // "ci", "end2end", "prod", etc
+    stackname = "${project}--${project_env}"  // "elife-bot--prod"
+    supported_projects = {
+        "elife-bot": {
+            "path": "/srv/elife-bot",
+            "install": "./install.sh",
+        },
+    }
+    config = supported_projects[project]
+    if !(config) {
+        msg = "project not supported. supported projects: " + supported_projects.keySet().join(", ")
+        println(msg)
+        return
+    }
+    elifeForEachNode({
+        stage "refresh", {
+            sh "cd ${config.path} && test -d venv && rm -rf venv && ${config.install_cmd}"
+        }
+        stage "update", {
+            sudo salt-call state.highstate --recode-passthrough"
+        }
+    }, stackname)
+}
