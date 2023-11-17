@@ -1,0 +1,5 @@
+elifePipeline {
+    ["ci", "end2end", "continuumtest", "prod"].each{ env ->
+        build job: '/process/process-refresh-venv', parameters: [string(name: 'project_name', value: 'elife-bot'), string(name: 'project_env', value: env)]
+    }
+}

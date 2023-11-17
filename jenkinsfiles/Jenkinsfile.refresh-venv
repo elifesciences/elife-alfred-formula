@@ -1,6 +1,6 @@
 elifePipeline({
     project = params.project_name             // "lax", "elife-bot", ...
-    project_env = params.project_environment  // "ci", "end2end", "prod", etc
+    project_env = params.project_env          // "ci", "end2end", "prod", etc
     stackname = "${project}--${project_env}"  // "elife-bot--prod"
     supported_projects = {
         "elife-bot": {
