@@ -1,0 +1,17 @@
+elifePipeline({
+    project = params.project_name             // "lax", "elife-bot", ...
+    project_env = params.project_env          // "ci", "end2end", "prod", etc
+    stackname = "${project}--${project_env}"  // "elife-bot--prod"
+    supported_projects = {
+        "elife-bot": {
+            "path": "/srv/elife-bot",
+        },
+    }
+    config = supported_projects[project]
+    if !(config) {
+        msg = "project not supported. supported projects: " + supported_projects.keySet().join(", ")
+        println(msg)
+        return
+    }
+    builderCmd(stackname, "rm -rf venv && sudo salt-call state.highstate --retcode-passthrough", folder="${config.path}")
+}, concurrency="serial")
