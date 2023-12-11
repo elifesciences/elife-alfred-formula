@@ -8,7 +8,7 @@ elifePipeline({
         ],
     ]
     config = supported_projects[project]
-    if !(config) {
+    if (config == null) {
         msg = "project not supported. supported projects: " + supported_projects.keySet().join(", ")
         println(msg)
         return
