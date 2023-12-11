@@ -7,11 +7,22 @@ elifePipeline({
             "path": "/srv/elife-bot",
         ],
     ]
+
     config = supported_projects[project]
     if (config == null) {
         msg = "project not supported. supported projects: " + supported_projects.keySet().join(", ")
         println(msg)
         return
     }
-    builderCmd(stackname, "rm -rf venv && sudo salt-call state.highstate --retcode-passthrough", folder="${config.path}")
+
+    lock (stackname) {
+        try {
+            builderStart(stackname)
+            builderCmd(stackname, "rm -rf venv", folder="${config.path}")
+            builderUpdate(stackname)
+        }
+        finally {
+            builderStop(stackname)
+        }
+    }
 })
