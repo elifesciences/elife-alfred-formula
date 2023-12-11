@@ -2,11 +2,11 @@ elifePipeline({
     project = params.project_name             // "lax", "elife-bot", ...
     project_env = params.project_env          // "ci", "end2end", "prod", etc
     stackname = "${project}--${project_env}"  // "elife-bot--prod"
-    supported_projects = {
-        "elife-bot": {
+    supported_projects = [
+        "elife-bot": [
             "path": "/srv/elife-bot",
-        },
-    }
+        ],
+    ]
     config = supported_projects[project]
     if !(config) {
         msg = "project not supported. supported projects: " + supported_projects.keySet().join(", ")
