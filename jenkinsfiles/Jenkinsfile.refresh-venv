@@ -4,7 +4,7 @@ elifePipeline({
     stackname = "${project}--${project_env}"  // "elife-bot--prod"
     supported_projects = [
         "elife-bot": [
-            "path": "/srv/elife-bot",
+            "path": "/opt/elife-bot",
         ],
     ]
 
