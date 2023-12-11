@@ -14,4 +14,4 @@ elifePipeline({
         return
     }
     builderCmd(stackname, "rm -rf venv && sudo salt-call state.highstate --retcode-passthrough", folder="${config.path}")
-}, concurrency="serial")
+})
