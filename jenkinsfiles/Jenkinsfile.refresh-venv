@@ -16,13 +16,8 @@ elifePipeline({
     }
 
     lock (stackname) {
-        try {
-            builderStart(stackname)
-            builderCmd(stackname, "rm -rf venv", folder="${config.path}")
-            builderUpdate(stackname)
-        }
-        finally {
-            builderStop(stackname)
-        }
+        builderStart(stackname)
+        builderCmd(stackname, "rm -rf venv", folder="${config.path}")
+        builderUpdate(stackname)
     }
 })
