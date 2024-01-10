@@ -13,7 +13,7 @@ elifePipeline {
 
     stage 'Reindex search prod', {
         lock('search--prod') {
-            builderCmdNode 'search--prod', 1, "cd /srv/search; ./bin/reindex-reviewed-preprints"
+            builderCmdNode 'search--prod', 1, "cd /srv/search; ./bin/reindex-reviewed-preprints-dateFrom"
         }
     }
 
