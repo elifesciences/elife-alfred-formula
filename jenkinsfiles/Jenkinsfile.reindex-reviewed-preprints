@@ -1,7 +1,7 @@
 elifePipeline {
     stage 'Reindex search continuumtest', {
         lock('search--continuumtest') {
-            builderCmdNode 'search--continuumtest', 1, "cd /srv/search; ./bin/reindex-reviewed-preprints"
+            builderCmdNode 'search--continuumtest', 1, "cd /srv/search; ./bin/reindex-reviewed-preprints-dateFrom"
         }
     }
 
