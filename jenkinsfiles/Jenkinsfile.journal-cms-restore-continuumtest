@@ -1,4 +1,4 @@
-elifePipeline {
+elifePipeline({
     def stackname = 'journal-cms--continuumtest'
     def backupLocation = 's3://elife-app-backups/journal-cms/'
 
@@ -24,4 +24,4 @@ elifePipeline {
             builderDeployRevision 'journal-cms--continuumtest', 'master'
         }
     }
-}
+}, 240)
