@@ -120,6 +120,17 @@ jenkins-user-and-group:
         - require:
             - jenkins
 
+{% if pillar.elife.webserver.app == "caddy" %}
+reverse-proxy:
+    file.managed:
+        - name: /etc/caddy/sites.d/jenkins
+        - source: salt://elife-alfred/config/etc-caddy-sites.d-jenkins
+        - template: jinja
+        - require:
+            - caddy-config
+        - listen_in:
+            - service: caddy-server-service
+{% else %}
 reverse-proxy:
     file.managed:
         - name: /etc/nginx/sites-enabled/jenkins.conf
@@ -127,6 +138,7 @@ reverse-proxy:
         - template: jinja
         - watch_in:
             - service: nginx-server-service
+{% endif %}
 
 {% if salt['elife.cfg']('cfn.outputs.DomainName') %}
 non-https-redirect:
