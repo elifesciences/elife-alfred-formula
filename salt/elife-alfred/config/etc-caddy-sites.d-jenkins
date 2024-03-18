@@ -18,9 +18,9 @@
 }
 
 # redirect from (prod|anything)--alfred.* to alfred.*
-{% if pillar.elife.env == 'prod' or true %}
-*--alfred.elifesciences.org {
-    redir https://{{ salt['elife.cfg']('project.project_hostname') }}${uri};
+{% if salt['elife.cfg']('cfn.outputs.DomainName') and pillar.elife.env == 'prod' %}
+prod--alfred.elifesciences.org:80, prod--alfred.elifesciences.org:443 {
+    redir https://{{ salt['elife.cfg']('project.project_hostname') }}{uri} permanent
 }
 {% endif %}
 
