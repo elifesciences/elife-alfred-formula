@@ -7,7 +7,9 @@
     }
 
     handle /favicon.ico {
-        file /var/local/alfred-assets/favicon.ico
+        file_server {
+            root /var/local/alfred-assets/
+        }
     }
 
     handle {
