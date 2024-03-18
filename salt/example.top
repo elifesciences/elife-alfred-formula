@@ -10,7 +10,9 @@ base:
         - elife.nodejs16 # for 'npm' and npm releases
         {% endif %}
         - elife.jenkins-scripts
-        - elife.nginx
+        #- elife.nginx
+        - elife.disable-nginx
+        - elife.caddy
         - elife.postfix
         - elife.postfix-ses
         - elife.aws-cli

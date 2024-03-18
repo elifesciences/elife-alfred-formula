@@ -1,0 +1,36 @@
+(config) {
+    log {
+        output file /var/log/caddy/access.log
+        format json {
+            time_format rfc3339
+        }
+    }
+
+    handle /favicon.ico {
+        file_server {
+            root /var/local/alfred-assets/
+        }
+    }
+
+    handle {
+        reverse_proxy 127.0.0.1:8080
+    }
+}
+
+# redirect from (prod|anything)--alfred.* to alfred.*
+{% if salt['elife.cfg']('cfn.outputs.DomainName') and pillar.elife.env == 'prod' %}
+prod--alfred.elifesciences.org:80, prod--alfred.elifesciences.org:443 {
+    redir https://{{ salt['elife.cfg']('project.project_hostname') }}{uri} permanent
+}
+{% endif %}
+
+:80 {
+    import config
+}
+
+{% if salt['elife.cfg']('cfn.outputs.DomainName') %}
+:443 {
+    import ../snippets/certs
+    import config
+}
+{% endif %}

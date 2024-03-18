@@ -22,6 +22,8 @@ alfred:
         secret_id: null
 
 elife:
+    webserver:
+        app: caddy
     github_email_aliases:
         bar: bar@example.com
         foo: foo@example.org
