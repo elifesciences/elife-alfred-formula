@@ -120,7 +120,6 @@ jenkins-user-and-group:
         - require:
             - jenkins
 
-{% if pillar.elife.webserver.app == "caddy" %}
 reverse-proxy:
     file.managed:
         - name: /etc/caddy/sites.d/jenkins
@@ -132,15 +131,6 @@ reverse-proxy:
             - caddy-validate-config
         - listen_in:
             - service: caddy-server-service
-{% else %}
-reverse-proxy:
-    file.managed:
-        - name: /etc/nginx/sites-enabled/jenkins.conf
-        - source: salt://elife-alfred/config/etc-nginx-sites-available-jenkins.conf
-        - template: jinja
-        - watch_in:
-            - service: nginx-server-service
-{% endif %}
 
 # only needed to checkout the git projects
 jenkins-ssh:
