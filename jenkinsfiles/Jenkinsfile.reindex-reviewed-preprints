@@ -7,7 +7,7 @@ elifePipeline {
 
     stage 'Reimport to journal-cms continuumtest', {
         lock('journal-cms--continuumtest') {
-            builderCmdNode 'journal-cms--continuumtest', 1, "cd /srv/journal-cms/web; ../vendor/bin/drush reviewed-preprint:import-all --start-date=today"
+            builderCmdNode 'journal-cms--continuumtest', 1, "cd /srv/journal-cms/web; ../vendor/bin/drush reviewed-preprint:import-all --start-date='-1 week'"
         }
     }
 
@@ -19,7 +19,7 @@ elifePipeline {
 
     stage 'Reimport to journal-cms prod', {
         lock('journal-cms--prod') {
-            builderCmdNode 'journal-cms--prod', 1, "cd /srv/journal-cms/web; ../vendor/bin/drush reviewed-preprint:import-all --start-date=today"
+            builderCmdNode 'journal-cms--prod', 1, "cd /srv/journal-cms/web; ../vendor/bin/drush reviewed-preprint:import-all --start-date='-1 week'"
         }
     }
 }
