@@ -31,8 +31,8 @@ jenkins-home-directory-ownership:
     group.present:
         - name: jenkins
         - system: True
-    
-    user.present: 
+
+    user.present:
         - name: jenkins
         - home: /var/lib/jenkins
         - fullname: Jenkins
@@ -70,7 +70,7 @@ jenkins-install:
             # the version of the Jenkins package configuration is equal to the package installed
             - test $(dpkg-query --showformat='${Version}' --show jenkins) == "{{ jenkins_version }}"
 
-# lsh@2022-05-09: jenkins upgrade now uses systemctl to execute jenkins, 
+# lsh@2022-05-09: jenkins upgrade now uses systemctl to execute jenkins,
 # unfortunately this bypasses shell profiles ("/etc/profile.d/*") which, for better or worse, we rely on.
 # this override executes jenkins using bash. the leading ExecStart= is so systemd can 'reset' params that take lists.
 jenkins-systemd-service-override:
@@ -89,7 +89,7 @@ jenkins-jvm-defaults:
         # lsh@2023-02-01: HEARTBEAT_CHECK_INTERVAL of 5m (300s) added to avoid jenkins killing jobs during an activity spike:
         # - https://github.com/elifesciences/issues/issues/7889
         - repl: 'JAVA_ARGS="-Djava.awt.headless=true -Duser.timezone=Europe/London -XX:MaxPermSize=256m -Djenkins.branch.WorkspaceLocatorImpl.PATH_MAX=30 -Dorg.jenkinsci.plugins.durabletask.BourneShellScript.HEARTBEAT_CHECK_INTERVAL=300"'
-        - require: 
+        - require:
             - jenkins-install
 
 jenkins-default-args:
@@ -98,7 +98,7 @@ jenkins-default-args:
         - name: /etc/default/jenkins
         - pattern: '^JENKINS_ARGS=.*'
         - repl: 'JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT --sessionTimeout=43200"'
-        - require: 
+        - require:
             - jenkins-install
 
 jenkins:
@@ -140,13 +140,6 @@ reverse-proxy:
         - template: jinja
         - watch_in:
             - service: nginx-server-service
-{% endif %}
-
-{% if salt['elife.cfg']('cfn.outputs.DomainName') %}
-non-https-redirect:
-    file.symlink:
-        - name: /etc/nginx/sites-enabled/unencrypted-redirect.conf
-        - target: /etc/nginx/sites-available/unencrypted-redirect.conf
 {% endif %}
 
 # only needed to checkout the git projects
@@ -354,7 +347,7 @@ jenkins-junit-xml-cleanup-cron:
         - user: root
         - identifier: jenkins-tmp-cleanup-cron
         - hour: 5
-        - minute: 0 
+        - minute: 0
 
 jenkins-cli:
     cmd.run:
@@ -375,7 +368,7 @@ jenkins-cli:
         - require:
             - cmd: jenkins-cli
 
-jenkins-cli-smoke-test:    
+jenkins-cli-smoke-test:
     cmd.run:
         - name: /usr/local/bin/jenkins-cli -version
         - runas: jenkins
@@ -385,7 +378,7 @@ jenkins-cli-smoke-test:
 # this requires a configured Jenkins, not one out of the box
 # Go to 'Manage Jenkins' > 'Configure Global Security'.
 # For 'TCP port for JNLP agents' select 'Fixed' and specify a port to use.
-#jenkins-cli-validation:    
+#jenkins-cli-validation:
 #    cmd.run:
 #        - name: /usr/local/bin/jenkins-cli
 #        - runas: jenkins
