@@ -1,19 +1,7 @@
 elifePipeline {
-    stage 'Reindex search continuumtest', {
-        lock('search--continuumtest') {
-            builderCmdNode 'search--continuumtest', 1, "cd /srv/search; ./bin/reindex-reviewed-preprints-dateFrom"
-        }
-    }
-
     stage 'Reimport to journal-cms continuumtest', {
         lock('journal-cms--continuumtest') {
             builderCmdNode 'journal-cms--continuumtest', 1, "cd /srv/journal-cms/web; ../vendor/bin/drush reviewed-preprint:import-all --start-date='-1 week'"
-        }
-    }
-
-    stage 'Reindex search prod', {
-        lock('search--prod') {
-            builderCmdNode 'search--prod', 1, "cd /srv/search; ./bin/reindex-reviewed-preprints-dateFrom"
         }
     }
 
