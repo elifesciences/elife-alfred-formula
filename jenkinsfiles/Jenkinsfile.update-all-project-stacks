@@ -2,7 +2,6 @@ elifePipeline({
     // there has to be a list of these things out there, right?
     project_envlist = [
         ["annotations", "continuumtest,end2end,prod"],
-        ["api-dummy", "demo"],
         ["api-gateway", "continuumtest,end2end,prod"],
         ["bastion", "prod"],
         ["bioprotocol", "continuumtest,ci,end2end,prod"],
@@ -20,7 +19,6 @@ elifePipeline({
         ["profiles", "continuumtest,end2end,prod"],
         ["recommendations", "continuumtest,ci,end2end,prod"],
         ["redirects", "ci,prod"],
-        ["search", "continuumtest,ci,end2end,prod"],
 
         // no reason for library instances to be run sequentially
         ["elife-libraries", "powerful3", "elife-libraries--powerful3"],
