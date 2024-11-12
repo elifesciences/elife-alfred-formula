@@ -22,8 +22,6 @@ elifePipeline({
 
         // no reason for library instances to be run sequentially
         ["elife-libraries", "powerful3", "elife-libraries--powerful3"],
-        ["elife-libraries", "spectrum", "elife-libraries--spectrum"],
-        ["elife-libraries", "load", "elife-libraries--load"],
         ["elife-libraries", "ci", "elife-libraries--ci"],
     ]
     actions = [:]
