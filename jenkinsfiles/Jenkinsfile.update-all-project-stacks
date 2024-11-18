@@ -15,7 +15,6 @@ elifePipeline({
         ["lax", "continuumtest,ci,end2end,prod"],
         ["observer", "ci,end2end,prod"],
         ["pattern-library", "prod"],
-        ["personalised-covers", "continuumtest,ci,end2end,prod"],
         ["profiles", "continuumtest,end2end,prod"],
         ["recommendations", "continuumtest,ci,end2end,prod"],
         ["redirects", "ci,prod"],
