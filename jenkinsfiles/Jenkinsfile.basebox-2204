@@ -1,0 +1,30 @@
+import jenkins.model.Jenkins
+
+def project = 'basebox'
+def alternative = '2204'
+def stackname = "${project}--${alternative}"
+
+elifePipeline {
+    stage 'Clean existing stack', {
+        sh "/srv/builder/bldr ensure_destroyed:${stackname}"
+        sh "/srv/builder/bldr tasks.remove_minion_key:${stackname}"
+    }
+
+    stage 'Launch new stack', {
+        sh "/srv/builder/bldr launch:${project},${alternative}"
+    }
+
+    def amiId
+    def generated = sh(script: 'date +"%Y%m%d%H%M%S"', returnStdout: true).trim()
+    def amiName = "${project}-${alternative}-${generated}"
+    stage 'Generate AMI', {
+        sh "BUILDER_NON_INTERACTIVE=1 /srv/builder/bldr tasks.create_ami:${stackname},name=${amiName} | tee ${amiName}.log"
+        amiId = sh(script: "cat ${amiName}.log | grep '^ami-'", returnStdout: true).trim()
+        // TODO: perhaps destroy? Separate stage for sure
+        sh "/srv/builder/bldr stop:${stackname}"
+    }
+
+    stage 'Downstream', {
+        build job: '../dependencies/dependencies-builder-ami-update', wait: false, parameters: [string(name: 'release', value: '2204'), string(name: 'amiId', value: amiId)]
+    }
+}
