@@ -11,7 +11,7 @@ elifePipeline({
         ["elife-metrics", "continuumtest,ci,prod"],
         ["iiif", "continuumtest,ci,prod"],
         ["journal-cms", "continuumtest,ci,prod"],
-        ["journal", "continuumtestpreview,demo,preview,continuumtest,prod"],
+        ["journal", "continuumtestpreview,preview,continuumtest,prod"],
         ["lax", "continuumtest,ci,prod"],
         ["observer", "ci,prod"],
         ["pattern-library", "prod"],
