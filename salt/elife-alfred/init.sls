@@ -294,7 +294,6 @@ jenkins-sudo-commands:
         - text:
             - "jenkins    ALL=(ALL)    NOPASSWD: /usr/local/builder-scripts/"
             - "jenkins    ALL=(ALL)    NOPASSWD: /usr/bin/kubectl"
-            - "jenkins    ALL=(ALL)    NOPASSWD: /usr/local/bin/helm"
 
 jenkins-slave-node-for-end2end-tests-folder:
     file.absent:
@@ -477,4 +476,3 @@ github-aliases-file:
 remove-github-repo-security-alerts:
     file.absent:
         - name: /usr/bin/github-repo-security-alerts
-
