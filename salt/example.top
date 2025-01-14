@@ -20,4 +20,3 @@ base:
         #- elife-alfred.postfix
         - elife.hub
         - elife.kubectl
-        - elife.helm
