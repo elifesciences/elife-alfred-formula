@@ -16,7 +16,7 @@ elifePipeline({
         ["observer", "ci,prod"],
         ["pattern-library", "prod"],
         ["profiles", "continuumtest,prod"],
-        ["recommendations", "continuumtest,ci,prod"],
+        ["continuumtest,ci,prod"],
         ["redirects", "ci,prod"],
 
         // no reason for library instances to be run sequentially
@@ -49,7 +49,7 @@ elifePipeline({
     // their order is debateable, but they should *not* be run in parallel.
     special_cases = [
         // would ordinarily shutdown the machine orchestrating the update!
-        // the `elifeUpdateProjectByEnv` pipeline has special handling for `elife-alfred--prod`, 
+        // the `elifeUpdateProjectByEnv` pipeline has special handling for `elife-alfred--prod`,
         // executing the update from the `elife-libraries--ci` instance.
         ["elife-alfred", "prod"],
 
