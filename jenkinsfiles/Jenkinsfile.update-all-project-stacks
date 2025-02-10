@@ -16,7 +16,6 @@ elifePipeline({
         ["observer", "ci,prod"],
         ["pattern-library", "prod"],
         ["profiles", "continuumtest,prod"],
-        ["continuumtest,ci,prod"],
         ["redirects", "ci,prod"],
 
         // no reason for library instances to be run sequentially
