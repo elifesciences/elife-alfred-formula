@@ -267,7 +267,8 @@ builder-update:
         - name: /srv/builder/.no-delete-venv.flag
 
     cmd.run:
-        - name: ./update.sh --exclude virtualbox vagrant ssh-agent ssh-credentials vault terraform
+        # mise exec to create the venv with version of python specified in the .python-version file
+        - name: mise exec -- ./update.sh --exclude virtualbox vagrant ssh-agent ssh-credentials vault terraform
         - cwd: /srv/builder
         - runas: jenkins
         - require:
@@ -275,6 +276,7 @@ builder-update:
             - builder-project-aws-credentials-elife
             - builder-project-aws-credentials-jenkins
             - file: builder-update
+            - mise-pkg
 
 builder-logrotate:
     file.managed:
