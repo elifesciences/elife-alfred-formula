@@ -268,7 +268,7 @@ builder-update:
 
     cmd.run:
         # mise exec to create the venv with version of python specified in the .python-version file
-        - name: mise exec -- ./update.sh --exclude virtualbox vagrant ssh-agent ssh-credentials vault terraform
+        - name: mise install && mise exec -- ./update.sh --exclude virtualbox vagrant ssh-agent ssh-credentials vault terraform
         - cwd: /srv/builder
         - runas: jenkins
         - require:
