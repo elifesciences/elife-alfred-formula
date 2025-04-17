@@ -5,7 +5,6 @@ elifePipeline({
         ["api-gateway", "continuumtest,prod"],
         ["bastion", "prod"],
         ["bioprotocol", "continuumtest,ci,prod"],
-        ["digests", "continuumtest,prod"],
         ["elife-bot", "continuumtest,ci,prod"],
         ["elife-dashboard", "continuumtest,ci,prod"],
         ["elife-metrics", "continuumtest,ci,prod"],
