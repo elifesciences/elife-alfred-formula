@@ -14,7 +14,6 @@ elifePipeline({
         ["lax", "continuumtest,ci,prod"],
         ["observer", "ci,prod"],
         ["profiles", "continuumtest,prod"],
-        ["redirects", "ci,prod"],
 
         // no reason for library instances to be run sequentially
         ["elife-libraries", "powerful3", "elife-libraries--powerful3"],
