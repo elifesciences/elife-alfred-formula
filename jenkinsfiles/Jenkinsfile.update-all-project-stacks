@@ -2,7 +2,6 @@ elifePipeline({
     // there has to be a list of these things out there, right?
     project_envlist = [
         ["annotations", "continuumtest,prod"],
-        ["api-gateway", "continuumtest,prod"],
         ["bastion", "prod"],
         ["bioprotocol", "continuumtest,ci,prod"],
         ["elife-bot", "continuumtest,ci,prod"],
