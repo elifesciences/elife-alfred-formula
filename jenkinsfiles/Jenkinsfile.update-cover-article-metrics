@@ -1,0 +1,13 @@
+elifePipeline {
+    stage 'Update cover article metrics on journal-cms continuumtest', {
+        lock('journal-cms--continuumtest') {
+            builderCmdNode 'journal-cms--continuumtest', 1, "cd /srv/journal-cms/web; ../vendor/bin/drush cover-article:metrics-import-all"
+        }
+    }
+
+    stage 'Update cover article metrics on journal-cms prod', {
+        lock('journal-cms--prod') {
+            builderCmdNode 'journal-cms--prod', 1, "cd /srv/journal-cms/web; ../vendor/bin/drush cover-article:metrics-import-all"
+        }
+    }
+}
