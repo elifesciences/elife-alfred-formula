@@ -6,7 +6,6 @@ elifePipeline({
         ["bioprotocol", "continuumtest,ci,prod"],
         ["elife-bot", "continuumtest,ci,prod"],
         ["elife-dashboard", "continuumtest,ci,prod"],
-        ["iiif", "continuumtest,ci,prod"],
         ["journal-cms", "continuumtest,ci,prod"],
         ["journal", "continuumtestpreview,preview,continuumtest,prod"],
         ["lax", "continuumtest,ci,prod"],
