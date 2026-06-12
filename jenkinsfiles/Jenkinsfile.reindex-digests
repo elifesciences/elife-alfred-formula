@@ -1,0 +1,13 @@
+elifePipeline {
+    stage 'Reimport digests to journal-cms continuumtest', {
+        lock('journal-cms--continuumtest') {
+            builderCmdNode 'journal-cms--continuumtest', 1, "cd /srv/journal-cms/web; ../vendor/bin/drush digest:import-all"
+        }
+    }
+
+    stage 'Reimport digests to journal-cms prod', {
+        lock('journal-cms--prod') {
+            builderCmdNode 'journal-cms--prod', 1, "cd /srv/journal-cms/web; ../vendor/bin/drush digest:import-all"
+        }
+    }
+}
